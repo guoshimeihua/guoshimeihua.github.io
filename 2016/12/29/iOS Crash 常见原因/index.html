@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>iOS Crash 杀手排名 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="随着公司嘟嘟牛app用户数量多了起来，崩溃的问题也多了起来，最近这几天终于得空，集中时间处理了一下崩溃的问题，现总结一下，希望对大家有所帮助。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS Crash 杀手排名">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2016/12/29/iOS%20Crash%20%E5%B8%B8%E8%A7%81%E5%8E%9F%E5%9B%A0/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="随着公司嘟嘟牛app用户数量多了起来，崩溃的问题也多了起来，最近这几天终于得空，集中时间处理了一下崩溃的问题，现总结一下，希望对大家有所帮助。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-f3368e3fd81bea96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-6e8c28429b0820d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2016-12-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-03-08T01:29:37.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-f3368e3fd81bea96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-iOS Crash 常见原因" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/29/iOS%20Crash%20%E5%B8%B8%E8%A7%81%E5%8E%9F%E5%9B%A0/" class="article-date">
+  <time datetime="2016-12-28T16:00:00.000Z" itemprop="datePublished">2016-12-29</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS Crash 杀手排名
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>随着公司嘟嘟牛app用户数量多了起来，崩溃的问题也多了起来，最近这几天终于得空，集中时间处理了一下崩溃的问题，现总结一下，希望对大家有所帮助。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="杀手-NO-1"><a href="#杀手-NO-1" class="headerlink" title="杀手 NO.1"></a>杀手 NO.1</h3><h4 id="NSInvalidArgumentException-异常"><a href="#NSInvalidArgumentException-异常" class="headerlink" title="NSInvalidArgumentException 异常"></a>NSInvalidArgumentException 异常</h4><p>出现这个crash的原因有很多，选取了崩溃次数较多的crash。 </p>
+<p><strong>crash 日志1-1</strong></p>
+<pre><code>-[__NSPlaceholderDictionary initWithObjects:forKeys:count:]: attempt to insert nil object from objects[3]</code></pre><p>crash日志拿到了，怎么复现该现象呢？我们看到initWithObjects:forKeys:count:，猜测一下应该是NSDictionary初始化时的问题，在看后面的提示attempt to insert nil object，此时就可以做一个猜测，应该是NSDictionary初始化时插入nil对象造成的异常。下面我们写一段代码来验证一下：</p>
+<pre><code>NSString *password = nil;
+NSDictionary *dict = @{
+                       @&quot;userName&quot;: @&quot;bruce&quot;,
+                       @&quot;password&quot;: password
+                       };
+NSLog(@&quot;dict is : %@&quot;, dict);</code></pre><p>运行过后，崩溃信息如下: </p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-f3368e3fd81bea96.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Crash 日志1-1"></p>
+<p>上面的崩溃信息证明了我们的猜测。从崩溃日志记录中，查询到该问题的崩溃记录有33条（总崩溃记录304条），占10.85%，崩溃率比较高。为什么会出现这种现象呢？如何解决这样的crash呢？</p>
+<p><strong>崩溃率高的原因是因为自己的框架中采用了去model化的设计思想，不会把后台返回的数据转换成model，而是通过一个reformer机制转换成NSDictionary形式，提供给目标对象使用，在转换成NSDictionary的过程中，后台返回的数据有时可能为空，就会造成插入nil对象，从而导致crash。</strong></p>
+<p>有3种方案可以解决该问题，如下：</p>
+<p>方案一：后台在返回数据的时候进行校验，对空值进行处理。但是在项目中有些空值是有特殊的用途，此种方案不可行。</p>
+<p>方案二：在转换成NSDictionary的时候，对后台返回的数据进行校验，把空值转换成NSNull对象。<strong>方案可行，但是需要对现有代码做大的改动，每次转换的时候都需要进行校验，太麻烦。业务高速发展时期，这样做成本太高。</strong></p>
+<p>方案三：有没有一种无须改动现有代码又能解决该问题呢？<strong>答案是有的，可以利用Objective-C的runtime来解决该问题。</strong></p>
+<p><strong>NSDictionary插入nil对象会造成崩溃，但是插入NSNull对象是不会造成崩溃的，只要利用runtime的Swizzle Method把nil对象给转换成NSNull对象就可以把该问题给解决了。</strong>创建一个NSDictionary的类别，利用runtime的Swizzle Method来替换系统的方法。源码实现可以参考Glow团队封装的NSDictionary+NilSafe(Github上可下载到), <strong>全部源码会在文章末尾提供</strong>，现截取其中的部分代码如下：</p>
+<pre><code>+ (instancetype)gl_dictionaryWithObjects:(const id [])objects forKeys:(const id&lt;NSCopying&gt; [])keys count:(NSUInteger)cnt {
+    id safeObjects[cnt];
+    id safeKeys[cnt];
+    NSUInteger j = 0;
+    for (NSUInteger i = 0; i &lt; cnt; i++) {
+        id key = keys[i];
+        id obj = objects[i];
+        if (!key) {
+            continue;
+        }
+        if (!obj) {
+            obj = [NSNull null];
+        }
+        safeKeys[j] = key;
+        safeObjects[j] = obj;
+        j++;
+    }
+    return [self gl_dictionaryWithObjects:safeObjects forKeys:safeKeys count:j];
+}</code></pre><p>** crash 日志1-2 **</p>
+<pre><code>data parameter is nil</code></pre><p>通过日志信息，可以把崩溃问题定位到参数为nil的情况，在看了下堆栈的日志信息，<strong>把问题定位到了NSJSONSerialization序列化的时候，传入data为nil，造成的崩溃。</strong>为了验证是不是该问题，我写了一段代码做了下验证：</p>
+<pre><code>NSData *data = nil;
+NSError *error;
+NSDictionary *orginDict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:&amp;error];
+NSLog(@&quot;originDict is : %@&quot;, orginDict);</code></pre><p>运行后，崩溃信息如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-6e8c28429b0820d3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="Crash日志 1-2"></p>
+<p>这个问题比较好解决，在序列化的时候，统一加入判断，判断data是不是nil即可。</p>
+<p>** crash 日志1-3 **</p>
+<pre><code>unrecognized selector sent to instance 0x15d23910</code></pre><p>造成这条崩溃的原因，想必大家都比较熟悉了，<strong>就是一个类调用了一个不存在的方法，造成的崩溃。</strong>解决这样的问题，可以在写一个方法的时候，判断一下其类的类型，不符合类型的不让其调用，也可以使用runtime对常见的方法调用做一下错误兼容。比如我这边经常会出现这样的崩溃：</p>
+<pre><code>-[__NSCFConstantString objectForKeyedSubscript:]: unrecognized selector sent to instance 0x1741af420
+-[NSNull length]: unrecognized selector sent to instance 0x1b21e6ef8    
+-[__NSCFConstantString objectForKeyedSubscript:]: unrecognized selector sent to instance
+-[__NSDictionaryI length]: unrecognized selector sent to instance 0x174264500</code></pre><p>当这些对象调用这几个不存在的方法的时候，替换成自己定义的一个方法，对它们做一下错误兼容，使应用不会崩溃。现截取部分代码实现，<strong>全部源码会在文章末尾提供</strong>。    </p>
+<pre><code>@implementation NSString (NSRangeException)
+
++ (void)load{
+    static dispatch_once_t onceToken;
+    dispatch_once(&amp;onceToken, ^{
+        @autoreleasepool {
+            [objc_getClass(&quot;__NSCFConstantString&quot;) swizzleMethod:@selector(objectForKeyedSubscript:) swizzledSelector:@selector(replace_objectForKeyedSubscript:)];
+        }
+    });
+}
+
+- (id)replace_objectForKeyedSubscript:(NSString *)key {
+    return nil;
+}
+
+@end</code></pre><p>小结一下，造成NSInvalidArgumentException异常大概有以下原因: </p>
+<ul>
+<li>NSDictionary插入nil的对象。NSMutableDictionary也是同样的道理。</li>
+<li>NSJSONSerialization序列化的时候，传入data为nil。</li>
+<li>an unrecognized selector 无法识别的方法</li>
+</ul>
+<p><strong>NSInvalidArgumentException的崩溃记录有149条（总崩溃记录304条），占49.01%，称霸Crash界，杀手排名第一。</strong></p>
+<h3 id="杀手-NO-2"><a href="#杀手-NO-2" class="headerlink" title="杀手 NO.2"></a>杀手 NO.2</h3><h4 id="SIGSEGV-异常"><a href="#SIGSEGV-异常" class="headerlink" title="SIGSEGV 异常"></a>SIGSEGV 异常</h4><p>SIGSEGV是当SEGV发生的时候，让代码终止的标识。<strong>当去访问没有被开辟的内存或者已经被释放的内存时，就会发生这样的异常。另外，在低内存的时候，也可能会产生这样的异常。</strong></p>
+<p>对于这样的异常，我们可以使用两种方式来解决，一种方式使用Xcode自带的内存分析工具(Leaks)，一种是使用facebook提供的自动化工具来监测内存泄漏问题，如:<br><a href="https://code.facebook.com/posts/583946315094347/automatic-memory-leak-detection-on-ios/" target="_blank" rel="noopener">FBRetainCycleDetector、FBAllocationTracker、FBMemoryProfiler</a></p>
+<p>例子1: </p>
+<pre><code>dataOut = malloc(dataOutAvailable * sizeof(uint8_t));</code></pre><p>这是使用Xcode自带的Leaks工具检测到的内存泄漏，通过代码我们看出这是一个C语言使用malloc函数分配了一块内存地址，但是在不使用的时候却忘记了释放其内存地址，这样就造成了内存泄漏，应该在其不使用的时候加上如下代码：</p>
+<pre><code>free(dataOut);</code></pre><p>另外，通过这个例子我们也要特别注意，在使用C语言对象的时候，一定要记得在不使用的时候给释放掉，ARC并不能释放掉这块内存。</p>
+<p>例子2:</p>
+<pre><code>Can&apos;t add self as subview crash </code></pre><p>造成这个崩溃的原因，<strong>一种原因是在push或pop一个视图的时候，并且设置了animated:YES，如果此时动画(animated)还没有完成，这个时候，你在去push或pop另外一个视图的时候，就会造成该异常。</strong> 也有其他原因可以造成这个崩溃，比如：</p>
+<pre><code>[self.view addSubview:self.view];</code></pre><p>复现这个现象，我写了一个下面的代码测试，如下：</p>
+<pre><code>- (IBAction)btnAction:(id)sender {
+    UIViewController *test01 = [[UIViewController alloc] init];
+    [self.navigationController pushViewController:test01 animated:YES];
+    [self.navigationController pushViewController:test01 animated:YES];
+}</code></pre><p>解决该异常最简单的方式是把animated设置为NO，但是很不友好，把系统自带的动画效果给去掉了。另外一种友好的方式就是通过runtime来进行实现了，通过安全的方式，确保当有控制器正在进行入栈或出栈时，没有其他入栈或出栈操作。<strong>具体源码会在文章末尾提供。</strong></p>
+<p><strong>SIGSEGV的崩溃记录有57条(总共304条崩溃记录)，占18.75%。在Crash界排名第二。</strong></p>
+<h3 id="杀手-NO-3"><a href="#杀手-NO-3" class="headerlink" title="杀手 NO.3"></a>杀手 NO.3</h3><h4 id="NSRangeException-异常"><a href="#NSRangeException-异常" class="headerlink" title="NSRangeException 异常"></a>NSRangeException 异常</h4><p>造成这个异常，就是越界异常了，在iOS中我们经常碰到的越界异常有两种，一种是数组越界，一种字符串截取越界，我们通过crash日志来具体分析一下。</p>
+<p>** crash 日志3-1 **</p>
+<pre><code>-[__NSArrayM objectAtIndex:]: index 1 beyond bounds for empty array
+-[__NSCFConstantString substringToIndex:]: Index 10 out of bounds; string length 0</code></pre><p>通过日志可以很明显的知道问题，就是越界造成的，复现该现象也比较简单，在此就略过了。怎么解决呢？</p>
+<p>方案一：在对数组取数据的时候，要判断一下数组的长度大于取的index，这个要在平时写代码的时候给规范起来。同样在对字符串进行截取的时候，也需要做类似的判断。但现实的情况是，有时我们会忘了写这样的逻辑判断，就会有潜在的崩溃问题。如何做一下统一的判断呢？即使开发人员忘了写这样的逻辑判断也不会造成崩溃，从框架层面来杜绝这类的崩溃，方案二给出了答案。</p>
+<p>方案二：利用runtime的Swizzle Method特性，可以实现从框架层面杜绝这类的崩溃问题，这样做的好处有两点：</p>
+<ol>
+<li><strong>开发人员忘了写判断越界的逻辑，也不会造成app的崩溃，对开发人员来说是透明的。</strong></li>
+<li><strong>不需要修改现有的代码，对现有代码的侵入性降低到最低，不需要添加大量重复的逻辑判断代码。</strong></li>
+</ol>
+<p><strong>全部源码会在文章末尾提供</strong>，现截取部分代码实现：</p>
+<pre><code>@implementation NSArray (NSRangeException)
+
++ (void)load{
+    static dispatch_once_t onceToken;
+    dispatch_once(&amp;onceToken, ^{
+        @autoreleasepool {
+            [objc_getClass(&quot;__NSArray0&quot;) swizzleMethod:@selector(objectAtIndex:) swizzledSelector:@selector(emptyObjectIndex:)];
+            [objc_getClass(&quot;__NSArrayI&quot;) swizzleMethod:@selector(objectAtIndex:) swizzledSelector:@selector(arrObjectIndex:)];
+            [objc_getClass(&quot;__NSArrayM&quot;) swizzleMethod:@selector(objectAtIndex:) swizzledSelector:@selector(mutableObjectIndex:)];
+            [objc_getClass(&quot;__NSArrayM&quot;) swizzleMethod:@selector(insertObject:atIndex:) swizzledSelector:@selector(mutableInsertObject:atIndex:)];
+        }
+    });
+}
+
+- (id)emptyObjectIndex:(NSInteger)index{
+    return nil;
+}
+
+- (id)arrObjectIndex:(NSInteger)index{
+    if (index &gt;= self.count || index &lt; 0) {
+        return nil;
+    }
+    return [self arrObjectIndex:index];
+}
+
+- (id)mutableObjectIndex:(NSInteger)index{
+    if (index &gt;= self.count || index &lt; 0) {
+        return nil;
+    }
+    return [self mutableObjectIndex:index];
+}
+
+- (void)mutableInsertObject:(id)object atIndex:(NSUInteger)index{
+    if (object) {
+        [self mutableInsertObject:object atIndex:index];
+    }
+}
+
+@end</code></pre><p><strong>越界的崩溃记录有46条（总共崩溃记录是304条），占15.13%，在crash界杀手排名第三。</strong></p>
+<h3 id="杀手-NO-4"><a href="#杀手-NO-4" class="headerlink" title="杀手 NO.4"></a>杀手 NO.4</h3><h4 id="SIGPIPE-异常"><a href="#SIGPIPE-异常" class="headerlink" title="SIGPIPE 异常"></a>SIGPIPE 异常</h4><p>先解释一下什么是SIGPIPE异常，通俗一点的描述是这样的：对一个端已经关闭的socket调用两次write，第二次write将会产生SIGPIPE信号，该信号默认结束进程。</p>
+<p>那如何解决该问题呢？对SIGPIPE信号可以进行捕获，也可将其忽略，对于iOS系统来说，只需要把下面这段代码放在.pch文件中即可。</p>
+<pre><code>// 仅在 IOS 系统上支持 SO_NOSIGPIPE
+#if defined(SO_NOSIGPIPE) &amp;&amp; !defined(MSG_NOSIGNAL)
+    // We do not want SIGPIPE if writing to socket.
+    const int value = 1;
+    setsockopt(fd, SOL_SOCKET, SO_NOSIGPIPE, &amp;value, sizeof(int));
+#endif</code></pre><p><strong>SIGPIPE的崩溃记录有11条(总共304条崩溃记录)，占3.61%。在Crash界排名第四。</strong></p>
+<h3 id="杀手-NO-5"><a href="#杀手-NO-5" class="headerlink" title="杀手 NO.5"></a>杀手 NO.5</h3><h4 id="SIGABRT-异常"><a href="#SIGABRT-异常" class="headerlink" title="SIGABRT 异常"></a>SIGABRT 异常</h4><p><strong>这是一个让程序终止的标识，会在断言、app内部、操作系统用终止方法抛出。通常发生在异步执行系统方法的时候。如CoreData、NSUserDefaults等，还有一些其他的系统多线程操作。</strong></p>
+<blockquote>
+<p>注意：这并不一定意味着是系统代码存在bug，代码仅仅是成了无效状态，或者异常状态。</p>
+</blockquote>
+<p><strong>SIGABRT崩溃记录9条(总共304条崩溃记录)，占2.96%。Crash界排名第五。</strong></p>
+<h3 id="杀手总结"><a href="#杀手总结" class="headerlink" title="杀手总结"></a>杀手总结</h3><p>前面5大crash杀手，占了89.46%的崩溃率，解决了这5大crash杀手，基本上你的app就很健壮了，剩下的崩溃问题就需要具体问题具体分析了。</p>
+<p><a href="https://github.com/guoshimeihua/RuntimeDemo.git" target="_blank" rel="noopener">源码下载地址</a></p>
+<p><em>参考文章：</em><br><a href="http://zhijianshusheng.github.io/2016/07/11/%E6%8C%89%E5%91%A8%E5%88%86%E7%B1%BB/20160711-0718/%E5%AF%BC%E8%87%B4iOS%E5%B4%A9%E6%BA%83%E7%9A%84%E6%9C%80%E5%B8%B8%E8%A7%815%E5%A4%A7%E5%85%83%E5%87%B6/" target="_blank" rel="noopener">http://zhijianshusheng.github.io/2016/07/11/%E6%8C%89%E5%91%A8%E5%88%86%E7%B1%BB/20160711-0718/%E5%AF%BC%E8%87%B4iOS%E5%B4%A9%E6%BA%83%E7%9A%84%E6%9C%80%E5%B8%B8%E8%A7%815%E5%A4%A7%E5%85%83%E5%87%B6/</a><br><a href="https://code.facebook.com/posts/583946315094347/automatic-memory-leak-detection-on-ios/" target="_blank" rel="noopener">https://code.facebook.com/posts/583946315094347/automatic-memory-leak-detection-on-ios/</a><br><a href="http://tech.glowing.com/cn/how-we-made-nsdictionary-nil-safe/" target="_blank" rel="noopener">http://tech.glowing.com/cn/how-we-made-nsdictionary-nil-safe/</a><br><a href="http://stackoverflow.com/questions/19560198/ios-app-error-cant-add-self-as-subview" target="_blank" rel="noopener">http://stackoverflow.com/questions/19560198/ios-app-error-cant-add-self-as-subview</a><br><a href="https://my.oschina.net/moooofly/blog/474604" target="_blank" rel="noopener">https://my.oschina.net/moooofly/blog/474604</a><br><a href="http://devma.cn/blog/2016/11/10/ios-beng-kui-crash-jie-xi/" target="_blank" rel="noopener">http://devma.cn/blog/2016/11/10/ios-beng-kui-crash-jie-xi/</a></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2016/12/29/iOS%20Crash%20%E5%B8%B8%E8%A7%81%E5%8E%9F%E5%9B%A0/" data-id="ck5cjpo5s000q5yt56cjq4fgg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/12/31/2016%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2017%E5%B9%B4%E5%B1%95%E6%9C%9B/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          总结2016，展望2017
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/21/iOS%E7%BB%98%E5%9B%BE%E7%B3%BB%E7%BB%9F(%E4%B8%80)%20UIKit%E4%B8%8ECoreGraphics/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS绘图系统(一) UIKit与CoreGraphics(读书笔记)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

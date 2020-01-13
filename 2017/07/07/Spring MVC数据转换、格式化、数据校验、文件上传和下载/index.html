@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Spring MVC数据转换、格式化、数据校验、文件上传和下载 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本篇文章主要分享下自己在学习Spring MVC数据转换、格式化和数据校验、Spring MVC文件上传和下载以及Spring MVC拦截器遇到的一些问题和读书笔记，希望对你有所帮助。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring MVC数据转换、格式化、数据校验、文件上传和下载">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/07/07/Spring%20MVC%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2%E3%80%81%E6%A0%BC%E5%BC%8F%E5%8C%96%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E3%80%81%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="本篇文章主要分享下自己在学习Spring MVC数据转换、格式化和数据校验、Spring MVC文件上传和下载以及Spring MVC拦截器遇到的一些问题和读书笔记，希望对你有所帮助。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-37a7ec453413d53a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-19f57900a98da9a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-07-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-07-07T07:27:22.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-37a7ec453413d53a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Spring MVC数据转换、格式化、数据校验、文件上传和下载" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/07/Spring%20MVC%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2%E3%80%81%E6%A0%BC%E5%BC%8F%E5%8C%96%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E3%80%81%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/" class="article-date">
+  <time datetime="2017-07-06T16:00:00.000Z" itemprop="datePublished">2017-07-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring MVC数据转换、格式化、数据校验、文件上传和下载
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本篇文章主要分享下自己在学习Spring MVC数据转换、格式化和数据校验、Spring MVC文件上传和下载以及Spring MVC拦截器遇到的一些问题和读书笔记，希望对你有所帮助。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="Component、-Repository、-Service、-Controller的区别"><a href="#Component、-Repository、-Service、-Controller的区别" class="headerlink" title="@Component、@Repository、@Service、@Controller的区别"></a>@Component、@Repository、@Service、@Controller的区别</h3><p>在应用的分层模型中，大致上都可以分为如下几层：表现层、控制器层、业务逻辑层、DAO层、Domain Object层，了解了应用的分层模型，再来看注解之间的区别就很简单了。<strong>@Controller对应于控制器层，@Service对应于业务逻辑层，@Repository对应于持久化层（也就是DAO层），@Component对应于哪些比较中立的类（就是不属于任何一层的类）。</strong></p>
+<p>注意：有这样一个问题，我把控制器类放在com.dodonew.controller包下面，把持久化层类放在com.dodonew.dao包下面，控制器类使用@Controller进行注解，持久化类使用@Repository进行注解，以前项目中扫码包配置如下所示：</p>
+<pre><code>&lt;context:component-scan base-package=&quot;com.dodonew.controller&quot;/&gt;</code></pre><p>还是这样配置的话就会出现一个问题，@Repository注解没有办法进行识别，因为没有被扫描到，所以包的扫描范围就要进行扩大，这点特别要注意，配置如下：</p>
+<pre><code>&lt;context:component-scan base-package=&quot;com.dodonew&quot;/&gt;</code></pre><h3 id="Resource、-Autowired、-Qualifier区别"><a href="#Resource、-Autowired、-Qualifier区别" class="headerlink" title="@Resource、@Autowired、@Qualifier区别"></a>@Resource、@Autowired、@Qualifier区别</h3><p>@Resource注解（该注解属于J2EE）</p>
+<p><strong>该注解默认是按名称来装配注入的，如果Spring找不到与名称相匹配的bean时，该注解才会按照类型来装配注入。</strong>@Resource有两个重要的属性，name和type，Spring将@Resource注解的name属性解析为bean的名字，而type属性则解析为bean的类型。当使用name属性时，Spring则使用byName的自动注入策略，使用type属性时则使用byType自动注入策略。如果既不指定name也不指定type属性，Spring将通过反射机制使用byName自动注入策略。</p>
+<p>装配顺序：</p>
+<ol>
+<li>如果同时指定了name和type，则从Spring上下文中找到唯一匹配的bean进行装配，找不到则会抛出异常。</li>
+<li>如果指定了name，则从上下文中查找名称匹配的bean进行装配，找不到抛出异常。</li>
+<li>如果指定了type，则从上下文中找到类型匹配的唯一bean进行装配，找不到或找到多个都会抛出异常。</li>
+<li>如果既没有指定name，也没有指定type，则自动按照byName方式进行装配；如果没有找到匹配，则会回退到一个原始类型进行匹配，如果匹配则自动装配，否则抛出异常。</li>
+</ol>
+<p>@Autowired注解（该注解属于Spring）</p>
+<p>该注解默认是按照类型装配注入的，在默认情况下，它要求依赖对象必须存在，如果允许null值，可以设定它的required属性为false，如下所示：</p>
+<pre><code>@Autowired(required=false)
+public IUserService userService;</code></pre><p>@Qualifier注解</p>
+<p>该注解配合@Autowired使用，因为会存在这样一种情况，当你创建了多个具有相同类型的bean时，怎么进行区分呢？在这种情况下，可以使用@Qualifier注解和@Autowired注解来进行区分，如下所示：</p>
+<pre><code>@Autowired
+@Qualifier(&quot;userServiceImpl&quot;)
+public IUserService userService;</code></pre><h3 id="Spring-MVC的数据绑定流程"><a href="#Spring-MVC的数据绑定流程" class="headerlink" title="Spring MVC的数据绑定流程"></a>Spring MVC的数据绑定流程</h3><p>Spring MVC通过反射机制对目标处理方法的签名进行分析，并将请求消息绑定到处理方法的参数中，数据绑定的核心部件是DataBinder，其运行机制如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-37a7ec453413d53a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="dataBinder 1-1.png"></p>
+<p>Spring MVC框架将ServletRequest对象及处理方法的参数对象实例传递给DataBinder，DataBinder调用装配在Spring Web上下文中的ConversionService组件进行数据类型转换，数据格式化工作，并将ServletRequest中的消息填充到参数对象中，然后再调用Validator组件对已经绑定了请求消息数据的参数对象进行数据合法性校验，并最终生成数据绑定到BindingResult对象。BindingResult包含已经完成数据绑定的参数对象，还包含相应的校验错误对象，Spring MVC抽取BindingResult中的参数对象及校验错误对象，将它们赋值给处理方法的相应参数。</p>
+<p>从图中我们可以看出在请求消息到达真正调用处理方法的这一段时间内，Spring MVC还会完成很多其他的工作，包括请求信息转换、数据转换、数据格式化及数据校验等。我们先来看下数据转换。</p>
+<h3 id="数据转换、数据格式化、数据校验"><a href="#数据转换、数据格式化、数据校验" class="headerlink" title="数据转换、数据格式化、数据校验"></a>数据转换、数据格式化、数据校验</h3><p><strong>数据转换</strong></p>
+<p>数据转换的实现有两种方法，第一种方法是java.beans包中提供了一个ProperyEditor接口来进行数据转换，ProperyEditor的核心功能是将一个字符串转换为一个Java对象，但是存在以下不足：</p>
+<ul>
+<li>只能用于字符串和Java对象的转换，不适用于任意两个Java类型直接的转换。</li>
+<li>对源对象及目标对象所在的上下文信息（如注解等）不敏感，在类型转换时不能利用这些上下文信息进行高级转换逻辑。</li>
+</ul>
+<p>第二种方法是Spring添加了一个通用的类型转换模块，该类型转换模块位于org.springframework.core.convert包中，这种方法可以实现任意两种类型之间的转换，弥补了ProperyEditor类型转换的缺陷。</p>
+<p>在Spring上下文配置文件中，使用了mvc:annotation-driven标签，该标签会注册一个默认的ConversionService，即FormattingConversionServiceFactoryBean，以满足大多数类型转换的需求。在实际项目开发中，一般使用默认的转换器即可满足我们日常的开发需求了，实际中使用比较多的是数据格式化。</p>
+<p><strong>数据格式化</strong></p>
+<p><strong>Spring使用Converter转换器进行源类型对象到目标类型对象的转换，但是Spring的转换器并不承担输入以及输出信息格式化的工作。</strong>这个时候就需要用到Spring提供的数据格式化了，格式化框架位于org.springframework.format包。实现数据的格式化，有两种方法，第一种方法是手工代码实现Formatter接口，但是这种硬编码的格式化方式现在已经过时了。第二种方法是用Spring提供的注解驱动的属性对象格式化功能。在org.springframework.format.annotation包下面定义了两个格式化的注解类型：</p>
+<ul>
+<li>DateTimeFormat</li>
+</ul>
+<p>@DateTimeFormat注解可以对java.util.Date、java.util.Calendar等时间类型的属性进行注解。</p>
+<ul>
+<li>NumberFormat</li>
+</ul>
+<p>@NumberFormat可对类似数字类型的属性进行注解。</p>
+<p><strong>数据校验</strong></p>
+<p>Spring MVC提供了强大的数据校验功能，有两种方法可以实现校验，一种方法是利用Spring自带的Validation校验框架，另一种方法是利用JSR 303（Java验证规范）。但是Validation框架通过硬编码完成数据校验，比较麻烦，所以现在项目开发一般都使用JSR 303完成数据校验。</p>
+<h3 id="Spring-MVC上传文件与下载文件"><a href="#Spring-MVC上传文件与下载文件" class="headerlink" title="Spring MVC上传文件与下载文件"></a>Spring MVC上传文件与下载文件</h3><p>Spring MVC为文件上传提供了直接的支持，这种支持是用即插即用的MultipartResolver实现的，Spring MVC使用Apache Commons FileUpload技术实现了一个MultipartResolver实现类：CommonsMultipartResolver，因为Spring MVC的文件上传还需要依赖Apache Commons FileUpload的组件。具体的使用在这里就不做介绍了，这里主要介绍下在实现下载文件时遇到的一个问题。先看下如下配置：</p>
+<pre><code>&lt;!-- 启动注解功能 --&gt;
+&lt;mvc:annotation-driven&gt;
+    &lt;!-- 设置不使用默认的消息转换器 --&gt;
+    &lt;mvc:message-converters register-defaults=&quot;false&quot;
+        &lt;!-- 配置fastjson中实现HttpMessageConvert接口的转换器 --&gt;
+        &lt;bean class=&quot;com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter&quot;&gt;
+            &lt;property name=&quot;supportedMediaTypes&quot;&gt;
+                &lt;list&gt;
+                    &lt;!-- 这里顺序不能反，一定先写text/html，不然IE下会出现下载提示 --&gt;
+                    &lt;value&gt;text/html;charset=UTF-8&lt;/value&gt;
+                    &lt;value&gt;application/json;charset=UTF-8&lt;/value&gt;
+                &lt;/list&gt;
+            &lt;/property&gt;
+            &lt;property name=&quot;features&quot;&gt;
+                &lt;array&gt;
+                    &lt;!-- 是否输出值为null的字段，默认为false --&gt;
+                    &lt;value&gt;WriteMapNullValue&lt;/value&gt;
+                    &lt;value&gt;WriteNullStringAsEmpty&lt;/value&gt;
+                &lt;/array&gt;
+            &lt;/property&gt;
+            &lt;property name=&quot;charset&quot;&gt;
+                &lt;value&gt;UTF-8&lt;/value&gt;
+            &lt;/property&gt;
+        &lt;/bean&gt;
+    &lt;/mvc:message-converters&gt;
+&lt;/mvc:annotation-driven&gt;</code></pre><p>从上面的配置可以看到，设置了不使用默认的消息转换器。<strong>但是图片在下载的过程中是以二进制数据方式在传输的，因为没有对应的消息转换器进行处理，所以下载后的图片打开的时候就提示该图片已经被损坏了。解决这个问题只需要在添加一个ByteArrayHttpMessageConverter消息转换器就可以了，它的主要作用就是读写二进制数据，</strong>添加后的配置如下所示：</p>
+<pre><code>&lt;!-- 启动注解功能 --&gt;
+&lt;mvc:annotation-driven&gt;
+    &lt;!-- 设置不使用默认的消息转换器 --&gt;
+    &lt;mvc:message-converters register-defaults=&quot;false&quot;&gt;
+        &lt;!-- mvc:annotation-driven默认会装配四个信息转换器，分别为
+         StringHttpMessageConverter
+         ByteArrayHttpMessageConverter
+         SourceHttpMessageConverter
+         XmlAwareFormHttpMessageConverter，所以需要把这四种也给添加上去--&gt;
+        &lt;bean class=&quot;org.springframework.http.converter.StringHttpMessageConverter&quot;/&gt;
+        &lt;bean class=&quot;org.springframework.http.converter.ByteArrayHttpMessageConverter&quot;/&gt;
+        &lt;bean class=&quot;org.springframework.http.converter.BufferedImageHttpMessageConverter&quot;/&gt;
+
+        &lt;!-- 配置fastjson中实现HttpMessageConvert接口的转换器 --&gt;
+        &lt;bean class=&quot;com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter&quot;&gt;
+            &lt;property name=&quot;supportedMediaTypes&quot;&gt;
+                &lt;list&gt;
+                    &lt;!-- 这里顺序不能反，一定先写text/html，不然IE下会出现下载提示 --&gt;
+                    &lt;value&gt;text/html;charset=UTF-8&lt;/value&gt;
+                    &lt;value&gt;application/json;charset=UTF-8&lt;/value&gt;
+                &lt;/list&gt;
+            &lt;/property&gt;
+            &lt;property name=&quot;features&quot;&gt;
+                &lt;array&gt;
+                    &lt;!-- 是否输出值为null的字段，默认为false --&gt;
+                    &lt;value&gt;WriteMapNullValue&lt;/value&gt;
+                    &lt;value&gt;WriteNullStringAsEmpty&lt;/value&gt;
+                &lt;/array&gt;
+            &lt;/property&gt;
+            &lt;property name=&quot;charset&quot;&gt;
+                &lt;value&gt;UTF-8&lt;/value&gt;
+            &lt;/property&gt;
+        &lt;/bean&gt;
+    &lt;/mvc:message-converters&gt;
+&lt;/mvc:annotation-driven&gt;</code></pre><p>如果使用的是mvc: annotation-driven，就不需要额外添加ByteArrayHttpMessageConverter，因为默认会装配这个消息转换器的。</p>
+<h3 id="Spring-MVC拦截器"><a href="#Spring-MVC拦截器" class="headerlink" title="Spring MVC拦截器"></a>Spring MVC拦截器</h3><p>Interceptor拦截器是Spring MVC中相当重要的功能，它的主要作用是拦截用户的请求并进行相应的处理，比如通过拦截器来进行用户权限验证，或者用来判断用户是否已经登录等。<strong>Spring MVC拦截器是可拔插式的设计，如果需要使用某个拦截器，只需要在配置文件中应用该拦截器即可。如果不需要使用该拦截器，只需要在配置文件中取消应用该拦截器。不管是否应用某个拦截器，对Spring MVC框架不会有任何影响。</strong>拦截器的拦截机制如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-19f57900a98da9a1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="interceptor 1-2.png"></p>
+<p>从图中可以看到发送一个请求，首先要经过拦截器的，拦截器通过之后，才会到对应的Controller的。<strong>不过需要注意的是，在实际的项目开发中，我们是会根据业务需求设置拦截范围的，不是所有的请求都要进行拦截，比如只拦截/api/*这样的请求。</strong></p>
+<h3 id="欢迎关注国士梅花"><a href="#欢迎关注国士梅花" class="headerlink" title="欢迎关注国士梅花"></a>欢迎关注国士梅花</h3><p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="国士梅花"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/07/07/Spring%20MVC%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2%E3%80%81%E6%A0%BC%E5%BC%8F%E5%8C%96%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E3%80%81%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/" data-id="ck5cjpo5m000n5yt55uj73bfx" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Mybatis使用介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/30/Spring%20MVC%E6%B3%A8%E8%A7%A3%E3%80%81%E6%A0%87%E7%AD%BE%E5%BA%93%E3%80%81%E5%9B%BD%E9%99%85%E5%8C%96/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spring MVC注解、标签库、国际化</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Spring MVC注解、标签库、国际化 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本篇文章主要介绍自己在学习Spring MVC常用注解、标签库、国际化遇到的一些问题，分享给大家，希望对你有所帮助。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring MVC注解、标签库、国际化">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/06/30/Spring%20MVC%E6%B3%A8%E8%A7%A3%E3%80%81%E6%A0%87%E7%AD%BE%E5%BA%93%E3%80%81%E5%9B%BD%E9%99%85%E5%8C%96/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="本篇文章主要介绍自己在学习Spring MVC常用注解、标签库、国际化遇到的一些问题，分享给大家，希望对你有所帮助。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-3be2cfee76e765b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-27ae448d0bc55495.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-8c582cec53453769.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-396f3474572db859.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-b2c875c56aa89b72.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-2a1d962ee050dcdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-ecd3cc4f9c2bbb14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-bd4109eaef101de7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-06-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-07-02T04:19:58.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-3be2cfee76e765b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Spring MVC注解、标签库、国际化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/30/Spring%20MVC%E6%B3%A8%E8%A7%A3%E3%80%81%E6%A0%87%E7%AD%BE%E5%BA%93%E3%80%81%E5%9B%BD%E9%99%85%E5%8C%96/" class="article-date">
+  <time datetime="2017-06-29T16:00:00.000Z" itemprop="datePublished">2017-06-30</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring MVC注解、标签库、国际化
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本篇文章主要介绍自己在学习Spring MVC常用注解、标签库、国际化遇到的一些问题，分享给大家，希望对你有所帮助。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="问题一：指定扫描包的位置"><a href="#问题一：指定扫描包的位置" class="headerlink" title="问题一：指定扫描包的位置"></a>问题一：指定扫描包的位置</h3><p>应该将所有控制器类都放在基本包下，并且指定该扫描包，避免Spring MVC扫描了无关的包。比如所有控制器类全部放在com.dodonew.controller包下面，扫描配置如下所示：</p>
+<pre><code>&lt;!-- 指定包的扫描位置 --&gt;
+&lt;context:component-scan base-package=&quot;com.dodonew.controller&quot;/&gt;</code></pre><p>而不应该配置为com.dodonew，因为扫描了无关的包，会影响应用程序的效率。</p>
+<h3 id="问题二：Content-Type的理解"><a href="#问题二：Content-Type的理解" class="headerlink" title="问题二：Content-Type的理解"></a>问题二：Content-Type的理解</h3><p>@RequestMapping注解中有这样两个属性：consumes属性和produces属性，类型为String[]，consumes属性指定处理请求的提交内容类型(Content-Type)。例如application/json、text/html等。produces属性指定返回的内容类型，返回的内容类型必须是request请求头(Accept)中所包含的类型，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-3be2cfee76e765b4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="annotation 1-1.png"></p>
+<p>先看下2标注的地方，request请求头中Accept接收的类型包括text/html,application/xhtml+xml,application/xml等，在1标注的地方，我们看到返回的Content-Type的值为text/html;charset=UTF-8，这也验证了返回的内容类型必须是request请求头(Accept)中所包含的类型。</p>
+<p>要理解Content-Type，我们得先了解下HTTP的基础知识。HTTP通信过程包括从客户端发往服务端的请求以及从服务器端返回客户端的响应。用于HTTP协议交互的信息被称为HTTP报文，请求端（客户端）的HTTP报文叫做请求报文，响应端（服务器端）的叫做响应报文，HTTP报文本身是由多行（用CR+LF作换行符）数据构成的字符串文本。HTTP报文大致可分为报文首部和报文主体两块，通常，并不一定要有报文主体，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-27ae448d0bc55495.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="annotation 1-2.png"></p>
+<p>请求报文和响应报文的结构如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-8c582cec53453769.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="annotation 1-3.png"></p>
+<p>从图中可以看出，通用首部字段、实体首部字段在请求报文和响应报文中都存在的，而请求首部字段、响应首部字段分别存在于请求报文和响应报文中的。一般有4种首部，分别是：通用首部、请求首部、响应首部和实体首部。而这个Content-Type字段就是存在于实体首部字段的，<strong>Content-Type字段说明了实体主体内对象的媒体类型，</strong>和Accept字段一样，字段值用type/subtype形式赋值，一般是指网页中存在的Content-Type，如果没有指定Content-Type，默认为text/html。下面是几个常见的Content-Type: </p>
+<ul>
+<li>text/html</li>
+<li>text/plain</li>
+<li>text/css</li>
+<li>text/javascript</li>
+<li>application/x-www-form-urlencoded</li>
+<li>multipart/form-data</li>
+<li>application/json</li>
+<li>application/xml</li>
+</ul>
+<p>其中后面四个是post的发包方式，也就是说在发送post请求的时候指定的Content-Type就是这些值。下面通过一幅图来更加形象的理解下Content-Type，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-396f3474572db859.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="annotation 1-4.png"></p>
+<p>content-type的主要作用就是约定客户端与服务器端主体内对象的类型，也就是传输数据指定的类型。</p>
+<h3 id="问题三：解决中文乱码的问题"><a href="#问题三：解决中文乱码的问题" class="headerlink" title="问题三：解决中文乱码的问题"></a>问题三：解决中文乱码的问题</h3><p>为了解决中文乱码的问题，我们在Spring MVC中经常会做如下配置：</p>
+<pre><code>&lt;filter&gt;
+    &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+    &lt;filter-class&gt;org.springframework.web.filter.CharacterEncodingFilter&lt;/filter-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;encoding&lt;/param-name&gt;
+        &lt;param-value&gt;UTF-8&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;forceEncoding&lt;/param-name&gt;
+        &lt;param-value&gt;true&lt;/param-value&gt;
+    &lt;/init-param&gt;
+&lt;/filter&gt;
+
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;encodingFilter&lt;/filter-name&gt;
+    &lt;url-pattern&gt;/*&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;</code></pre><p>但是这个配置只对post请求是有效的，对get请求是没有效果的，也就是说发送post请求中包含有中文的话，该配置起作用，不会出现中文的问题，但是发送get请求中包含中文的话，该配置就不起作用，一样会出现中文乱码的情况。为了解决get请求中文乱码的问题，需要对get请求参数进行urlEncode编码，一般情况下get请求尽量不要带中文参数，如果使用建议使用两次urlEncode编码。</p>
+<h3 id="问题四：深入理解WEB-INF"><a href="#问题四：深入理解WEB-INF" class="headerlink" title="问题四：深入理解WEB-INF"></a>问题四：深入理解WEB-INF</h3><p><strong>WEB-INF里面存放的东西只对服务器端开放，对客户端是不可见的。</strong>所以在使用的时候就需要注意以下几点：</p>
+<ul>
+<li>页面资源文件只能放在webapp目录下（也就是web应用的根目录），如css、js、image等，不能放在WEB-INF下，因为WEB-INF是对客户端隐藏的，所以放在WEB-INF下会造成页面的布局等文件引用不到的情况。比如在引入jquery和json2文件时，不能放在WEB-INF里面，否则会出现找不到引用文件的问题。</li>
+<li>页面文件一般放在WEB-INF目录下面，这样可以限制访问，提高安全性，如jsp、html文件，放在WEB-INF目录下就可以避免客户端直接在地址栏上输入路径进行访问了。基于不同的功能，把jsp放置在WEB-INF下的不同的目录中。</li>
+<li>只能用转向方式来访问WEB-INF目录下的jsp，不能采用重定向的方式请求该目录里面的任何资源。比如使用spring mvc中的dispatcherServlet进行转发。</li>
+<li>在WEB-INF下面存放的jsp文件，访问css、js等资源文件，忽略WEB-INF目录即可。也就是说在WEB-INF里面的文件访问不在WEB-INF里面的文件，忽略WEB-INF目录即可。但是WEB-INF外面的文件访问WEB-INF里面的文件，必须要通过转向的方式才能实现。</li>
+<li>比如用a标签，location:ref标签，来访问WEB-INF里面的东西是访问不到的，因为这两个标签相当于是客户端发送的请求链接，而WEB-INF对客户端是隐藏的。</li>
+</ul>
+<h3 id="问题五：域对象为什么要序列化？"><a href="#问题五：域对象为什么要序列化？" class="headerlink" title="问题五：域对象为什么要序列化？"></a>问题五：域对象为什么要序列化？</h3><p>先看下什么是序列化？<strong>对象序列化机制是Java语言内建的一种对象持久化方式，可以很容易的在JVM中的活动对象和字节数组流之间进行转换。除了可以很简单的实现持久化之外，序列化机制的另外一个重要用途是在远程方法调用中，用来对开发人员屏蔽底层实现细节。</strong>对于一个存在Java虚拟机中的对象来说，其内部的状态只保持在内存中。JVM停止之后，这些状态就丢失了。在很多情况下，对象的内部状态是需要被持久化下来的，提到持久化，一种方式就是存储到数据库，一种就是进行序列化。<strong>所以对域对象进行序列化后，可以保存对象的内部状态，更重要的是让远程调用整个过程透明化。</strong></p>
+<p>注意：在序列化对象的时候，我们需要声明一个全局唯一标识符serialVersionUID，为什么要声明这个呢？因为把一个Java对象序列化之后，所得到的字节数组一般会保存在磁盘或数据库之中。在保存完成之后，有可能原来的Java类有了更新，比如添加了额外的域。这个时候从兼容性的角度出发，要求仍然能够读取旧版本的序列化数据。在读取的过程中，当ObjectInputStream发现一个对象的定义的时候，会尝试在当前JVM中查找其Java类定义。这个查找过程不能仅根据Java类的全名来判断，因为当前JVM中可能存在名称相同，但是含义完全不同的Java 类。<strong>这个对应关系是通过一个全局惟一标识符serialVersionUID来实现的。通过在实现了Serializable接口的类中定义该域，就声明了该Java类的一个惟一的序列化版本号。JVM会比对从字节数组中得出的类的版本号，与JVM中查找到的类的版本号是否一致，来决定两个类是否是兼容的。对于开发人员来说，需要记得的就是在实现了Serializable接口的类中定义这样的一个域，并在版本更新过程中保持该值不变。当然，如果不希望维持这种向后兼容性，换一个版本号即可。该域的值一般是综合Java类的各个特性而计算出来的一个哈希值，可以通过Java提供的serialver命令来生成。在Eclipse中，如果Java类实现了</strong>Serializable接口，Eclipse会提示并帮你生成这个serialVersionUID。在IntelliJ IDEA开发工具中，需要进行下设置，打开偏好设置，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-b2c875c56aa89b72.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="annotation 1-5.png"></p>
+<p>这样就设置好了，在使用的时候把鼠标放在类名上，比如定义了一个User类，就放在User类上面，在mac上，按住option+enter键就会出现对应的提示了。在windows上，按住alter+enter，效果如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-2a1d962ee050dcdd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="annotation 1-6.png"></p>
+<h3 id="问题六：IntelliJ-IDEA提供的热更新功能"><a href="#问题六：IntelliJ-IDEA提供的热更新功能" class="headerlink" title="问题六：IntelliJ IDEA提供的热更新功能"></a>问题六：IntelliJ IDEA提供的热更新功能</h3><p>打开tomcat设置，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-ecd3cc4f9c2bbb14.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="annotation 1-7.png"></p>
+<p>在红色标注的地方，都选择了Update classes and resouces，选择了这两个配置的作用就是当你更改了一个类的时候，不需要重新启动tomcat。<strong>但是这两个配置只在Debug模式起作用，在Run模式下是不起作用的，这点一定要注意。</strong></p>
+<h3 id="问题七：Spring-MVC整合fastjson组件"><a href="#问题七：Spring-MVC整合fastjson组件" class="headerlink" title="问题七：Spring MVC整合fastjson组件"></a>问题七：Spring MVC整合fastjson组件</h3><p>HttpMessageConvert是Spring3.0之后新增的一个重要接口，它负责将请求信息转换为一个对象（类型为T），并将对象（类型T）绑定到请求方法的参数中或输出为响应信息。在Spring中的dispatcherServlet默认已经装配了RequestMappingHandlerAdapter作为HandleAdapter组件的实现类，也就是说RequestMappingHandlerAdapter默认已经使用了HttpMessageConvert，会将请求信息转换为对象，或将对象转换为响应信息。Spring为HttpMessageConvert<T>提供了多个实现类，如下：</p>
+<ul>
+<li>StringHttpMessageConverter</li>
+<li>FormHttpMessageConverter</li>
+<li>XmlAwareFormHttpMessageConverter</li>
+<li>ResourceHttpMessageConverter</li>
+<li>BufferedImageHttpMessageConverter</li>
+<li>MappingJackson2HttpMessageConverter等等。</li>
+</ul>
+<p><strong>注意：如果在Spring Web容器中显式定义了一个RequestMappingHandlerAdapter，则Spring MVC的RequestMappingHandlerAdapter默认装配的HttpMessageConverter将不再起作用。</strong></p>
+<p>在项目开发中使用json数据越来越成为一种趋势了，而Spring默认使用Jackson处理json数据。如果要使用Jackson处理json数据的话，就需要引入依赖的Jackson包，如果没有依赖Jackson包，当客户端发送application/json格式的数据时，服务端就会报application/json not supported contentType错误。使用默认的Jackson处理json数据，只需要引入依赖的jar包即可，不需要做额外的配置，否则的话，就需要添加额外的配置，比如使用业界比较流行的fastjson组件，添加的额外配置如下：</p>
+<pre><code>&lt;mvc:annotation-driven&gt;
+    &lt;mvc:message-converters register-defaults=&quot;true&quot;&gt;
+        &lt;!-- 配置fastjson中实现HttpMessageConvert接口的转换器 --&gt;
+        &lt;bean class=&quot;com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter&quot;&gt;
+            &lt;property name=&quot;supportedMediaTypes&quot;&gt;
+                &lt;list&gt;
+                    &lt;!-- 这里顺序不能反，一定先写text/html，不然IE下会出现下载提示 --&gt;
+                    &lt;value&gt;text/html;charset=UTF-8&lt;/value&gt;
+                    &lt;value&gt;application/json;charset=UTF-8&lt;/value&gt;
+                &lt;/list&gt;
+            &lt;/property&gt;
+            &lt;property name=&quot;features&quot;&gt;
+                &lt;array&gt;
+                    &lt;!-- 是否输出值为null的字段，默认为false --&gt;
+                    &lt;value&gt;WriteMapNullValue&lt;/value&gt;
+                    &lt;value&gt;WriteNullStringAsEmpty&lt;/value&gt;
+                &lt;/array&gt;
+            &lt;/property&gt;
+            &lt;property name=&quot;charset&quot;&gt;
+                &lt;value&gt;UTF-8&lt;/value&gt;
+            &lt;/property&gt;
+        &lt;/bean&gt;
+    &lt;/mvc:message-converters&gt;
+&lt;/mvc:annotation-driven&gt;</code></pre><ul>
+<li>QuoteFieldNames ：输出key时是否使用双引号，默认为true</li>
+<li>WriteMapNullValue ：否输出值为null的字段，默认为false</li>
+<li>WriteNullListAsEmpty ：List字段若为null，输出[]，而非null</li>
+<li>WriteNullNumberAsZero ：数值字段若为null，输出0，而非null</li>
+<li>WriteNullStringAsEmpty ：字符类型字段若为null，输出”“，而非null</li>
+<li>WriteNullBooleanAsFalse ：Boolean字段若为null，输出false，而非null  </li>
+</ul>
+<p>通过这样的配置，就可以使用Fastjson对json数据进行处理了，不再使用Jackson组件。</p>
+<h3 id="问题八：Spring-MVC标签库有哪些优势？"><a href="#问题八：Spring-MVC标签库有哪些优势？" class="headerlink" title="问题八：Spring MVC标签库有哪些优势？"></a>问题八：Spring MVC标签库有哪些优势？</h3><p>Spring从2.0版本开始，提供了一组功能强大的标签用来在JSP和Spring Web MVC中处理其他元素，<strong>相比其他的标签库，Spring的标签库集成在Spring Web MVC中，因此这里的标签库可以访问控制器（Controller）处理命令对象和绑定数据，</strong>这样会使JSP页面开发更加容易。要使用Spring MVC的标签库，需要在JSP页面的开头处声明一下taglib指令，如下所示：</p>
+<pre><code>&lt;%@ taglib prefix=&quot;form&quot; uri=&quot;http://www.springframework.org/tags/form&quot; %&gt;</code></pre><h3 id="问题九：Spring-MVC国际化要注意的问题"><a href="#问题九：Spring-MVC国际化要注意的问题" class="headerlink" title="问题九：Spring MVC国际化要注意的问题"></a>问题九：Spring MVC国际化要注意的问题</h3><p>Spring MVC的国际化实现方式有3种，分别为AcceptHeaderLocaleResolver国际化，SessionLocaleResolver国际化，CookieLocaleResolver国际化，具体的实现可以搜下文章看下，这里主要讲下自己遇到的一些问题。</p>
+<p>先看下基于AcceptHeaderLocaleResolver国际化，它是默认的，也是最容易使用的语言区域解析器，使用它Spring MVC会读取浏览器的accept-language标题，来确定使用哪个语言区域。AcceptHeaderLocalResolver可以不用显式配置，也可以显式配置，配置如下所示：</p>
+<pre><code>&lt;!-- 国际化 --&gt;
+&lt;bean id=&quot;messageSource&quot;
+      class=&quot;org.springframework.context.support.ResourceBundleMessageSource&quot;&gt;
+    &lt;property name=&quot;basenames&quot;&gt;
+        &lt;list&gt;
+            &lt;value&gt;message&lt;/value&gt;
+        &lt;/list&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;!-- 国际化操作拦截器如果采用基于（Session/Cookie）则必须配置 --&gt;
+&lt;mvc:interceptors&gt;
+    &lt;bean class=&quot;org.springframework.web.servlet.i18n.LocaleChangeInterceptor&quot;/&gt;
+&lt;/mvc:interceptors&gt;
+
+&lt;!--AcceptHeaderLocalResolver配置，因为AcceptHeaderLocalResolver是默认语言区域解析器，不配置也可以 --&gt;
+&lt;bean id=&quot;localeResolver&quot; class=&quot;org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver&quot;/&gt;
+&lt;!-- SessionLocaleResolver配置 --&gt;
+&lt;bean id=&quot;localeResolver&quot; class=&quot;org.springframework.web.servlet.i18n.SessionLocaleResolver&quot;/&gt;
+&lt;!-- CookieLocaleResolver配置 --&gt;
+&lt;bean id=&quot;localeResolver&quot; class=&quot;org.springframework.web.servlet.i18n.CookieLocaleResolver&quot;/&gt;</code></pre><p>特别要注意的是id=”messageSource”和id=”localeResolver”，一定要是这个值，不能做任何改动，否则就会报错说找不到对应的国际化属性文件，这个稍后会做解释的。另外，需要注意的是美式英语和英语两个是不同的，美式英语对应的属性文件名后缀为en_US，英语对应的属性文件名为en，所以在对属性文件命名时要特别注意。最后，在更改或添加浏览器支持的语言时，也要注意选择和属性文件名相对应的语言，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-bd4109eaef101de7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="annotation 1-8.png"></p>
+<p>从图中也可以看到美式英语和英语是不一样的，所以在进行国际化适配的时候，这点是需要注意的。</p>
+<p>SessionLocaleResolver需要对其进行显式配置，会从HttpSession作用域中获取用户设置的语言区域，来确定使用哪个语言区域。CookieLocaleResolver也需要对其进行显式配置，会从Cookie中获取用户设置的语言区域，来确定使用哪个语言区域。它们的配置如上所示，也都需要注意id=”localeResolver”的值是不能做更改的，下面来解释下为什么不能做更改。</p>
+<blockquote>
+<p>This constructs a bean with the name sessionLocaleResolver however the DispatcherServlet looks for a bean with the name localeResolver. If this isn’t detected it will use the default, which is a AcceptHeaderLocaleResovler.</p>
+</blockquote>
+<p>也就是说dispatcherServlet会根据localeResolver名称找到对应的bean，如果名称发生了改变，就找不到对应的bean，所以这个时候基于SessionLocaleResolver的国际化就会失败，不起作用。这个时候，系统就会改用默认的AcceptHeaderLocaleResolver来实现国际化。同样id=”messageSource”也不能做更改，否则就会出现找不到对应属性文件的问题。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://segmentfault.com/a/1190000003002851" target="_blank" rel="noopener">理解HTTP之Content-Type</a></p>
+<p><a href="http://www.infoq.com/cn/articles/cf-java-object-serialization-rmi" target="_blank" rel="noopener">Java深度历险（十）Java对象序列化与RMI</a></p>
+<p><a href="http://jadyer.cn/2014/08/06/springmvc-fastjson/" target="_blank" rel="noopener">Spring MVC整合Fastjson</a></p>
+<p><a href="https://stackoverflow.com/questions/25428249/spring-4-i18n-l10n-cannot-change-http-accept-header" target="_blank" rel="noopener">Cannot change HTTP accept header</a></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/06/30/Spring%20MVC%E6%B3%A8%E8%A7%A3%E3%80%81%E6%A0%87%E7%AD%BE%E5%BA%93%E3%80%81%E5%9B%BD%E9%99%85%E5%8C%96/" data-id="ck5cjpo6o001d5yt50kja6ndh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/07/07/Spring%20MVC%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2%E3%80%81%E6%A0%BC%E5%BC%8F%E5%8C%96%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E3%80%81%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spring MVC数据转换、格式化、数据校验、文件上传和下载
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/16/Maven+Web+Spring%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Maven+Web+Spring项目搭建</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

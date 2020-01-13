@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>iOS绘图系统(二) Core Animation (读书笔记) | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="想快速掌握Core Animation，看这篇文章就足够了，通过这篇文章你就可以对Core Animation相关的知识点有一个全面的了解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS绘图系统(二) Core Animation (读书笔记)">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/01/15/iOS%E7%BB%98%E5%9B%BE%E7%B3%BB%E7%BB%9F(%E4%BA%8C)%20Core%20Animation%20(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="想快速掌握Core Animation，看这篇文章就足够了，通过这篇文章你就可以对Core Animation相关的知识点有一个全面的了解。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-8fe1739b4c21c294.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-3fe0934a0cc13714.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-df96cf0e4590814d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-7304494379ac201c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-889f2156c5556e80.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-5bb4cf3415532879.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-e5ad986a1220ba3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-884e04769c33d1ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-a2d6be50d3e1f579.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-a2cfb6e46afa1c20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-bde8bf75f86ab23e.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-51f2ac4106e7c301.gif?imageMogr2/auto-orient/strip">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-01-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-03-08T01:29:51.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-8fe1739b4c21c294.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-iOS绘图系统(二) Core Animation (读书笔记)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/15/iOS%E7%BB%98%E5%9B%BE%E7%B3%BB%E7%BB%9F(%E4%BA%8C)%20Core%20Animation%20(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" class="article-date">
+  <time datetime="2017-01-14T16:00:00.000Z" itemprop="datePublished">2017-01-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS绘图系统(二) Core Animation (读书笔记)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>想快速掌握Core Animation，看这篇文章就足够了，通过这篇文章你就可以对Core Animation相关的知识点有一个全面的了解。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="图层树"><a href="#图层树" class="headerlink" title="图层树"></a>图层树</h3><p>什么是图层树呢？<strong>图层其实指的就是CALayer，由一些被层级关系树管理的矩形块，可以包含一些内容(如图片、文本或者背景色等)，管理子图层的位置，有一些方法或属性可以用来做动画。</strong></p>
+<p>除了图层树，系统中还存在视图树、呈现树、渲染树。视图树比较好理解，<strong>是由UIView组成的，UIView可以处理触摸事件，支持基于Core Graphics的绘图、变换等；</strong>呈现树，是由CALayer的呈现层presentationLayer组成的；渲染树，一旦打包的图层和动画到达渲染服务进程，它们就会被反序列化来形成另一个叫做渲染树的图层树。</p>
+<p>呈现树和渲染树，稍后再做解释。先看下视图树和图层树有什么区别？</p>
+<ol>
+<li><strong>UIView和CALayer的最大区别就是CALayer不处理用户的交互，也就是说不能响应触摸事件，</strong>即使CALayer提供了一些方法来判断一个触点是否在某一个图层范围内。</li>
+<li>UIView和CALayer是平行的层级关系。如何理解平行呢？<strong>平行可以理解成一一对应的关系，</strong>UIView中的一个控件，比如UIButton，在CALayer上对应存在一个layer层，这个layer层可以用来设置圆角、阴影等效果。每一个UIView都存在一个CALayer的实例图层属性，也就是常说的backing layer。<strong>视图的职责就是创建并管理这个图层，以确保当子视图在层级关系中添加或移除的时候，它们对应所关联的图层也有相同的操作。</strong></li>
+<li>UIView和CALayer都可以理解成一个容器的概念，都可以往各自的容器中添加子视图或子图层。</li>
+</ol>
+<p>总结：从上面可以看出，CALayer可以用来显示如图片、文本等，但是不能响应触摸事件。UIView也可以显示如图片、文本等，但是可以响应触摸事件。关键的是每一个UIView都有一个CALayer的属性，那么是不是可以这样来理解，其实CALayer才是真正的负责显示，而UIView只是在CALayer的基础上进行了封装，以提供响应触摸事件。<strong>简单的来讲就是CALayer是UIView内部实现细节。</strong></p>
+<p>CALayer能提供哪些UIView不能提供的功能呢？比如下面这些：</p>
+<ul>
+<li>阴影、圆角、边框。</li>
+<li>3D变换</li>
+<li>非矩形范围</li>
+</ul>
+<h3 id="contents属性"><a href="#contents属性" class="headerlink" title="contents属性"></a>contents属性</h3><p>CALayer有一个contents属性，图层会在它的contents属性中绘制任意东西。最简单的一种方法是直接设置contents属性，另外一种方法是通过CALayer和委托方法来实现。先看下最简单的一种方法，直接给contents属性设置一张图片，代码如下：</p>
+<pre><code>self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+self.containerView.center = self.view.center;
+self.containerView.backgroundColor = [UIColor yellowColor];
+[self.view addSubview:self.containerView];
+
+self.layer = [[CALayer alloc] init];
+self.layer.bounds = CGRectMake(0, 0, 200, 200);
+self.layer.position = CGPointMake(150, 150);
+[self.containerView.layer addSublayer:self.layer];
+self.layer.contents = (__bridge id)[UIImage imageNamed:@&quot;120icon&quot;].CGImage;
+self.layer.contentsScale = [UIScreen mainScreen].scale;
+self.layer.contentsGravity = kCAGravityResizeAspectFill;
+self.layer.masksToBounds = YES;</code></pre><p>效果图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-8fe1739b4c21c294.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1.png"></p>
+<p>解释一下代码中几个属性设置的作用：</p>
+<p>contentsGravity属性的作用是使图片自适应，不会发生变形，和UIImageView中设置mode属性的作用是一样的。</p>
+<p>contentsScale属性主要作用是适应Retina屏与非Retina屏的，因为contentsScale的默认属性石1.0，它将会以每个点一个像素绘制，这就是非Retina，如果设置为2，则会以每个点2个像素绘制，这就是熟悉的Retina屏。如果不设置这个属性，在Retina上显示就会出现像素化的现象，通俗来说就是图片变得模糊了。<strong>所以在给contents赋值的时候，一定记得要设置当前的contentsScale是符合当前设备的。</strong></p>
+<p>maskToBounds属性作用就是把超出边界范围的图层给裁减掉。和UIView中的clipsToBounds属性很相似。</p>
+<p>除了这三个属性，在介绍两个属性：<br>contentsRect属性作用允许我们在图层边框里显示寄宿图的一个子域，给上面的图添加一行代码如下：</p>
+<pre><code>self.layer.contentsRect = CGRectMake(0, 0, 0.5, 0.5);</code></pre><p>效果图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-3fe0934a0cc13714.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-2.png"></p>
+<p>contentsRect这个属性在app中可以应用在图片拼合中。</p>
+<p>contentsCenter是一个CGRect类型，它定义了一个固定的边框和一个在图层上可拉伸的区域。</p>
+<p>以上都是介绍的直接设置contents属性，下面介绍一下通过CALayer和委托方法来设置contents属性。如果你没有直接设置contents属性，Core Animation会按照以下顺序来创建它：</p>
+<ol>
+<li>[CALayer setNeedsDisplay]: 它将图层标记为需要重绘的，要求通过列表中的步骤更新contents。除非调用了setNeedsDDisplay方法，否则contents属性永远都不会更新。</li>
+<li>[CALayer displayIfNeeded]: 绘图系统在需要时自动调用它，如果已经调用了setNeedsDisplay，跳过步骤2，执行后续步骤。</li>
+<li>[CALayer display]: displayIfNeeded方法会在合适的时候调用它，开发则不应该直接调用这个方法。如果实现了委托方法，默认会调用displayLayer:委托方法。否则，display方法会调用drawInContext方法。</li>
+<li>[delegate displayLayer:]: 它的任务是设置contents。如果实现了这个方法，后面就不会运行自定义的绘制代码。</li>
+<li>[CALayer drawInContext:]: 默认的display方法会创建一个视图图形上下文并将其传递给drawInContext:方法。它与[UIView drawRect:]方法相似，但不会自动设置UIKit上下文。默认的[CALayer drawInContext:]会在方法实现时调用[delegate drawLayer:inContext:]。否则，就不进行任何操作。也可以直接调用[CALayer drawInContext:]方法。</li>
+<li>[delegate drawLayer:inContext:]: 更新设置contents。</li>
+</ol>
+<p>上面6个步骤中，用到最多的也就是1、2、4、6了。通过一个例子来使用下，代码如下：</p>
+<pre><code>self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+self.containerView.center = self.view.center;
+self.containerView.backgroundColor = [UIColor yellowColor];
+[self.view addSubview:self.containerView];
+
+self.layer = [[CALayer alloc] init];
+self.layer.bounds = CGRectMake(0, 0, 200, 200);
+self.layer.position = CGPointMake(150, 150);
+self.layer.backgroundColor = [UIColor blueColor].CGColor;
+self.layer.contentsScale = [UIScreen mainScreen].scale;
+[self.containerView.layer addSublayer:self.layer];
+self.layer.delegate = self;
+
+// 强制更新
+[self.layer setNeedsDisplay];
+
+- (void)drawLayer:(CALayer *)layer inContext:(CGContextRef)ctx {
+    CGContextSetLineWidth(ctx, 5.0f);
+    CGContextSetStrokeColorWithColor(ctx, [UIColor redColor].CGColor);
+    CGContextStrokeEllipseInRect(ctx, layer.bounds);
+}</code></pre><p>效果图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-df96cf0e4590814d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-3.png"></p>
+<p>注意点：</p>
+<ul>
+<li>CALayer不会自动重绘它的内容，它把重绘的决定权交给了给开发者。</li>
+<li>上面的代码中，我们没有设置maskToBounds属性，绘制的那个圆仍然沿边界被裁剪掉了，因为使用CALayerDelegate绘制寄宿图的时候，并没有提供对超出边界绘图的支持。</li>
+</ul>
+<p>警惕drawRect: -drawRect:方法没有默认的实现，因为对UIView来说，寄宿图并不是必须的，<strong>但是一旦drawRect:方法被调用了，它就会为视图分配一个寄宿图，这个寄宿图的大小等于视图大小乘以contentsScale的值。这也是很多文章说到的drawRect:方法比较吃内存的原因，所以尽量避免使用drawRect:方法。</strong></p>
+<h3 id="图层几何学"><a href="#图层几何学" class="headerlink" title="图层几何学"></a>图层几何学</h3><p>UIView有三个比较重要的布局属性：frame、bounds、center，CALayer对应的叫frame、bounds、position。<strong>视图的center和图层的position属性都指定了anchorPoint相对于父图层的位置。默认来说，anchorPoint位于图层的中点，所以图层将会以这个点为中心点放置。如果改变图层的anchorPoint，就可以移动图层了。anchorPoint属性没有被UIView给暴漏出来，这也就是视图的position被叫做center的原因，因为永远在中间的位置。</strong>通过一个例子看下anchorPoint改变的时候，会发生什么情况，代码如下：</p>
+<pre><code>self.layer = [[CALayer alloc] init];
+self.layer.bounds = CGRectMake(0, 0, 200, 200);
+self.layer.position = CGPointMake(150, 150);
+self.layer.backgroundColor = [UIColor blueColor].CGColor;
+[self.view.layer addSublayer:self.layer];
+
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {
+    NSLog(@&quot;anchorPoint改变前的frame: %@ bounds: %@, position: %@, anchorPoint: %@&quot;,
+      NSStringFromCGRect(self.layer.frame),
+      NSStringFromCGRect(self.layer.bounds),
+      NSStringFromCGPoint(self.layer.position),
+      NSStringFromCGPoint(self.layer.anchorPoint));
+    self.layer.anchorPoint = CGPointMake(0, 0);
+      NSLog(@&quot;anchorPoint改变后的frame: %@ bounds: %@, position: %@, anchorPoint: %@&quot;,
+      NSStringFromCGRect(self.layer.frame),
+      NSStringFromCGRect(self.layer.bounds),
+      NSStringFromCGPoint(self.layer.position),
+      NSStringFromCGPoint(self.layer.anchorPoint));
+}</code></pre><p>输出结果如下：</p>
+<pre><code>anchorPoint改变前的frame: {{50, 50}, {200, 200}} bounds: {{0, 0}, {200, 200}}, position: {150, 150}, anchorPoint: {0.5, 0.5}
+anchorPoint改变后的frame: {{150, 150}, {200, 200}} bounds: {{0, 0}, {200, 200}}, position: {150, 150}, anchorPoint: {0, 0}</code></pre><p>从输出结果看出，bounds和position没有发生变化。frame和anchorPoint都发生了变化，我们用图来演示一下是如何变化过来的：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-7304494379ac201c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-4.png"></p>
+<p>从图中可以看出，当anchorPoint从{0.5,0.5}到{0,0}的时候，相当于在原来的基础上x,y左边分别向下移动了100。<strong>由于position属性指定了anchorPoint相对于父图层的位置，所以anchorPoint发生了改变的话，position也就随之发生了改变，现在anchorPoint所在的位置position刚好是{150, 150}而已，看起来没有发生变化，实际上已经发生了变化的。</strong></p>
+<p>CALayer给不同坐标系之间的图层转换提供了一些工具类方法：</p>
+<pre><code>- (CGPoint)convertPoint:(CGPoint)point fromLayer:(CALayer *)layer;
+- (CGPoint)convertPoint:(CGPoint)point toLayer:(CALayer *)layer;
+- (CGRect)convertRect:(CGRect)rect fromLayer:(CALayer *)layer;
+- (CGRect)convertRect:(CGRect)rect toLayer:(CALayer *)layer;</code></pre><p>CALayer不能处理触摸事件或者手势，但是它有一系列的方法可以来处理事件，比如containsPoint和hitTest。通过下面一个例子来说下这两个方法的使用，代码如下：</p>
+<pre><code>self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+self.containerView.center = self.view.center;
+self.containerView.backgroundColor = [UIColor yellowColor];
+[self.view addSubview:self.containerView];
+
+self.layer = [CALayer layer];
+self.layer.bounds = CGRectMake(0, 0, 200, 200);
+self.layer.position = CGPointMake(150, 150);
+self.layer.backgroundColor = [UIColor blueColor].CGColor;
+[self.containerView.layer addSublayer:self.layer];
+
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {
+    CGPoint point = [[touches anyObject] locationInView:self.view];
+    // 把point转换成黄色layer图层中的point
+    point = [self.containerView.layer convertPoint:point fromLayer:self.view.layer];
+    if ([self.containerView.layer containsPoint:point]) {
+        // 把point转换成蓝色layer图层中的point
+        point = [self.layer convertPoint:point fromLayer:self.containerView.layer];
+        if ([self.layer containsPoint:point]) {
+            NSLog(@&quot;blue layer is clicked&quot;);
+        }else {
+            NSLog(@&quot;yellow layer is clicked&quot;);
+        }
+    }
+}</code></pre><p>从代码中可以看到，如果使用containsPoint，需要在多个图层之间转换坐标系统，还是比较麻烦的，我们来看下通过hitTest是如何实现的：</p>
+<pre><code>- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {    
+    CGPoint point = [[touches anyObject] locationInView:self.view];
+    CALayer *layer = [self.containerView.layer hitTest:point];
+    if (layer == self.containerView.layer) {
+        NSLog(@&quot;yellow layer is clicked&quot;);
+    }else if (layer == self.layer) {
+        NSLog(@&quot;blue layer is clicked&quot;);
+    }
+}</code></pre><p>明显简单许多，不要考虑图层之间坐标的转换关系，建议大家使用这种方式，简单清晰。</p>
+<p>注意点：<strong>在UIView的时候，会用过UIViewAutoresizing类型的一些常量，当父视图的尺寸改变时，相应UIView的frame也跟着更新的场景，比如横竖屏切换。但是图层就不能自动更新视图，需要自己手动去更新，比如调用setNeedsLayout方法。</strong></p>
+<h3 id="视觉效果"><a href="#视觉效果" class="headerlink" title="视觉效果"></a>视觉效果</h3><p>通过CALayer图层，我们很容易实现给一个视图添加圆角、边框、阴影的效果。阴影常用的几个属性：shadowColor、shadowOffset、shadowRadius，shadowPath。shadowColor指定阴影的颜色，shadowOffset属性控制这阴影的方向和距离，它是一个CGSize值，宽度控制阴影横向的位移，高度控制阴影的纵向位移，shadowRadius属性控制这阴影的模糊度，shadowPath可以自定义阴影的形状。</p>
+<p>在PS上会经常用到图层蒙版的，在iOS上通过CALayer也可以实现图层蒙版的效果，如下代码就可以实现一个图层蒙版的效果：</p>
+<pre><code>self.imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 120, 120)];
+self.imgView.center = self.view.center;
+self.imgView.contentMode = UIViewContentModeScaleAspectFill;
+self.imgView.layer.masksToBounds = YES;
+self.imgView.image = [UIImage imageNamed:@&quot;ddn&quot;];
+[self.view addSubview:self.imgView];
+
+CALayer *maskLayer = [CALayer layer];
+maskLayer.frame = self.imgView.bounds;
+maskLayer.contents = (__bridge id)[UIImage imageNamed:@&quot;circle&quot;].CGImage;
+self.imgView.layer.mask = maskLayer;</code></pre><p>所使用的图片如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-889f2156c5556e80.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-5.png"><br><img src="http://upload-images.jianshu.io/upload_images/416556-5bb4cf3415532879.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-6.png"></p>
+<p>最后得到的效果图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-e5ad986a1220ba3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-7.png"></p>
+<p>通过这个简单的例子就知道了图层蒙版到底是怎么一回事，怎么使用它了。通俗来讲就是用一个图层圈出想要的部分。</p>
+<p>CALayer还有一个拉伸过滤的效果，拉伸过滤效果主要用在哪里呢？比如说一个头像或是图片的缩略图，或者一个可以被拖拽和伸缩的大图，为同一图片的不同大小存储不同的图片显得又不切实际的。<strong>当图片需要显示不同的大小的时候，有一种叫做拉伸过滤的算法就起到作用了，它作用于原图的像素上并根据需要生成新的像素显示在屏幕上。</strong>CALayer为minificationFilter何magnificationFilter提供了三种拉伸过滤方法：</p>
+<ul>
+<li>kCAFilterLinear</li>
+<li>kCAFilterNearest</li>
+<li>kCAFilterTrilinear</li>
+</ul>
+<p><strong>默认的过滤器都是kCAFilterLinear，这个过滤器采用双线性滤波算法，通过对多个像素取样最终生成新的值。kCAFilterTrilinear和kCAFilterLinear非常相似，大部分情况下两者看不出来有什么差别，但是kCAFilterTrilinear采用三线性滤波算法，存储了多个大小情况的图片，并三维取样，同时结合大图和小图的存储进而得到最后的结果。这个方法的好处在于能够从一系列已经接近于最终大小的图片中得到想要的结果，也就说不需要对很多像素同步取样，提高了性能。kCAFilterNearest就是取样最近的单像素点而不管其他的颜色。</strong> 通过一个例子看下，代码如下：</p>
+<pre><code>self.imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+self.imgView.center = self.view.center;
+self.imgView.contentMode = UIViewContentModeScaleAspectFill;
+self.imgView.layer.masksToBounds = YES;
+self.imgView.image = [UIImage imageNamed:@&quot;120icon&quot;];
+self.imgView.layer.magnificationFilter = kCAFilterNearest;
+[self.view addSubview:self.imgView];</code></pre><p>效果图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-884e04769c33d1ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-8.png"></p>
+<p>从图中可以看出像素化比较大了。那我们换成kCAFilterTrilinear来试下，这次效果图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-a2d6be50d3e1f579.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-9.png"></p>
+<p>发现像素化比刚才的小了许多。通过前面对三种拉伸过滤算法的描述比较好理解为什么出现这种现象。总结来说，对于比较小的图或者是差异特别明显，极少斜线的大图，kCAFilterNearest算法会保留这种差异明显的特质以呈现更好的结果。否则的话，就采用另外两种算法。<strong>线性过滤保留了形状，最近过滤保留了像素的差异。</strong></p>
+<h3 id="仿射变换"><a href="#仿射变换" class="headerlink" title="仿射变换"></a>仿射变换</h3><p>UIView的transform属性类型是CGAffineTransform，可以用于在二维空间做旋转，缩放和平移。CGAffineTransform中的仿射的意思是无论变换矩阵用什么值，图层中平行的两条线在变换之后仍然保持平行。如下这几个函数都可以创建一个CGAffineTransform实例：</p>
+<pre><code>CGAffineTransformMakeRotation(CGFloat angle)
+CGAffineTransformMakeScale(CGFloat sx, CGFloat sy)
+CGAffineTransformMakeTranslation(CGFloat tx, CGFloat ty)</code></pre><p>上面三个函数都是在创建的时候做一些变换，无法做混合变换，下面的几个函数可以做混合变换的：</p>
+<pre><code>CGAffineTransformRotate(CGAffineTransform t, CGFloat angle)
+CGAffineTransformScale(CGAffineTransform t, CGFloat sx, CGFloat sy)
+CGAffineTransformTranslate(CGAffineTransform t, CGFloat tx, CGFloat ty)</code></pre><p>当进行混合变换的时候，初始的时候生成一个单位矩阵是很有必要的，可以通过下面这个函数来生成：</p>
+<pre><code>CGAffineTransformIdentity</code></pre><p>如果要混合两个存在的变换矩阵，可以用下面这个方法：</p>
+<pre><code>CGAffineTransformConcat(CGAffineTransform t1, CGAffineTransform t2);</code></pre><p>通过一个简单的例子来应用下混合变换：</p>
+<pre><code>self.imgView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 120, 120)];
+self.imgView.center = self.view.center;
+self.imgView.contentMode = UIViewContentModeScaleAspectFill;
+self.imgView.layer.masksToBounds = YES;
+self.imgView.image = [UIImage imageNamed:@&quot;120icon&quot;];
+[self.view addSubview:self.imgView];
+
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {
+    CGAffineTransform transform = CGAffineTransformIdentity;
+    transform = CGAffineTransformRotate(transform, M_PI_2);
+    transform = CGAffineTransformTranslate(transform, 50, 50);
+    self.imgView.transform = transform;
+}</code></pre><p>如果把混合变换的顺序给调整下，先平移在旋转，在运行，就会发现是两种完全不同的结果。<strong>这也就说明了变换是累加的效果，上一个变换会对下一个变换造成影响的。</strong></p>
+<p>上面说的都是视图层级的，在图层层级呢？CALayer的transform属性类型是CATransform3D，是在3D空间内进行变换的。CALayer中的affineTransform是和UIView中的属性对应的。3D变换自己现在也没看懂多少，在此就不说了。</p>
+<h3 id="专用图层"><a href="#专用图层" class="headerlink" title="专用图层"></a>专用图层</h3><p>比较常用的专用图层有CAShapeLayer、CATextLayer、CATransformLayer、CAGradientLayer、CAReplicatorLayer、CAScrollLayer、CATiledLayer、CAEmitterLayer、CAEAGLLayer、AVPlayerLayer等。自己经常用到的就是CAShapeLayer和CAGradientLayer，拿CAShapeLayer做下总结，其余的用到的时候可以具体查下，CAShapeLayer是一个通过矢量图形而不是bitmap来绘制的图层子类，可以设置颜色和线宽等属性，用CGPath来定义想要绘制的图形，最后用CAShapeLayer给渲染出来即可。比用普通的CALayer绘制有以下优点：</p>
+<ul>
+<li>渲染快速。CAShapeLayer使用了硬件加速，绘制同一图形会比用Core Graphics快很多。</li>
+<li>高效使用内存。一个CAShapeLayer不需要像普通CALayer一样创建一个寄宿图形，所以无论有多大，都不会占用太多的内存。</li>
+<li>不会被图层边界裁剪掉。一个CAShapeLayer可以在边界之外绘制，不会像普通CALayer一样被裁剪掉。</li>
+<li>不会出现像素化。当你给CAShapeLayer做3D变换时，它不像一个有寄宿图的普通图层一样变得像素化。</li>
+</ul>
+<p>我们通过CAShapeLayer绘制一个三角有圆角，一角为直角的矩形，代码如下：</p>
+<pre><code>CGRect rect = CGRectMake(50, 50, 100, 100);
+CGSize radius = CGSizeMake(20, 20);
+UIRectCorner corners = UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight;
+UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:rect byRoundingCorners:corners cornerRadii:radius];
+
+CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+shapeLayer.frame = CGRectMake(0, 0, 300, 300);
+shapeLayer.position = self.view.center;
+shapeLayer.backgroundColor = [UIColor whiteColor].CGColor;
+shapeLayer.strokeColor = [UIColor redColor].CGColor;
+shapeLayer.fillColor = [UIColor clearColor].CGColor;
+shapeLayer.lineWidth = 5.0;
+shapeLayer.lineCap = kCALineCapRound;
+shapeLayer.lineJoin = kCALineJoinRound;
+shapeLayer.path = path.CGPath;
+[self.view.layer addSublayer:shapeLayer];</code></pre><p>效果图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-a2cfb6e46afa1c20.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-10.png"></p>
+<h3 id="隐式动画"><a href="#隐式动画" class="headerlink" title="隐式动画"></a>隐式动画</h3><p>什么是隐式动画呢？隐式动画就是当你改变CALayer的一个可做动画的属性，它并不会立刻在屏幕上显示出来，相反，它会从先前的值平滑过渡到新值，这一切都是默认行为，你不需要做任何操作。通过下面的例子来做下说明：</p>
+<pre><code>self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+self.containerView.center = self.view.center;
+self.containerView.backgroundColor = [UIColor yellowColor];
+[self.view addSubview:self.containerView];
+
+self.layer = [[CALayer alloc] init];
+self.layer.bounds = CGRectMake(0, 0, 200, 200);
+self.layer.position = CGPointMake(150, 150);
+self.layer.backgroundColor = [UIColor blueColor].CGColor;
+[self.containerView.layer addSublayer:self.layer];
+
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {
+    self.layer.backgroundColor = [UIColor greenColor].CGColor;
+}</code></pre><p>通过运行我们会发现，layer的背景颜色是从蓝色平滑过渡到绿色的，你没有做任何的操作，这就是隐式动画。当你改变一个属性，Core Animation是如何判断动画类型和持续时间呢？实际上动画执行时间取决于当前事务的设置，动画类型取决于图层行为。<strong>事务实际上是用来包含一系列动画集合的机制，任何用指定事务去改变可以做动画的图层属性都不会立刻发生变化，而是当事务提交的时候开始用一个动画过渡到一个新值。</strong>事务是通过CATransaction来管理，Core Animation在每个run loop周期中自动开始一次新的事务(run loop是iOS负责收集用户输入、处理定时器或者网络事件并且重新绘制屏幕的东西)，任何在一次run loop循环中属性的改变都会被集中起来，然后做一次0.25秒的动画。用事务让刚才的例子，动画持续时间改成1.0秒，代码如下：</p>
+<pre><code>- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:1.0];
+    self.layer.backgroundColor = [UIColor greenColor].CGColor;
+    [CATransaction commit];
+}</code></pre><p>CATransaction提供了完成块，setCompletionBlock，允许你在动画结束的时候提供一个完成的动作，比如上面的例子，可以在动画结束的时候让其旋转45度，代码如下：</p>
+<pre><code>- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:1.0];
+    self.layer.backgroundColor = [UIColor greenColor].CGColor;
+        [CATransaction setCompletionBlock:^{
+        CGAffineTransform transform = CGAffineTransformMakeRotation(M_PI_4);
+        self.layer.affineTransform = transform;
+    }];
+    [CATransaction commit];
+}</code></pre><p>运行后，会注意到旋转的动画比颜色渐变动画快的多，这是因为完成块是在事务提交commit之后才执行的，提交之前把事务的时间改成了1秒钟，但是提交之后，完成块用的是默认的事务，时间是0.25秒，所以就会出现这种现象了。</p>
+<p>什么是图层行为？当我们改变CALayer的可动画属性的时候，自动给属性添加的动画就称作行为，也称作图层行为。那么隐式动画是如何为当前的属性选择对应的图层行为呢？这就需要知道隐式动画是如何实现的。</p>
+<ul>
+<li>当属性被修改的时候，会调用actionForKey:方法，传递属性的名称。</li>
+<li>图层首先检测它是否有委托，并且实现了-actionForLayer:forKey方法，如果有，直接调用返回结果。</li>
+<li>如果没有委托，或者委托没有实现-actionForLayer:forKey方法，图层接着检查包含属性名称对应行为映射的actions字典。</li>
+<li>如果action字典没有包含对应的属性，那么图层接着在它的style字典接着搜索属性名。</li>
+<li>最后，如果在style里面也找不到对应的行为，图层将会直接调用定义了每个属性的标准行为defaultAcitonForKey:方法。</li>
+</ul>
+<p>所以经过上面几个步骤后，-actionForKey要么返回空(这种情况下将不会有动画发生)，要么是CAAction协议对应的对象，最后CALayer拿着这个对象去做动画。</p>
+<p>注意点：<strong>每个UIView对它关联的图层都自动设置了委托，并且实现了-actionForLayer:forKey方法。当不在一个动画块的实现中，UIView对所有图层的行为返回nil，在动画块中，它就返回一个非空值，所以UIView默认是禁止隐式动画的。对于单独存在的图层，可以通过实现-actionForLayer:forKey委托方法，或者提供一个actions字典来控制隐式动画。</strong> 还是通过两个例子来看下具体如何使用，代码如下：</p>
+<pre><code>self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+self.containerView.center = self.view.center;
+self.containerView.backgroundColor = [UIColor yellowColor];
+[self.view addSubview:self.containerView];
+
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {
+    self.containerView.layer.backgroundColor = [UIColor greenColor].CGColor;
+}</code></pre><p>会发现对UIView关联图层做背景颜色改变，没有平滑的过渡，说明把隐式动画给禁止掉了。在看下在动画块中的情况：</p>
+<pre><code>- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {
+    [UIView beginAnimations:nil context:nil];
+    self.containerView.layer.backgroundColor = [UIColor greenColor].CGColor;
+    [UIView commitAnimations];
+}</code></pre><p>会发现有一个平滑的过渡效果。最后看下，如何通过一个actions字典来控制隐式动画：</p>
+<pre><code>self.containerView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+self.containerView.center = self.view.center;
+self.containerView.backgroundColor = [UIColor yellowColor];
+[self.view addSubview:self.containerView];
+
+self.layer = [[CALayer alloc] init];
+self.layer.bounds = CGRectMake(0, 0, 200, 200);
+self.layer.position = CGPointMake(150, 150);
+self.layer.backgroundColor = [UIColor blueColor].CGColor;
+[self.containerView.layer addSublayer:self.layer];
+
+CATransition *transition = [CATransition animation];
+transition.type = kCATransitionPush;
+transition.subtype = kCATransitionFromLeft;
+self.layer.actions = @{@&quot;backgroundColor&quot;: transition};
+
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {    
+    self.layer.backgroundColor = [UIColor greenColor].CGColor;
+}</code></pre><p>呈现与模型：当改变CALayer的一个属性时，并没有立刻生效，而是通过一段时间渐变更新。这个现象可以这么来理解，当你改变了一个属性的时候，其实是改变了它的模型值，这个模型值定义了动画之后要显示的内容。但它只是改变了模型值，在呈现树中却没有立即改变，因为在iOS中，屏幕每秒重绘60次，如果动画时长超过60分之一，Core Animation就需要在设置一次新值和新值生效之间，对屏幕上的图层进行重新组织，这就是呈现的过程。呈现图层可以通过调用presentationLayer来获得。</p>
+<h3 id="显式动画"><a href="#显式动画" class="headerlink" title="显式动画"></a>显式动画</h3><p>要做显式动画，首先应该把隐式动画给禁止掉，可以通过调用setDisableActions:方法，设置为YES来禁止隐式动画。</p>
+<p>我们比较经常用到的属性动画有2个，分别是CABasicAnimation、CAKeyframeAnimation。CAKeyframeAnimation(关键帧动画)和CABasicAnimation不一样的是，它不限制于一个起始值和结束值，而是可以根据一连串随意的值来做动画。CABasicAnimation和CAKeyframeAnimation仅仅作用于单独的属性，而CAAnimationGroup可以把这些动画组合在一起。我们也可以通过CATransition创建一个过渡的效果。如果在动画过程中想取消动画，可以通过调用removeAnimationForKey:方法或者removeAllAnimations方法来实现。下面通过使用关键帧动画来具体看下怎么使用显式动画：</p>
+<pre><code>// 画一条曲线
+self.path = [UIBezierPath bezierPath];
+[self.path moveToPoint:CGPointMake(30, 200)];
+CGFloat width = CGRectGetWidth(self.view.frame);
+[self.path addCurveToPoint:CGPointMake(width-30, 200) controlPoint1:CGPointMake(130, 100) controlPoint2:CGPointMake(210, 300)];
+CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+shapeLayer.strokeColor = [UIColor redColor].CGColor;
+shapeLayer.fillColor = [UIColor clearColor].CGColor;
+shapeLayer.lineWidth = 5.0;
+shapeLayer.lineCap = kCALineCapRound;
+shapeLayer.lineJoin = kCALineJoinRound;
+shapeLayer.path = self.path.CGPath;
+[self.view.layer addSublayer:shapeLayer];
+
+// 显示一张图片
+self.layer = [CALayer layer];
+self.layer.frame = CGRectMake(0, 0, 60, 60);
+self.layer.position = CGPointMake(30, 200);
+self.layer.contents = (__bridge id)[UIImage imageNamed:@&quot;120icon&quot;].CGImage;
+[self.view.layer addSublayer:self.layer];
+
+- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event {
+    CAKeyframeAnimation *animation = [CAKeyframeAnimation animation];
+    animation.keyPath = @&quot;position&quot;;
+    animation.duration = 4.0;
+    animation.path = self.path.CGPath;
+    animation.rotationMode = kCAAnimationRotateAuto;
+    [self.layer addAnimation:animation forKey:@&quot;keyAnimation&quot;];
+}</code></pre><p>运行之后，会发现当动画时间结束之后，立即又恢复到初始值了，这是为什么呢？<strong>因为CAAnimation创建了layer的副本并对其进行修改，使其变成表示层，表示层将被绘制到屏幕上，绘制完成后，所有的更改都会丢失并由模型层决定新状态，但是模型层并没有改变，所以就会出现这种现象了。</strong>解决这种现象，只需要设置两个属性removedOnCompletion、fillMode即可，代码如下：</p>
+<pre><code>animation.removedOnCompletion = NO;
+animation.fillMode = kCAFillModeBoth;</code></pre><p>最后的效果图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-bde8bf75f86ab23e.gif?imageMogr2/auto-orient/strip" alt="1-11.gif"></p>
+<h3 id="图层时间与缓冲"><a href="#图层时间与缓冲" class="headerlink" title="图层时间与缓冲"></a>图层时间与缓冲</h3><p>CAMediaTiming协议定义了在一段动画内用来控制逝去时间的属性的集合，CALayer和CAAnimation都实现了这个协议，所以时间可以被任意基于图层或者一段动画的类控制。</p>
+<p>duration代表动画持续的时间，repeatCount重复的次数。duration和repeatCount默认都为0，这里的0代表了默认，也就是0.25秒和1秒。</p>
+<p>在Core Animation中，时间都是相对的，每个动画都有它自己描述的时间，可以独立地加速，延时或者偏移。beginTime指定了动画开始之前的延迟时间。timeOffset，增加timeOffset只是让动画快进到某一点。speed是一个时间的倍数，默认是1.0，减少它会减慢时间，增加它会加快速度。如果speed为2.0，duration为1.0的动画，实际上在0.5秒的时候就已经完成了。</p>
+<p>上面介绍的都是图层的时间，描述了动画的时间。对于一个运动的动画来说，时间有了，当然还要有速度的。CAAnimation的timingFunction属性，提供了以下几种缓冲函数(也可说成速度函数)：</p>
+<pre><code>kCAMediaTimingFunctionLinear 
+kCAMediaTimingFunctionEaseIn 
+kCAMediaTimingFunctionEaseOut 
+kCAMediaTimingFunctionEaseInEaseOut
+kCAMediaTimingFunctionDefault</code></pre><p>Linear可以理解为物理学中的匀速运动，EaseIn可以理解为先加速然后突然停止，EaseOut先匀速运动然后慢慢减速停止，EaseInEaseOut就是先加速然后慢慢停止，Default和EaseInEaseOut相似。</p>
+<h3 id="定时器"><a href="#定时器" class="headerlink" title="定时器"></a>定时器</h3><p>NSTimer和CADisplayLink的区别：先看下NSTimer是如何工作的。iOS上的每个线程都管理了一个NSRunloop，表面上来看就是通过一个循环来完成一些任务列表，但是对于主线程，这些任务包含如下几项：</p>
+<ul>
+<li>处理触摸事件。</li>
+<li>发送和接收网络数据包。</li>
+<li>执行使用GCD的代码。</li>
+<li>处理计时器行为。</li>
+<li>屏幕重绘。</li>
+</ul>
+<p>当你设置一个NSTimer，它会被插入到当前任务列表中，但是何时启动定时器并没有一个时间上限，而且它只会在列表中上一个任务完成之后开始执行，这通常会导致几毫秒的延迟，但是如果上一个任务过了很久才完成就会导致延迟很长一段时间。</p>
+<p>CADisplayLink是Core Animation提供的另一个类似于NSTimer的类。它比NSTimer有以下优点：</p>
+<ul>
+<li>保证帧率足够连续，如果丢失了帧，就会直接忽略它们。</li>
+<li>可以让更新频率严格控制在每次屏幕刷新之后。</li>
+</ul>
+<p>在进行做动画的时候，都可以调整run loop模式，保证其不会被别的事件干扰。</p>
+<hr>
+<p>最后，附上公司同事<strong>梁学彰写的一个签到的动画效果，</strong>效果图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-51f2ac4106e7c301.gif?imageMogr2/auto-orient/strip" alt="sign.gif"></p>
+<p><a href="https://github.com/guoshimeihua/SignInDemo" target="_blank" rel="noopener">Demo下载地址</a></p>
+<p>参考文章：<br><a href="https://www.gitbook.com/book/zsisme/ios-/details" target="_blank" rel="noopener">https://www.gitbook.com/book/zsisme/ios-/details</a></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/01/15/iOS%E7%BB%98%E5%9B%BE%E7%B3%BB%E7%BB%9F(%E4%BA%8C)%20Core%20Animation%20(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" data-id="ck5cjpo70001n5yt5fs9af832" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/19/%E8%A7%A3%E5%86%B3CocoaPods%E5%90%84%E7%A7%8D%E6%85%A2%E7%9A%84%E5%BF%85%E6%9D%80%E6%8A%80/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          解决CocoaPods慢的小技巧
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/10/%E5%85%AD%E5%A4%A7%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">六大设计原则(读书笔记)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

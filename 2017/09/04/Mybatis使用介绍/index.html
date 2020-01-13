@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Mybatis使用介绍 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近项目比较忙，现在终于抽出空来，分享下自己在学习mybatis orm框架时遇到的一些问题，希望对你有所帮助。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Mybatis使用介绍">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="最近项目比较忙，现在终于抽出空来，分享下自己在学习mybatis orm框架时遇到的一些问题，希望对你有所帮助。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-09-03T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-09-04T09:40:12.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Mybatis使用介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2017-09-03T16:00:00.000Z" itemprop="datePublished">2017-09-04</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Mybatis使用介绍
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近项目比较忙，现在终于抽出空来，分享下自己在学习mybatis orm框架时遇到的一些问题，希望对你有所帮助。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="mybatis事务管理"><a href="#mybatis事务管理" class="headerlink" title="mybatis事务管理"></a>mybatis事务管理</h3><p><strong>事务：是一步或几步操作组成的逻辑执行单元，这些基本操作作为一个整体执行单元，它们要么全部执行，要么全部取消执行，绝不能仅仅执行一部分。</strong>事务具备4个特性：原子性、一致性、隔离性（并发执行的事务之间不能相互影响）、持续性（持续性也被称为持久性，指事务一旦提交，对数据所做的任何改变都要记录到永久存储器中，通常就是保存到物理数据库）。</p>
+<p>mybatis的事务管理分为两种形式：</p>
+<ul>
+<li>使用JDBC的事务管理机制。即利用java.sql.Connection对象完成对事务的提交commit()、回滚rollback()和关闭close()等操作。</li>
+<li>使用MANAGED的事务管理机制，对于这种机制，Mybatis自身不会去实现事务管理，而是让容器如WebLogic、JBOSS等来实现对事务的管理。</li>
+</ul>
+<p>一般我们在进行DML操作（delete、insert、update）的时候，都需要进行事务管理的，操作不成功的话，就需要进行事务回滚。在具体的项目中，一般使用@Transactional注解来管理事务，具体使用如下：</p>
+<ul>
+<li>@Transactional只能被应用到public方法，对于其他非public的方法，如果标记了@Transactional也不会报错，但方法没有事务功能。</li>
+<li>用spring事务管理器，由spring来负责数据库的打开、提交、回滚。默认遇到运行期例外throw new RuntimeException注释会回滚，即遇到不受检查unchecked的例外回滚，而遇到需要捕获的例外throw new Exception，不会回滚。如果遇到受检查的例外，就是非运行时抛出异常，需要我们指定方式来让事务回滚，要想所有异常都回滚，只需要加上@Transactional(rollbackFor={Exception.class,其他异常})即可。</li>
+</ul>
+<p>简单来说运行时异常回滚，做如下配置即可：</p>
+<pre><code>@Transaction(rollbackFor=RuntimeException.Class)</code></pre><p>所有异常都回滚，做如下配置即可：</p>
+<pre><code>@Transaction(rollbackFor=Exception.Class)</code></pre><p><strong>如果项目中使用的是Spring+Mybatis，则没有必要配置事务管理器，因为Spring模块会使用自带的管理器来覆盖前面的配置。</strong>下面说下自己在Spring整合Mybatis时遇到的一个问题，就是mybatis事务配置不起作用，先复原下当时的配置如下所示：</p>
+<p>springmvc-config.xml里面有段这样的配置：</p>
+<pre><code>&lt;!-- 指定包的扫描位置 --&gt;
+&lt;context:component-scan base-package=&quot;com.dodonew&quot;/&gt;</code></pre><p>applicationContext-datasource.xml里面有段这样的配置：</p>
+<pre><code>&lt;!-- 扫描com.dodonew包下面的java文件，有Spring的相关注解的类，则把这些类注册为Spring的bean。 --&gt;
+&lt;context:component-scan base-package=&quot;com.dodonew&quot;/&gt;
+
+&lt;!-- JDBC事务管理器 --&gt;
+&lt;bean id=&quot;transactionManager&quot; class=&quot;org.springframework.jdbc.datasource.DataSourceTransactionManager&quot;&gt;
+    &lt;property name=&quot;dataSource&quot; ref=&quot;dataSource&quot;/&gt;
+&lt;/bean&gt;
+&lt;tx:annotation-driven transaction-manager=&quot;transactionManager&quot;/&gt;</code></pre><p>这样的配置是有问题的，当数据插入失败的时候，并没有对数据进行回滚，这是为什么呢？<strong>这是因为在springmvc-config.xml文件中指定扫描位置的时候，也扫描了带有@Service注解的类，所以造成事务回滚失败。因为springmvc-config.xml与applicationContext-datasource.xml不是同时加载，如果不进行这样的设置，那么spring就会将所有带@Service注解的类都扫描到容器中，等到加载applicationContext-datasource.xml的时候，会因为容器已经存在Service类，使得cglib将不再对Service进行代理，直接导致的结果是applicationContext-datasource.xml中的事务配置不起作用，发生异常时，无法对数据进行回滚。</strong>所以，springmvc-config.xml中的配置应该更改为如下所示：</p>
+<pre><code>&lt;!-- 扫描com.dodonew包下面的java文件，有Spring的相关注解的类，则把这些类注册为Spring的bean。 --&gt;
+&lt;context:component-scan base-package=&quot;com.dodonew.controller&quot;/&gt;</code></pre><p>也就是说指定扫描的位置不要包括@Service就可以了。</p>
+<h3 id="mybatis缓存"><a href="#mybatis缓存" class="headerlink" title="mybatis缓存"></a>mybatis缓存</h3><p>Mybatis的查询缓存分为一级缓存和二级缓存，一级缓存是SqlSession级别的缓存，二级缓存是mapper级别的缓存，二级缓存是多个SqlSession共享的。Mybatis通过缓存机制减轻数据压力，提高数据库性能。</p>
+<p><strong>一级缓存（SqlSession级别）</strong></p>
+<p>在操作数据库时需要构建SqlSession对象，在对象中有一个HashMap用于存储缓存数据，不同的SqlSession之间的缓存数据区域（HashMap）是互相不影响的。 </p>
+<p><strong>二级缓存（mapper级别）</strong></p>
+<p>二级缓存是mapper级别的缓存，使用二级缓存时，多个SqlSession使用同一个Mapper的sql语句去操作数据库，得到的数据会存在二级缓存区域，它同样是使用HashMap进行数据存储。相比一级缓存，二级缓存的范围更大，多个SqlSession可以共用二级缓存，二级缓存是跨SqlSession的。<strong>二级缓存是多个SqlSession共享的，其作用域是mapper的同一个namespace。</strong>mybatis默认没有开启二级缓存，需要在setting全局参数中配置开启二级缓存。SqlSession（一级缓存）和Mapper（二级缓存）需要注意的点：</p>
+<ol>
+<li>只要进行了DML操作（insert、update、delete），不管有没有把操作提交到数据库，mybatis都会把SqlSession（一级缓存）和Mapper（二级缓存）给清除掉的。</li>
+<li>当进行了commit操作或close操作，mybatis会把SqlSession（一级缓存）给清除掉，二级缓存是不会清除掉的。</li>
+<li>mybatis首先去一级缓存查找，如果一级缓存查找不到的话，就会到二级缓存去查找，二级缓存还查找不到的话，就到数据库去查找。</li>
+</ol>
+<h3 id="数据库中表的外键"><a href="#数据库中表的外键" class="headerlink" title="数据库中表的外键"></a>数据库中表的外键</h3><p>在实际的项目开发当中，在建表的时候，不要添加外键，这样每个表都是相对独立的。在业务需求中，有需要进行关联的，在代码层面完成关联，避免在表中进行关联，这样在整个数据库当中表的关联关系是比较清晰的。使用外键比较多的话，会有性能问题：</p>
+<ul>
+<li>数据库需要维护外键的内部管理。</li>
+<li>外键等于把数据的一致性事务实现，全部交给数据库服务器完成。</li>
+<li>当做一些设计外键字段的增、删、更新操作之后，需要出发相关操作去检查，而不得不消耗资源。</li>
+<li>外键还会因为需要请求对其他表内部加锁而容易出现死锁情况。</li>
+</ul>
+<p><strong>所以在互联网行业应用不推荐使用外键，因为用户量大、并发度高，因此数据库服务器很容易成为性能瓶颈，尤其受IO能力限制，且不能轻易地水平扩展。在数据库需要使用外键的地方，可以通过添加冗余字段来解决。</strong>比如班级表(Clazz)和学生表(Student)，班级表列名为id、code，学生表列名为id、name、age、sex、clazz_id(这个是冗余字段，是Clazz表的主键id，这样在查学生表的时候，就能查询出该学生属于哪个班级了)，这样就可以不使用外键了。冗余字段的添加，大概分为以下几种情况：</p>
+<ul>
+<li>在处理一对一关系中，可以把冗余字段放在任何一张表中都可以，<strong>并且在一对一的时候加的冗余字段，需要设置unique，保证冗余字段的唯一性，因为是一对一的关系，否则就会出现问题的。</strong></li>
+<li>在处理一对多或者多对一关系中，需要把冗余字段放在<strong>多</strong>的表中。</li>
+<li>在处理多对多关系中，需要使用<strong>中间表</strong>来维护关系。</li>
+</ul>
+<p>另外，在使用mybatis的时候，经常会做如下配置：</p>
+<pre><code>&lt;setting name=&quot;useGeneratedKeys&quot; value=&quot;false&quot;/&gt;</code></pre><p>这个配置的主要作用就是，不允许使用mybatis自定义的主键（比如由程序生成的UUID 32位编码作为键值，比如指定UserId为主键），因为这样数据库本身的PK生成策略会被覆盖掉，一般情况下，我们会使用数据库本身自带的PK生成策略。但是需要注意的一点是，mysql数据库支持自动生成主键的，Oracle则不支持自动生成主键的。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://www.zhihu.com/question/19600081" target="_blank" rel="noopener">数据库设计使用外键吗？</a></p>
+<p><a href="http://blog.sina.com.cn/s/blog_7deb4bd60101cnuf.html" target="_blank" rel="noopener">mybatis事务配置不起作用</a></p>
+<p><a href="http://opiece.me/2016/03/18/spring-transactional-introduce/" target="_blank" rel="noopener">mybatis事务配置以及事务的传播性与隔离级别详解</a></p>
+<h3 id="欢迎关注国士梅花"><a href="#欢迎关注国士梅花" class="headerlink" title="欢迎关注国士梅花"></a>欢迎关注国士梅花</h3><p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="国士梅花"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/" data-id="ck5cjpo5k000m5yt5hmmqdni2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          如何使用Spring Boot从0到1搭建一个Java后台（一）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/07/07/Spring%20MVC%E6%95%B0%E6%8D%AE%E8%BD%AC%E6%8D%A2%E3%80%81%E6%A0%BC%E5%BC%8F%E5%8C%96%E3%80%81%E6%95%B0%E6%8D%AE%E6%A0%A1%E9%AA%8C%E3%80%81%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0%E5%92%8C%E4%B8%8B%E8%BD%BD/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spring MVC数据转换、格式化、数据校验、文件上传和下载</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

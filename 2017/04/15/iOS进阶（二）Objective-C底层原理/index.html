@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>iOS进阶（二）Objective-C底层原理 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="这篇读书笔记主要介绍了Objective-C底层的一些东西，比如Objective-C对象模型、objc_msgSend消息发送原理、方法混写(Method Swizzling)和ISA混写(ISA Swizzling)。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS进阶（二）Objective-C底层原理">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/04/15/iOS%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89Objective-C%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="这篇读书笔记主要介绍了Objective-C底层的一些东西，比如Objective-C对象模型、objc_msgSend消息发送原理、方法混写(Method Swizzling)和ISA混写(ISA Swizzling)。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-8c8e3a4e9b7ab21d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-e513fe41773fe332.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-04-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-07-02T04:18:32.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-8c8e3a4e9b7ab21d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-iOS进阶（二）Objective-C底层原理" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/15/iOS%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89Objective-C%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" class="article-date">
+  <time datetime="2017-04-14T16:00:00.000Z" itemprop="datePublished">2017-04-15</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS进阶（二）Objective-C底层原理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>这篇读书笔记主要介绍了Objective-C底层的一些东西，比如Objective-C对象模型、objc_msgSend消息发送原理、方法混写(Method Swizzling)和ISA混写(ISA Swizzling)。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="Objective-C对象模型"><a href="#Objective-C对象模型" class="headerlink" title="Objective-C对象模型"></a>Objective-C对象模型</h3><p>我们都知道Objective-C是一门动态性语言，这种动态性的核心是objc提供的Objective-C运行时，比如objc_msgSend就是一个核心函数，每次使用[object message]语法都会调用它。我们先来了解下Objective-C对象模型。</p>
+<p>Objective-C是一门面向对象的编程语言，<strong>每一个对象都是一个类的实例，在Objective-C中，每一个对象都有一个名为isa的指针，指向该对象的类。每一个类描述了一系列它的实例的特点，包括成员变量的列表、成员函数的列表等。每一个对象都可以接受到消息，而对象能够接受到的消息列表保存在它所对应的类中。</strong></p>
+<p>注意：</p>
+<ul>
+<li>每一个对象都有一个isa指针，这个指针指向的是它的类。</li>
+<li>类中包括成员变量、成员函数列表等。</li>
+</ul>
+<p>在Xcode中打开objc.h文件，会看到如下代码：</p>
+<pre><code>/// Represents an instance of a class.
+struct objc_object {
+    Class isa  OBJC_ISA_AVAILABILITY;
+};</code></pre><p>通过注释我们看到objc_object代表一个对象的实例，在对象实例中我们看到了isa指针，验证了我们刚才说的话。</p>
+<p><strong>根据面向对象的设计原则，所有事物都应该是对象，所以在Objective-C中，每一个类实际上也是一个对象，每一个类也有一个名为isa的指针，每一个类也可以接收消息，例如代码[NSObject alloc]，就是向NSObject这个类发送名为alloc的消息。</strong></p>
+<p>在Xcode中打开runtime.h文件，会看到如下代码：</p>
+<pre><code>struct objc_class {
+    Class isa  OBJC_ISA_AVAILABILITY;
+
+#if !__OBJC2__
+    Class super_class                                        OBJC2_UNAVAILABLE;
+    const char *name                                         OBJC2_UNAVAILABLE;
+    long version                                             OBJC2_UNAVAILABLE;
+    long info                                                OBJC2_UNAVAILABLE;
+    long instance_size                                       OBJC2_UNAVAILABLE;
+    struct objc_ivar_list *ivars                             OBJC2_UNAVAILABLE;
+    struct objc_method_list **methodLists                    OBJC2_UNAVAILABLE;
+    struct objc_cache *cache                                 OBJC2_UNAVAILABLE;
+    struct objc_protocol_list *protocols                     OBJC2_UNAVAILABLE;
+#endif
+
+} OBJC2_UNAVAILABLE;</code></pre><p>objc_class代表一个类，从上面代码中可以看出类中有一个isa指针的。前面说到isa指针会执行它的类，那类中的isa指针指向什么呢？<strong>因为类也是一个对象，所以它也必须是另一个类的实例，这个类就是元类（metaclass），所以isa指针指向的是它的元类。元类保存了类的方法列表。当一个类的方法被调用时，元类会首先查找它本身是否有该类方法的实现，如果没有，则该元类会向它的父类查找该方法，这样可以一直找到继承链的头。</strong></p>
+<p>如前面所说元类也是一个对象，那么元类的isa指针指向谁呢？<strong>Objective-C为了设计上的完整，所有的元类的isa指针都会指向一个根元类（root metaclass），根元类的isa指针指向自己，这样就形成一个闭环。</strong>上面说到，一个对象能够接收的消息列表是保存在它所对应的类中的。在实际编程中，我们几乎不会遇到向元类发消息的情况，那它的isa指针在实际上很少用到。</p>
+<p>再来看看继承关系，由于类方法的定义是保存在元类中，而方法调用的规则是，如果该类没有一个方法的实现，则向它的父类继续查找。所以，为了保证父类的类方法在子类中可以被调用，所有子类的元类都会继承父类的元类，<strong>简单来说就是类对象和元类对象有着同样的继承关系。</strong> </p>
+<p>最后用一张图对对象模型做一个总结，如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-8c8e3a4e9b7ab21d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1 对象模型.png"></p>
+<h3 id="objc-msgSend"><a href="#objc-msgSend" class="headerlink" title="objc_msgSend"></a>objc_msgSend</h3><p>Objective-C运行时的核心就在于消息分派器objc_msgSend，<strong>消息分派器把选择器映射为函数指针，并调用被引用的函数。</strong> 要想理解objc_msgSend的背后原理，先来理解下NSInvocation这个类。</p>
+<p><strong>NSInvocation是命令模式的一种传统实现，它把一个目标、一个选择器、一个方法签名和所有的参数都塞进一个对象里，</strong>这个对象可以先存储起来，以备将来调用。当NSInvocation被调用时，它会发送信息，Objective-C运行时会找到正确的方法实现来执行。<strong>我们通过一个例子来理解下NSInvocation的作用，比如[NSObject alloc]，此时会发送一个alloc消息，这条消息都包含什么内容呢？它怎么找到alloc的实现方法呢？这些都是通过NSInvocation来完成的，它包含了消息要传递的内容，也告诉了该怎么找到对应的方法实现。</strong></p>
+<p>解释一下什么是方法实现？<strong>一个方法实现(IMP)是一个指向具有如下签名的C函数的函数指针，注意是指针。</strong></p>
+<pre><code>id function(id self, SEL _cmd, ...)</code></pre><p>NSInvocation包含了一个目标和选择器，目标是一个可接受的对象，选择器则是被发送的消息。比如[NSObject alloc]，目标就是NSObject，选择器就是alloc。一个选择器大致是一个方法的名称，之所以说是大致是因为选择器不必精确映射到方法。比如[NSString length]和[NSData length]会映射到不同方法的实现，但他们拥有相同的选择器。</p>
+<p>NSInvocation还包含一个方法签名(NSMethodSignature)，它封装了一个方法的返回类型和参数类型，<strong>记住它不包括方法名称，只有返回类型和参数类型。</strong>你可以手动创建一个方法签名，如下：</p>
+<pre><code>NSMethodSignature *sig = [NSMethodSignature signatureWithObjCTypes:&quot;@@:*&quot;];</code></pre><p>但是应该尽可能少使用signatureWithObjCTypes:方法，获得方法签名常用的方法是为它请求一个类或实例，<strong>比如可以使用methodSignatureForSelector:方法从实例中请求实例方法签名，或者从类中请求类方法签名。也可以使用instanceMethodSignatureForSelector:方法从一个类中获取实例方法签名。</strong>两个方法有点绕口，我们通过一个例子来看下区别：</p>
+<pre><code>SEL initSEL = @selector(init);
+SEL allocSEL = @selector(alloc);
+
+// 从NSString类中获取实例方法(init)的方法签名
+NSMethodSignature *initSig = [NSString instanceMethodSignatureForSelector:initSEL];
+// 从test实例中获取实例方法(init)的方法签名
+initSig = [@&quot;test&quot; methodSignatureForSelector:initSEL];
+// 从NSString类中获取类方法签名
+NSMethodSignature *allocSig = [NSString methodSignatureForSelector:allocSEL];</code></pre><p>最后，NSInvocation还包含了所有的参数。至此，对于[NSString length]和[NSData length]就可以通过NSInvocation对象包含的信息，找到它们分别对应的方法实现。我们来看一个具体的例子，如下：</p>
+<pre><code>NSMutableSet *set = [NSMutableSet set];
+NSString *stuff = @&quot;stuff&quot;;
+SEL selector = @selector(addObject:);
+NSMethodSignature *sig = [set methodSignatureForSelector:selector];
+
+NSInvocation *invocation = [NSInvocation invocationWithMethodSignature:sig];
+[invocation setTarget:set];
+[invocation setSelector:selector];
+[invocation setArgument:&amp;stuff atIndex:2];
+[invocation invoke];
+
+NSLog(@&quot;set is : %@&quot;, set);</code></pre><p>注意，第一个参数被置于索引2处，索引0是目标(self)，索引1是选择器(_cmd)，NSInvocation会自动设置它们。另外，必须把参数指针传递给参数，而不能传递参数本身。</p>
+<p><strong>接下来重点要介绍下消息传递是如何工作的？</strong></p>
+<p>在Objective-C中调用方法最终会翻译成调用方法实现的函数指针，并传递给这个方法实现一个对象指针、一个选择器和一组函数参数。每个Objective-C消息表达式都会转化为对objc_msgSend的调用，看下objc_msgSend的工作方式：</p>
+<ol>
+<li>检查接受对象是否为nil，如果是nil，调用nil处理程序。</li>
+<li>检查缓存中是不是已经有方法实现了，有的话，直接调用。</li>
+<li>比较请求的选择器和类中定义的选择器，如果找到了，调用方法实现。</li>
+<li>比较请求的选择器和父类中定义的选择器，然后是父类的父类，以此类推，如果找到了选择器，调用方法实现。</li>
+<li>调用resolveInstanceMethod:(或resolveClassMethod)。如果它返回YES，那么重新开始。这一次对象会响应这个选择器，一般是因为它已经调用过class_addMethod。</li>
+<li>调用forwardingTargetForSelector:，如果返回非nil，那就把消息发送到返回的对象上，这里不要返回self，否则会形成死循环的。</li>
+<li>调用methodSignatureForSelector:，如果返回非nil，创建一个NSInvocation并传给forwardInvocation:。</li>
+<li>调用doesNotRecognizeSelector:，默认的实现是抛出异常。</li>
+</ol>
+<p>先看下第5步，<strong>首先可以想到的就是用resolveInstanceMethod:和resolveClassMethod:在运行时提供实现，这通常是@dynamic合成属性的处理方式。</strong>简单来说，就是需要自己实现属性的getter和setter方法，通过resolveInstanceMethod:方法来把setter方法和getter方法和属性绑定在一起。</p>
+<p>如果第5步返回NO的话，系统接着会首先尝试一次快速转发，也就是调用forwardingTargetForSelector:，看其能否返回一个对象，如果有对象返回，就转发给返回的对象。快速转发的原理其实就是先从缓存里找下是否存在对应的选择器。</p>
+<p>如果快速转发返回nil的话，接下来就进行普通的转发，调用forwardInvocation进行普通的转发。</p>
+<p>objc_msgSend还有几个相关的函数：objc_msgSend_fpret、objc_msgSendSuper、objc_msgSend_stret、objc_msgSendSuper_stret。SendSuper格式的函数很明显是把消息发送给父类，而带stret的在返回结构体时处理大部分情况。在Intel处理器上返回浮点数时，带fpret的函数处理大部分情况。</p>
+<h3 id="方法混写-Method-Swizzling-与ISA混写-Isa-Swizzling"><a href="#方法混写-Method-Swizzling-与ISA混写-Isa-Swizzling" class="headerlink" title="方法混写(Method Swizzling)与ISA混写(Isa Swizzling)"></a>方法混写(Method Swizzling)与ISA混写(Isa Swizzling)</h3><p>在Objective-C中，混写（Swizzling）是指透明地把一个东西换成另一个，我们可以利用Objective-C中的运行时来实现混写。我们先看下方法混写，Objective-C提供了以下API来动态替换类方法或实例方法的实现：</p>
+<ul>
+<li>class_replaceMethod替换类方法的定义。</li>
+<li>method_exchangeImplementations交换两个方法的实现。</li>
+<li>method_setImplementation设置一个方法的实现。</li>
+</ul>
+<p>我们来看下三者的区别：</p>
+<ul>
+<li>class_replaceMethod，当需要替换的方法有可能不存在时，可以考虑使用该方法。</li>
+<li>method_exchangeImplementations，当需要交换两个方法的实现时使用。</li>
+<li>method_setImplementation是最简单的用法，当仅仅需要为一个方法设置其实现方式时使用。</li>
+</ul>
+<p>系统中提供的KVO使用到了isa混写，具体是怎么实现的呢？<strong>当你观察一个对象时，一个新的类会被自动创建，这个新类继承自该对象的原本的类，并且重写了被观察属性setter方法。重写setter方法会负责在调用原setter方法之前和之后，通知所有观察对象：值的更改。最后通过isa混写，把这个对象的isa指针指向这个新创建的子类，对象就神奇的变成了新创建的子类的实例。</strong></p>
+<p>注意一点：把isa指针指向新创建的子类，被观察的对象就变成了新创建子类的对象实例，这是由于isa指针永远指向其对应的类。用一张图来说明下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-e513fe41773fe332.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-2 KVO.png"></p>
+<p><strong>键值观察通知依赖于NSObject的两个方法：willChangeValueForKey:和didChangeValueForKey:。在一个被观察属性发生改变之前，willChangeValueForKey:一定会被调用，这就会记录旧的值。而当改变之后，didChangeValueForKey:会被调用，继而obserValueForKey:ofObject:change:context:也会被调用。</strong>可以手动实现这些调用，但很少有人这么做。一般我们希望能控制回调的调用时机时才会这么做。</p>
+<p><strong>使用KVO的一个明显的优势就是零开销观察的优势，如果给定的实例没有观察者，那么KVO不会有任何消耗，因为根本没有KVO代码。而即使没有观察者，对于委托方法和NSNotification还得工作。</strong></p>
+<h3 id="参考文章："><a href="#参考文章：" class="headerlink" title="参考文章："></a>参考文章：</h3><p><a href="https://github.com/ChenYilong/iOSInterviewQuestions/tree/master/01%E3%80%8A%E6%8B%9B%E8%81%98%E4%B8%80%E4%B8%AA%E9%9D%A0%E8%B0%B1%E7%9A%84iOS%E3%80%8B%E9%9D%A2%E8%AF%95%E9%A2%98%E5%8F%82%E8%80%83%E7%AD%94%E6%A1%88" target="_blank" rel="noopener">招聘一个靠谱的iOS开发者</a></p>
+<p><strong>唐巧 iOS开发进阶书籍</strong></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/04/15/iOS%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89Objective-C%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" data-id="ck5cjpo5w000u5yt53javbauh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/11/Maven%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Maven入门介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/09/iOS%E8%BF%9B%E9%98%B6%EF%BC%88%E4%B8%80%EF%BC%89block%E4%B8%8Eproperty/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS进阶（一）block与property</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

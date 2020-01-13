@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>创建类模式(读书笔记) | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在读秦小波写的设计模式之禅这本书，创建类模式读完了，现在做一个读书笔记总结。创建类模式包括单例模式、原型模式、工厂方法模式、抽象工厂模式、建造者模式，它们都能提供对象的创建和管理职责。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建类模式(读书笔记)">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/02/09/%E5%88%9B%E5%BB%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="最近在读秦小波写的设计模式之禅这本书，创建类模式读完了，现在做一个读书笔记总结。创建类模式包括单例模式、原型模式、工厂方法模式、抽象工厂模式、建造者模式，它们都能提供对象的创建和管理职责。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-83a45d6d5e448222.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-73da775df5de0b57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-341e04d4e3e231d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-e26ac90f7e0e8ce4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-e327884b46d964b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-02-08T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-03-08T01:27:38.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-83a45d6d5e448222.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-创建类模式(读书笔记)" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/09/%E5%88%9B%E5%BB%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" class="article-date">
+  <time datetime="2017-02-08T16:00:00.000Z" itemprop="datePublished">2017-02-09</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      创建类模式(读书笔记)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近在读<strong>秦小波</strong>写的<strong>设计模式之禅</strong>这本书，创建类模式读完了，现在做一个读书笔记总结。创建类模式包括单例模式、原型模式、工厂方法模式、抽象工厂模式、建造者模式，它们都能提供对象的创建和管理职责。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="单例模式-Singleton-Pattern"><a href="#单例模式-Singleton-Pattern" class="headerlink" title="单例模式(Singleton Pattern)"></a>单例模式(Singleton Pattern)</h3><p><strong>定义：确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。</strong>简单来说就是确保这个类在整个系统中只有一个实例。单例模式通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-83a45d6d5e448222.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1 Singleton.png"></p>
+<p><strong>如何理解单例模式呢？</strong></p>
+<p>当在系统中，我们需要一个类有且仅有一个实例的时候，就可以考虑使用单例模式了，比如生成唯一序列号，创建一个对象需要消耗的资源过多，在整个项目中需要一个共享访问点或共享数据。单例模式有哪些优点呢？</p>
+<ul>
+<li>在内存中只有一个实例，减少了内存的消耗。比如一个对象需要频繁的创建与销毁。</li>
+<li>在系统中设置全局的访问点、优化和共享资源。</li>
+<li>由于只有一个实例，减少了系统的性能开销。比如创建一个对象需要消耗很多资源的时候，而又需要多次用到，这个时候使用单例模式就可以很大程度上减少系统性能的开销。</li>
+</ul>
+<p>单例模式的使用是比较简单的，只要确保在系统中一个类只存在一个实例即可。</p>
+<p><strong>单例模式的通用源码</strong></p>
+<p>Java版：</p>
+<pre><code>public class Singleton {
+    private static final Singleton singleton = new Singleton();
+    // 限制产生多个对象
+    private Singleton() {};
+
+    // 通过该方法获得实例对象
+    public static Singleton getSingleton() {
+        return singleton;
+    }
+
+    // 类中其他方法,尽量是static.
+    public static void doSomething(){};
+}</code></pre><p>Objective-C版:</p>
+<pre><code>+ (instancetype)sharedInstance
+{
+    static dispatch_once_t once;
+    static id sharedInstance;
+    // 通过dispatch_once限制产生多个对象
+    dispatch_once(&amp;once, ^{
+        sharedInstance = [[self alloc] init];
+    });
+    return sharedInstance;
+}</code></pre><p>在Java中，我们通过私有的构造函数来限制产生多个对象，在OC中通过dispatch_once来限制产生多个对象，其目的都是保证该类的实例只被实例化一次。</p>
+<p><strong>单例模式的扩展</strong></p>
+<p>单例模式要求我们只有一个实例，而有时候我们需要多个实例，这个时候就可以对单例模式进行下扩展就可以实现了，代码如下：</p>
+<pre><code>public class Singleton {
+    // 最多能产生的实例数量
+    private static int maxNumOfSingleton = 3;
+    // 定义一个数组,容纳所有的实例
+    private static ArrayList&lt;Singleton&gt; singletonList = new ArrayList&lt;Singleton&gt;();
+    // 每个实例都有一个名字.
+    private static ArrayList&lt;String&gt; nameList = new ArrayList&lt;String&gt;();
+    // 当前实例化的下标值
+    private static int index = 0;
+
+    static  {
+        for (int i = 0; i&lt;maxNumOfSingleton; i++) {
+            singletonList.add(new Singleton(&quot;实例&quot;+(i+1)));
+        }
+    }
+
+    private Singleton() {};
+    private Singleton(String name) {
+        nameList.add(name);
+    }
+
+    // 通过该方法获得实例对象
+    public static Singleton getSingleton() {
+        Random random = new Random();
+        index = random.nextInt(maxNumOfSingleton);
+        return singletonList.get(index);
+    }
+
+    // 类中其他方法,尽量是static.
+    public static void doSomething(){};
+}</code></pre><h3 id="原型模式-Prototype-Pattern"><a href="#原型模式-Prototype-Pattern" class="headerlink" title="原型模式(Prototype Pattern)"></a>原型模式(Prototype Pattern)</h3><p><strong>定义：用原型实例指定创建对象的种类，并且通过拷贝这些原型创建新的对象。</strong>简单来说就是通过复制的方式来创建新的对象。通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-73da775df5de0b57.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-2 Prototype.png"></p>
+<p><strong>如何理解原型模式呢？</strong></p>
+<p>原型模式的核心是一个clone方法，通过该方法进行对象的拷贝，Java提供了一个Cloneable接口来标示这个对象是可拷贝的，只需要重写clone方法就可以实现对象的拷贝。原型模式使用场景有哪些呢？</p>
+<ul>
+<li>资源优化场景。类初始化需要消化非常多的资源，这个资源包括数据、硬件资源等。</li>
+<li>性能和安全要求的场景。通过new产生一个对象需要繁琐的数据准备或访问权限，则可以使用原型模式。</li>
+<li>一个对象多个修改者的场景。</li>
+</ul>
+<p>原型模式比较简单，核心就是clone，掌握这个就可以了。<strong>在iOS中使用原型模式需要实现NSCopying协议及其方法-(id)copyWithZone:(NSZone *)zone。</strong></p>
+<p>注意点：Object类的clone方法是从内存中以二进制流的方式进行拷贝，重新分配一个内存块，所以构造函数是不会执行的。</p>
+<p><strong>原型模式通用源码</strong></p>
+<pre><code>public class PrototypeClass implements Cloneable {
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        PrototypeClass prototypeClass = null;
+        try {
+            prototypeClass = (PrototypeClass) super.clone();
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return prototypeClass;
+    }
+}</code></pre><h3 id="工厂方法模式-Factory-Pattern"><a href="#工厂方法模式-Factory-Pattern" class="headerlink" title="工厂方法模式(Factory Pattern)"></a>工厂方法模式(Factory Pattern)</h3><p><strong>定义：定义一个用于创建对象的接口，让子类决定实例化哪一个类。工厂方法使一个类的实例化推迟到子类。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-341e04d4e3e231d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-3 Factory.png"></p>
+<p><strong>如何理解工厂方法模式呢？</strong></p>
+<p>一家汽车生产工厂，里面可以生产奔驰、宝马、大众，我们可以通过传入不同的类型从而决定要生产那种汽车，这就是工厂方法模式的一种应用。工厂方法模式的最大优点就是屏蔽了产品类实现的细节，我们不用关心奔驰车具体是怎么生产出来的。<strong>在iOS中我们经常会使用到numberWithBool:、numberWithChar等方法，这就是典型的工厂方法模式，传入不同的类型，得到不同的NSNumber对象。</strong>工厂方法模式的使用场景有哪些呢？</p>
+<ul>
+<li>工厂方法模式是new对象的一个替代品，在需要生成对象的时候都可以使用，但是需要慎重地考虑是否要增加一个工厂类进行管理，增加代码的复杂度。</li>
+<li>需要灵活的、可扩展的框架时，可以考虑使用工厂方法模式。</li>
+<li>工厂方法模式可以用在异构项目中。比如通过webservice与一个非Java的项目交互。</li>
+</ul>
+<p><strong>工厂方法模式通用源码</strong></p>
+<pre><code>// 抽象产品类
+public abstract class Product {
+    // 产品类的公共方法
+    public void method1() {
+        // 业务逻辑处理
+    }
+
+    public abstract void method2();
+}
+
+public class ConcreteProduct1 extends Product {
+    @Override
+    public void method2() {
+        // 业务逻辑处理
+    }
+}
+
+public class ConcreteProduct2 extends Product {
+    @Override
+    public void method2() {
+        // 业务逻辑处理
+    }
+}
+
+// 抽象工厂
+public abstract class Creator {
+    // 输入参数类型使用泛型
+    public abstract &lt;T extends Product&gt; T createProduct(Class&lt;T&gt; c);
+}
+
+public class ConcreteCreator extends Creator {
+    @Override
+    public &lt;T extends Product&gt; T createProduct(Class&lt;T&gt; c) {
+        Product product = null;
+        try {
+            product = (Product) Class.forName(c.getName()).newInstance();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return (T) product;
+    }
+}</code></pre><p><strong>工厂方法模式扩展</strong></p>
+<ol>
+<li><p>缩小为简单工厂模式</p>
+<p> 把抽象工厂给去掉，只留一个具体的工厂，这就可以称之为简单工厂方法模式了，简单工厂方法模式是工厂方法模式的简化。</p>
+</li>
+<li><p>升级为多个工厂类</p>
+<p> 有时候在一个工厂类中会创建许多产品，这样所有的产品创建都在一个工厂类中的话，就会显得比较庞大，这个时候就可以拆分为多个工厂类，从而保持代码的简洁与清晰。</p>
+</li>
+<li><p>延迟初始化</p>
+<p> 什么是延迟初始化(Lazy initialization)呢？一个对象被消费完毕后，并不立刻释放，工厂类保持其初始状态，等待再次被使用。代码如下：</p>
+<pre><code>public class ProductFactory {
+    private static final Map&lt;String, Product&gt; productMap = new HashMap&lt;String, Product&gt;();
+    public static synchronized Product createProduct(String type) throws Exception {
+        Product product = null;
+        if (productMap.containsKey(type)) {
+            product = productMap.get(type);
+        }else {
+            if (type.equals(&quot;Product1&quot;)) {
+                product = new ConcreteProduct1();
+            }else {
+                product = new ConcreteProduct2();
+            }
+            // 同时把对象放到缓存容器中
+            productMap.put(type, product);
+        }
+        return product;
+    }
+}</code></pre></li>
+</ol>
+<h3 id="抽象工厂模式-Abstract-Factory-Pattern"><a href="#抽象工厂模式-Abstract-Factory-Pattern" class="headerlink" title="抽象工厂模式(Abstract Factory Pattern)"></a>抽象工厂模式(Abstract Factory Pattern)</h3><p><strong>定义：为创建一组相关或相互依赖的对象提供一个接口，而且无须指定它们的具体类。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-e26ac90f7e0e8ce4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-4 AbstractFactory.png"></p>
+<p><strong>如何理解抽象工厂模式呢？</strong></p>
+<p>我们看下定义中有相关或相互依赖的对象，什么是相关或相互依赖的对象呢？比如汽车的左门和右门。抽象工厂模式的使用场景有哪些呢？一个对象族都有相同的约束，则可以使用抽象工厂模式。简单来说抽象工厂模式主要实现产品族的创建。</p>
+<p><strong>抽象工厂模式通用源码</strong></p>
+<pre><code>// 产品
+public abstract class AbstractProductA {
+    public abstract void doSomething();
+}
+
+public abstract class AbstractProductB {
+    public abstract void doSomething();
+}
+
+public class ProductALeft extends AbstractProductA {
+    @Override
+    public void doSomething() {
+        System.out.println(&quot;生产A车左车门&quot;);
+    }
+}
+
+public class ProductARight extends AbstractProductA {
+    @Override
+    public void doSomething() {
+        System.out.println(&quot;生产A车右车门&quot;);
+    }
+}
+
+public class ProductBLeft extends AbstractProductB {
+    @Override
+    public void doSomething() {
+        System.out.println(&quot;生产B车左车门&quot;);
+    }
+}
+
+public class ProductBRight extends AbstractProductB {
+    @Override
+    public void doSomething() {
+        System.out.println(&quot;生产B车右车门&quot;);
+    }
+}
+
+// 工厂
+public abstract class AbstractCreator {
+    // 创建A产品家族
+    public abstract AbstractProductA createProductA();
+    // 创建B产品家族
+    public abstract AbstractProductB createProductB();
+}
+
+public class CreatorLeft extends AbstractCreator {
+    /**
+     * 左车门生产车间只生产各种车的左门.
+     */
+    @Override
+    public AbstractProductA createProductA() {
+        return new ProductALeft();
+    }
+
+    @Override
+    public AbstractProductB createProductB() {
+        return new ProductBLeft();
+    }
+}
+
+public class CreatorRight extends AbstractCreator {
+    /**
+     * 右车门车间只生产所有车的右门.
+     */
+    @Override
+    public AbstractProductA createProductA() {
+        return new ProductARight();
+    }
+
+    @Override
+    public AbstractProductB createProductB() {
+        return new ProductBRight();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        AbstractCreator creatorLeft = new CreatorLeft();
+        AbstractProductA aLeft = creatorLeft.createProductA();
+        aLeft.doSomething();
+        AbstractProductB bLeft = creatorLeft.createProductB();
+        bLeft.doSomething();
+
+        AbstractCreator creatorRight = new CreatorRight();
+        AbstractProductA aRight = creatorRight.createProductA();
+        aRight.doSomething();
+        AbstractProductB bRight = creatorRight.createProductB();
+        bRight.doSomething();
+    }
+}</code></pre><h3 id="建造者模式-Builder-Pattern"><a href="#建造者模式-Builder-Pattern" class="headerlink" title="建造者模式(Builder Pattern)"></a>建造者模式(Builder Pattern)</h3><p><strong>定义：将一个复杂对象的构建与它的表示分离，使得同样的构建过程可以创建不同的表示。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-e327884b46d964b2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-5 Builder.png"></p>
+<p><strong>如何理解建造者模式呢？</strong></p>
+<p>在定义中提到了构建与表示分离，我们可以这样来理解，建造者模式关注的是零件类型和装配顺序，零件的不同装配顺序会产生不同效能的产品，这时零件就相当于构建了，不同装配顺序产生的产品就相当于表示了。比如A零件、B零件，按照AB顺序组装会产生一个产品，按照BA顺序组装会产生另外一个产品。建造者模式的使用场景有哪些呢？</p>
+<ul>
+<li>相同的方法，不同的顺序执行，产生不同的事件结果时。</li>
+<li>多个部件或零件，都可以装配到一个对象中，但是产生的运行结果又不相同时。</li>
+<li>产品类非常复杂，或者产品类中的调用顺序不同产生了不同的效能。</li>
+</ul>
+<p><strong>建造者模式通用源码</strong></p>
+<pre><code>public class Product {
+    public void doSomething(){
+        // 独立业务处理
+    }
+}
+
+public abstract class Builder {
+    // 设置产品的不同部分,以获得不同的产品.
+    public abstract void setPart();
+    // 建造产品
+    public abstract Product buildProduct();
+}
+
+public class ConcreteBuilder extends Builder {
+    private Product product = new Product();
+    @Override
+    public void setPart() {
+        // 设置不同的部分
+    }
+
+    @Override
+    public Product buildProduct() {
+        return product;
+    }
+}
+
+public class Director {
+    private Builder builder = new ConcreteBuilder();
+    // 构建不同的产品
+    public Product getProductA() {
+        builder.setPart();
+        Product product = builder.buildProduct();
+        return product;
+    }
+}</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>工厂方法模式、抽象工厂模式、建造者模式、单例模式和原型模式都属于创建类模式，都能够提供对象的创建和管理的职责。其中单例模式与原型模式比较简单，<strong>单例模式是要保持在内存中只有一个对象，原型模式是通过复制的方式产生一个新的对象。</strong>下面看下工厂方法模式、抽象工厂模式、建造者模式之间的区别。<strong>工厂方法模式与抽象工厂模式最大的区别是：抽象工厂模式面向的是产品族，是工厂方法模式的升级版。工厂方法模式注重的是整体对象的创建方法，而建造者模式注重的是部件构建的过程，通过一步步地精确构造创建出一个复杂的对象。</strong></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/02/09/%E5%88%9B%E5%BB%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" data-id="ck5cjpo5z000y5yt5ev7sf53h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/17/%E7%BB%93%E6%9E%84%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          结构类模式(读书笔记)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/19/%E8%A7%A3%E5%86%B3CocoaPods%E5%90%84%E7%A7%8D%E6%85%A2%E7%9A%84%E5%BF%85%E6%9D%80%E6%8A%80/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">解决CocoaPods慢的小技巧</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,1098 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>如何使用Spring Boot从0到1搭建一个Java后台（二） | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本篇文章将一步步地来实现一个完整的RESTful接口以及对应的单元测试与集成测试。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何使用Spring Boot从0到1搭建一个Java后台（二）">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="本篇文章将一步步地来实现一个完整的RESTful接口以及对应的单元测试与集成测试。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-60f7f490a9ddfc9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-c78ac8c2f6dba8a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-d288fd474ba62395.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-c673105a96da8c61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-de2b515de9951e8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-ed60ae150cb5bc54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-798079774fb533ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-a4b601911c2004af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-6a3b20ebc84cdd0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-23e5a8c87559b293.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-bfc8f8ec7c5a8ffc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-fb417156c2b3c99b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-11-06T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-11-07T05:06:44.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-60f7f490a9ddfc9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-如何使用Spring Boot从0到1搭建一个Java后台（二）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" class="article-date">
+  <time datetime="2017-11-06T16:00:00.000Z" itemprop="datePublished">2017-11-07</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何使用Spring Boot从0到1搭建一个Java后台（二）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>本篇文章将一步步地来实现一个完整的RESTful接口以及对应的单元测试与集成测试。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h3><p><strong>第一步，</strong>首先来创建一个部门表并插入几条数据，打开MySQLWorkbench，执行下面的sql语句：</p>
+<pre><code># 创建数据库ddn_hrm_db
+create database ddn_hrm_db;
+# 使用数据库ddn_hrm_db
+use ddn_hrm_db;
+# 创建表dept_inf
+create table dept_inf (
+    id INT(11) not null auto_increment,
+    name varchar(50) not null,
+    remark varchar(300) default null,
+    primary key (id)
+);
+
+# 插入几条数据
+insert into dept_inf(id, name, remark) values (1, &apos;技术部&apos;, &apos;技术部&apos;), (2, &apos;运营部&apos;, &apos;运营部&apos;), (3, &apos;财务部&apos;, &apos;财务部&apos;), (4, &apos;总公办&apos;, &apos;总公办&apos;), (5, &apos;市场部&apos;, &apos;市场部&apos;);</code></pre><p>用MySQLWorkbench查询下刚才插入进去的数据，验证下表建立的是否正确、插入数据是否正确，查询结果如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-60f7f490a9ddfc9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-1.png"></p>
+<p><strong>第二步，</strong>在Spring Boot中配置mybatis，配置数据库连接池（使用阿里的Druid），先打开pom.xml加入mybatis、druid所依赖的jar包，配置如下所示：</p>
+<pre><code>&lt;!-- Mybatis集成 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;mysql&lt;/groupId&gt;
+    &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+    &lt;version&gt;5.1.30&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;dependency&gt;
+    &lt;groupId&gt;org.mybatis.spring.boot&lt;/groupId&gt;
+    &lt;artifactId&gt;mybatis-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.3.1&lt;/version&gt;
+&lt;/dependency&gt;
+
+&lt;!-- 阿里数据库连接池 --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.alibaba&lt;/groupId&gt;
+    &lt;artifactId&gt;druid-spring-boot-starter&lt;/artifactId&gt;
+    &lt;version&gt;1.1.4&lt;/version&gt;
+&lt;/dependency&gt;</code></pre><p>接着打开application.properties加入JDBC配置、druid配置、mybatis配置，配置如下所示：</p>
+<pre><code># JDBC配置
+spring.datasource.druid.url=jdbc:mysql://127.0.0.1:3306/ddn_hrm_db?useUnicode=true&amp;characterEncoding=utf8
+spring.datasource.druid.username=root
+spring.datasource.druid.password=
+spring.datasource.driver-class-name=com.mysql.jdbc.Driver
+
+# 连接池配置
+spring.datasource.druid.initial-size=10
+spring.datasource.druid.max-active=50
+spring.datasource.druid.min-idle=10
+spring.datasource.druid.max-wait=60000
+spring.datasource.druid.time-between-eviction-runs-millis=60000
+spring.datasource.druid.min-evictable-idle-time-millis=300000
+
+# 监控配置
+# WebStatFilter配置，说明请参考Druid Wiki，配置_配置WebStatFilter
+spring.datasource.druid.web-stat-filter.enabled=true
+spring.datasource.druid.web-stat-filter.url-pattern=/**
+spring.datasource.druid.web-stat-filter.exclusions=*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*
+spring.datasource.druid.web-stat-filter.session-stat-enable=true
+spring.datasource.druid.web-stat-filter.session-stat-max-count=1000
+spring.datasource.druid.web-stat-filter.profile-enable=true
+
+# StatViewServlet配置，说明请参考Druid Wiki，配置_StatViewServlet配置
+spring.datasource.druid.stat-view-servlet.enabled=true
+spring.datasource.druid.stat-view-servlet.url-pattern=/druid/*
+spring.datasource.druid.stat-view-servlet.reset-enable=true
+spring.datasource.druid.stat-view-servlet.login-username=bruce
+spring.datasource.druid.stat-view-servlet.login-password=bruce2017
+
+# Spring监控配置，说明请参考Druid Github Wiki，配置_Druid和Spring关联监控配置
+spring.datasource.druid.aop-patterns=com.dodonew.service.*,com.dodonew.dao.*  # Spring监控AOP切入点，如x.y.z.service.*,配置多个英文逗号分隔
+# 如果spring.datasource.druid.aop-patterns要代理的类没有定义interface请设置spring.aop.proxy-target-class=true
+
+# Filter配置
+spring.datasource.druid.filters=stat,wall
+
+# logging配置
+logging.level.org.mybatis.spring=debug
+# 显示SQL日志
+logging.level.com.dodonew.dao=debug
+
+# mybatis配置
+mybatis.configuration.cache-enabled=true
+mybatis.configuration.jdbc-type-for-null=null
+mybatis.configuration.call-setters-on-nulls=true</code></pre><p>在上面的配置中，<strong>显示SQL日志的配置要特别注意下，其中com.dodonew.dao是你mapper类所在的包，只有这样配置才能把sql日志给打印出来。</strong></p>
+<p><strong>第三步，</strong>建立Dept域对象、DeptDao类、DeptService类，如下所示：</p>
+<p><strong>Dept域对象：</strong></p>
+<pre><code>public class Dept implements Serializable {
+    private static final long serialVersionUID = -4243387151355500160L;
+    private Integer id;
+    private String departName;
+    private String remark;
+
+    public Dept(Integer id, String departName, String remark) {
+        this.id = id;
+        this.departName = departName;
+        this.remark = remark;
+    }
+
+    public Dept(String departName, String remark) {
+        this.departName = departName;
+        this.remark = remark;
+    }
+
+    public Dept() {
+
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getDepartName() {
+        return departName;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setDepartName(String departName) {
+        this.departName = departName;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;Dept{&quot; +
+                &quot;id=&quot; + id +
+                &quot;, departName=&apos;&quot; + departName + &apos;\&apos;&apos; +
+                &quot;, remark=&apos;&quot; + remark + &apos;\&apos;&apos; +
+                &apos;}&apos;;
+    }
+}</code></pre><p><strong>DeptDao、DeptDynaSqlProvider类：</strong></p>
+<pre><code>public interface DeptDao {
+    /**
+     * 查询所有部门
+     * @return 所有部门
+     */
+    @Select(&quot;select * from &quot; + HrmConstants.DEPTTABLE + &quot; &quot;)
+    List&lt;Dept&gt; selectAllDept();
+
+    /**
+     * 根据id查询部门
+     * @param id 部门id
+     * @return 某个部门
+     */
+    @Select(&quot;select * from &quot; + HrmConstants.DEPTTABLE + &quot; where id = #{id}&quot;)
+    Dept selectById(Integer id);
+
+    /**
+     * 根据id删除部门
+     * @param id 部门id
+     */
+    @Delete(&quot;delete from &quot; + HrmConstants.DEPTTABLE + &quot; where id = #{id}&quot;)
+    Integer deleteById(Integer id);
+
+    /**
+     * 查询总数量
+     * @param params
+     * @return 部门总数量
+     */
+    @SelectProvider(type = DeptDynaSqlProvider.class, method = &quot;count&quot;)
+    Integer count(Map&lt;String, Object&gt; params);
+
+    /**
+     * 分页动态查询
+     * @param params
+     * @return 部门列表
+     */
+    @SelectProvider(type = DeptDynaSqlProvider.class, method = &quot;selectWithParams&quot;)
+    List&lt;Dept&gt; selectByPage(Map&lt;String, Object&gt; params);
+
+    /**
+     * 动态插入部门
+     * @param dept
+     *
+     * @SelectKey 注解的主要作用就是把当前插入对象的主键值，赋值给对应的id属性(id代表对应的主键)
+     */
+    @InsertProvider(type = DeptDynaSqlProvider.class, method = &quot;insertDept&quot;)
+    @SelectKey(statement = &quot;SELECT LAST_INSERT_ID() AS id&quot;, keyProperty = &quot;id&quot;, keyColumn = &quot;id&quot;, before = false, resultType = Integer.class)
+    Integer save(Dept dept);
+
+    /**
+     * 更新某个部门的信息
+     * @param dept
+     */
+    @UpdateProvider(type = DeptDynaSqlProvider.class, method = &quot;updateDept&quot;)
+    Integer update(Dept dept);
+}
+
+public class DeptDynaSqlProvider {
+    // 分页动态查询
+    public String selectWithParams(final Map&lt;String, Object&gt; params) {
+        String sql = new SQL() {
+            {
+                SELECT(&quot;*&quot;);
+                FROM(HrmConstants.DEPTTABLE);
+                if (params.get(&quot;dept&quot;) != null) {
+                    Dept dept = (Dept) params.get(&quot;dept&quot;);
+                    if (dept.getDepartName() != null &amp;&amp; !&quot;&quot;.equals(dept.getDepartName())) {
+                    WHERE(&quot; departname like concat (&apos;%&apos;, #{dept.departName}, &apos;%&apos;) &quot;);
+                    }
+                }
+            }
+        }.toString();
+
+        if (params.get(&quot;pageModel&quot;) != null) {
+            sql += &quot; limit #{pageModel.firstLimitParam}, #{pageModel.pageSize}&quot;;
+        }
+
+        return sql;
+    }
+
+    // 动态查询总数量
+    public String count(final Map&lt;String, Object&gt; params) {
+        return new SQL(){
+            {
+                SELECT(&quot;count(*)&quot;);
+                FROM(HrmConstants.DEPTTABLE);
+                if (params.get(&quot;dept&quot;) != null) {
+                    Dept dept = (Dept) params.get(&quot;dept&quot;);
+                    if (dept.getDepartName() != null &amp;&amp; !&quot;&quot;.equals(dept.getDepartName())) {
+                        WHERE(&quot; departname like concat (&apos;%&apos;, #{dept.departName}, &apos;%&apos;) &quot;);
+                    }    
+                }
+            }
+        }.toString();
+    }
+
+    // 动态插入
+    public String insertDept(final Dept dept) {
+        return new SQL(){
+            {
+                INSERT_INTO(HrmConstants.DEPTTABLE);
+                if (dept.getDepartName() != null &amp;&amp; !&quot;&quot;.equals(dept.getDepartName())) {
+                    VALUES(&quot;departname&quot;, &quot;#{departName}&quot;);
+                }
+                if (dept.getRemark() != null &amp;&amp; !&quot;&quot;.equals(dept.getRemark())) {
+                    VALUES(&quot;remark&quot;, &quot;#{remark}&quot;);
+                }
+            }
+        }.toString();
+    }
+
+    // 动态更新
+    public String updateDept(final Dept dept) {
+        return new SQL(){
+            {
+                UPDATE(HrmConstants.DEPTTABLE);
+                if (dept.getDepartName() != null) {
+                    SET(&quot; departname = #{departName}&quot;);
+                }
+                if (dept.getRemark() != null) {
+                    SET(&quot; remark = #{remark}&quot;);
+                }
+                WHERE(&quot; id = #{id}&quot;);
+            }
+        }.toString();
+    }
+}</code></pre><p><strong>DeptService、DeptServiceImpl类：</strong></p>
+<pre><code>public interface DeptService {
+    public List&lt;Dept&gt; findDeptList(Integer pageIndex, Integer pageSize);
+
+    public Dept findDept(Integer id);
+
+    public boolean addDept(Dept dept);
+
+    public boolean removeDept(Integer id);
+
+    public boolean modifyDept(Dept dept);
+}
+
+@Transactional(propagation = Propagation.REQUIRED, isolation = Isolation.DEFAULT)
+@Service(&quot;deptService&quot;)
+public class DeptServiceImpl implements DeptService {
+    @Autowired
+    private DeptDao deptDao;
+
+    @Override
+    @Transactional(readOnly = true)
+    public Dept findDept(Integer id) {
+        return deptDao.selectById(id);
+    }
+
+    @Override
+    public boolean addDept(Dept dept) {
+        boolean isSuccess = false;
+        try {
+            // 这里row永远是返回受影响的行数
+            int row = deptDao.save(dept);
+            if (row &gt; 0) {
+                isSuccess = true;
+            }
+        } catch (Exception e) {
+            isSuccess = false;
+        }
+        return isSuccess;
+    }
+
+    @Override
+    public boolean removeDept(Integer id) {
+        boolean isSucces = false;
+        try {
+            Integer row = deptDao.deleteById(id);
+            if (row &gt; 0) {
+                isSucces = true;
+            }
+        } catch (Exception e) {
+            isSucces = false;
+        }
+        return isSucces;
+    }
+
+    @Override
+    public boolean modifyDept(Dept dept) {
+        boolean isSuccess = false;
+        try {
+            int row = deptDao.update(dept);
+            if (row &gt; 0) {
+                isSuccess = true;
+            }
+        } catch (Exception e) {
+            isSuccess = false;
+        }
+        return isSuccess;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List&lt;Dept&gt; findDeptList(Integer pageIndex, Integer pageSize) {
+        Map&lt;String, Object&gt; params = new HashMap&lt;&gt;();
+        PageModel pageModel = new PageModel();
+        pageModel.setPageIndex(pageIndex);
+        if (pageSize &lt;= 0) {
+            pageSize = 10;
+        }
+        pageModel.setPageSize(pageSize);
+        Integer count = deptDao.count(params);
+        pageModel.setRecordCount(count);
+        params.put(&quot;pageModel&quot;, pageModel);
+        return deptDao.selectByPage(params);
+    }
+}</code></pre><p>在这里需要特别注意的是，对数据进行插入、删除、修改的时候，要返回一个boolean变量值，告诉调用者有没有成功。对于mybatis来说，插入、删除、修改成功的时候，都会返回受影响的行数，也就是说大于0的，失败的时候会返回0。在数据插入的时候，有这样一条配置：</p>
+<pre><code>@InsertProvider(type = DeptDynaSqlProvider.class, method = &quot;insertDept&quot;)
+@SelectKey(statement = &quot;SELECT LAST_INSERT_ID() AS id&quot;, keyProperty = &quot;id&quot;, keyColumn = &quot;id&quot;, before = false, resultType = Integer.class)
+Integer save(Dept dept);</code></pre><p><strong>其中@SelectKey的作用就是把当前插入这条数据的主键id值，赋值给dept对象的id属性，这样就可以通过dept对象的id属性获取到mybatis数据库中的主键值，这对于有些接口业务实现是需要的。</strong></p>
+<p><strong>最后一步，</strong>我们来写单元测试来验证下，对dept表进行增删改查是否正常。</p>
+<p><strong>查询部门列表：</strong></p>
+<pre><code>@RunWith(SpringRunner.class)
+@SpringBootTest
+public class DeptServiceTests {
+    @Autowired
+    private DeptService deptService;
+
+    @Test
+    public void testDeptList() {
+        List&lt;Dept&gt; deptList = deptService.findDeptList(1, 10);
+        System.out.println(&quot;测试部门列表 : &quot; + deptList);
+        Assert.assertTrue(deptList.size() &gt; 0);
+    }
+}</code></pre><p>日志打印信息如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-c78ac8c2f6dba8a0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-2.png"></p>
+<p>从日志信息可以看到SQL日志给打印出来了，另外，部门列表也给正确打印出来了。这说明数据库配置、mybatis配置都没有问题了，可以正常使用了。</p>
+<p><strong>增加一个部门：</strong></p>
+<pre><code>@Test
+public void testAddDept() {
+    Dept dept = new Dept(&quot;测试部1&quot;, &quot;测试部1&quot;);
+    boolean isSuccess = deptService.addDept(dept);
+    System.out.println(&quot;增加部门的主键id：&quot; + dept.getId());
+    Assert.assertEquals(true, isSuccess);
+}
+
+@Test
+@Transactional
+public void testAddDept2() {
+    Dept dept = new Dept(&quot;测试部2&quot;, &quot;测试部2&quot;);
+    boolean isSuccess = deptService.addDept(dept);
+    System.out.println(&quot;增加部门的主键id: &quot; + dept.getId());
+    Assert.assertEquals(true, isSuccess);
+}</code></pre><p>这两个方法有什么区别呢？我们来跑下看下区别，运行testAddDept()方法得到的日志信息如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-d288fd474ba62395.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-3.png"></p>
+<p>可以看到增加部门的主键id为46，查询数据库可以看到该条记录已经存在数据库当中了。如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-c673105a96da8c61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-4.png"></p>
+<p>运行testAddDept2()得到的日志信息如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-de2b515de9951e8f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-5.png"></p>
+<p>可以看到增加部门的主键id为47，但是查询数据库后却发现没有id为47这条数据，查询数据库结果如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-ed60ae150cb5bc54.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-6.png"></p>
+<p>这是为什么呢？这是因为@Transactional注解的原因，我们看到主键的id为47，这说明数据是插入成功了，否则的话id就不存在的，但是在这个测试方法执行完之后，事务进行了下回滚，所以数据库中就没有这条数据了。</p>
+<p>其他修改、删除测试方法，这里就不在叙述了，大家可以自己实现下。</p>
+<h3 id="加密与解密"><a href="#加密与解密" class="headerlink" title="加密与解密"></a>加密与解密</h3><p><strong>Base64算法</strong></p>
+<p>Base64算法最早应用于解决电子邮件传输的问题。Base64是一种基于64个字符的编码算法，根据RFC 2045的定义：Base64内容传送编码是一种以任意8位字节序列组合的描述形式，这种形式不易被人直接识别。经过Base64编码后的数据会比原始数据略长，为原来的4/3倍。经Base64编码后的字符串的字符数是以4为单位的整数倍。Base64算法在org.springframework.util包中有实现，下面来测试下base64的编码与解码，如下所示：</p>
+<pre><code>@RunWith(SpringRunner.class)
+@SpringBootTest
+public class EncryptTests {
+    @Test
+    public void testBase64() {
+        String str = &quot;123456&quot;;
+        String encodeStr = Base64Utils.encodeToString(str.getBytes());
+        System.out.println(&quot;base64 encode str : &quot; + encodeStr);
+        String decodeStr = new String(Base64Utils.decodeFromString(encodeStr));
+        System.out.println(&quot;base64 decode str : &quot; + decodeStr);
+        Assert.assertEquals(str, decodeStr);
+    }
+}</code></pre><p>如果str等于decodeStr则说明测试通过，日志信息如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-798079774fb533ed.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-7.png"></p>
+<p><strong>MD5算法</strong></p>
+<p>MD5算法主要用于验证数据的完整性，md5算法的实现分为两个部分，一部分是对字符串进行加密，一部分是对文件进行加密，实现如下所示：</p>
+<pre><code>public class MD5Util {
+    private static byte[] hexBase = {48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 97, 98, 99, 100, 101, 102};
+
+    public static String fileHash(String filePath) {
+        return fileHash(new File(filePath));
+    }
+
+    /**
+     * 用DigestInputStream来计算大文件的md5，也避免内存吃不消。
+     */
+    public static String fileHash(File file) {
+        if (file == null) {
+            return &quot;&quot;;
+        }
+
+        try {
+            int bufferSize = 1024 * 1024;
+            MessageDigest messageDigest = MessageDigest.getInstance(&quot;MD5&quot;);
+            FileInputStream fis = new FileInputStream(file);
+            DigestInputStream dis = new DigestInputStream(fis, messageDigest);
+            byte[] buffer = new byte[bufferSize];
+            while (dis.read(buffer) &gt; 0) ;
+            messageDigest = dis.getMessageDigest();
+            byte[] result = messageDigest.digest();
+            return byteArrayToHex(result);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return &quot;&quot;;
+    }
+
+    public static String stringMD5(String string) {
+        return stringMD5(string, &quot;utf-8&quot;);
+    }
+
+    public static String stringMD5(String string, String charsetName) {
+        if (StringUtils.isEmpty(string)) {
+            return &quot;&quot;;
+        }
+        try {
+            byte[] data = string.getBytes(charsetName);
+            MessageDigest messageDigest = MessageDigest.getInstance(&quot;MD5&quot;);
+            messageDigest.update(data);
+            byte[] result = messageDigest.digest();
+            return byteArrayToHex(result);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+        return &quot;&quot;;
+    }
+
+    /**
+     * md5对字符串加密
+     * 方法一：使用hexBase 48, 49, 50, 51
+     * 方法二：hexDigts 0 1 2 3 4 5
+     * 这两种方法得到的md5加密结果是一样的。
+     * 实现字节数组到十六进制的转换
+     */
+    public static String byteArrayToHex(byte[] bytes) {
+        if (ArrayUtils.isEmpty(bytes)) {
+            return &quot;&quot;;
+        }
+
+        StringBuffer stringBuffer = new StringBuffer();
+        int length = bytes.length;
+        for (int i = 0; i &lt; length; i++) {
+            stringBuffer.append((char) hexBase[((bytes[i] &amp; 0xF0) &gt;&gt; 4)]);
+            stringBuffer.append((char) hexBase[(bytes[i] &amp; 0xF)]);
+        }
+
+        return stringBuffer.toString();
+    }
+
+    public static String byteArrayToHex2(byte[] byteArray) {
+        char[] hexDigits = {&apos;0&apos;,&apos;1&apos;,&apos;2&apos;,&apos;3&apos;,&apos;4&apos;,&apos;5&apos;,&apos;6&apos;,&apos;7&apos;,&apos;8&apos;,&apos;9&apos;, &apos;A&apos;,&apos;B&apos;,&apos;C&apos;,&apos;D&apos;,&apos;E&apos;,&apos;F&apos; };
+        char[] resultCharArray =new char[byteArray.length * 2];
+        int index = 0;
+        for (byte b : byteArray) {
+            resultCharArray[index++] = hexDigits[b&gt;&gt;&gt;4 &amp; 0xf];
+            resultCharArray[index++] = hexDigits[b &amp; 0xf];
+        }
+        return new String(resultCharArray).toLowerCase();
+    }
+
+    public static String createMD5Sign(SortedMap signMap, String key) {
+        StringBuffer stringBuffer = new StringBuffer();
+        Set&lt;Map.Entry&lt;String, String&gt;&gt; paramSet = signMap.entrySet();
+        for (Map.Entry&lt;String, String&gt; entry : paramSet) {
+            String k = entry.getKey();
+            if (k.equals(&quot;sign&quot;) || k.equals(&quot;mysign&quot;) || k.equals(&quot;code&quot;)) {
+                continue;
+            }
+            String v = entry.getValue();
+            stringBuffer.append(k + &quot;=&quot; + v + &quot;&amp;&quot;);
+        }
+        String params = stringBuffer.append(&quot;key=&quot; + key).toString();
+        return stringMD5(params, &quot;utf-8&quot;).toUpperCase();
+    }
+}</code></pre><p>先对字符串md5加密进行下测试，如下：</p>
+<pre><code>@Test
+public void testMD5Str() {
+    String str = &quot;456789123456&quot;;
+    String md5Str = MD5Util.stringMD5(str);
+    System.out.println(&quot;md5 str : &quot; + md5Str);
+    Assert.assertTrue(md5Str.length() == 32);
+}</code></pre><p>解释下为什么md5Str的长度等于32就认为md5加密成功了，因为md5算法需要获得一个随机长度的信息并产生一个128位的信息摘要，如果将这个128位的二进制摘要信息换算成十六进制，可以得到一个32位的字符串。日志信息如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-a4b601911c2004af.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-8.png"></p>
+<p>再测试一下对文件进行md5加密，文件为电脑桌面的一张图片，如下：</p>
+<pre><code>@Test
+public void testMD5File() {
+    File file = new File(&quot;/Users/Bruce/Desktop/hrm4.jpg&quot;);
+    String md5File = MD5Util.fileHash(file);
+    System.out.println(&quot;md5 file : &quot; + md5File);
+    Assert.assertTrue(md5File.length() == 32);
+}</code></pre><p>日志信息如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-6a3b20ebc84cdd0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-9.png"></p>
+<p><strong>在对大文件进行加密的时候，一定要使用DigestInputStream，这样可以避免内存吃不消，也可以使加密速度大大提高。</strong></p>
+<p><strong>AES算法</strong></p>
+<p>AES算法的出现主要就是为了解决DES算法出现的漏洞，实现如下：</p>
+<pre><code>public class AESUtil {
+    public static String encrypt(String data, String key, String iv) {
+        return encrypt(data, key, iv, &quot;utf-8&quot;);
+    }
+
+    public static String encrypt(String data, String key, String iv, String charsetName) {
+        try {
+            return encrypt(data.getBytes(charsetName), key.getBytes(charsetName), iv.getBytes(charsetName));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return &quot;&quot;;
+    }
+
+    public static String encrypt(byte[] data, byte[] key, byte[] iv) {
+        // 这里的key为了与iOS统一，不可以使用KeyGenerator、SecureRandom、SecretKey生成
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, &quot;AES&quot;);
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+        try {
+            Cipher cipher = Cipher.getInstance(&quot;AES/CBC/PKCS5Padding&quot;);
+            cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivParameterSpec);
+            byte[] result = cipher.doFinal(data);
+            // 对加密后的数据，尽心base64编码
+            return Base64Util.encode(result);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        }
+        return &quot;&quot;;
+    }
+
+    public static String decrypt(String data, String key, String iv){
+        return decrypt(data, key, iv, &quot;utf-8&quot;);
+    }
+
+    public static String decrypt(String data, String key, String iv, String charsetName) {
+        try {
+            byte[] contentData = Base64Util.decodeBytes(data.getBytes(charsetName));
+            return decrypt(contentData, key.getBytes(charsetName), iv.getBytes(charsetName), charsetName);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return &quot;&quot;;
+    }
+
+    public static String decrypt(byte[] data, byte[] key, byte[] iv, String charsetName) {
+        SecretKeySpec secretKeySpec = new SecretKeySpec(key, &quot;AES&quot;);
+        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv);
+        try {
+            Cipher cipher = Cipher.getInstance(&quot;AES/CBC/PKCS5Padding&quot;);
+            cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
+            byte[] result = cipher.doFinal(data);
+            return new String(result, charsetName);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (InvalidAlgorithmParameterException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return &quot;&quot;;
+    }
+}</code></pre><p>对AES算法进行下测试，如下：</p>
+<pre><code>@Test
+public void testAES() {
+    String str = &quot;0987654f321&quot;;
+    String encryptStr = AESUtil.encrypt(str, BootConstants.AES_KEY, BootConstants.AES_IV);
+    System.out.println(&quot;encryptStr : &quot; + encryptStr);
+    String decryptStr = AESUtil.decrypt(encryptStr, BootConstants.AES_KEY, BootConstants.AES_IV);
+    System.out.println(&quot;decryptStr : &quot; + decryptStr);
+    Assert.assertEquals(str, decryptStr);
+}</code></pre><p>其中KEY、IV都是我们自定义的，具体可以看下Java加密与解密这本书，上面对KEY和IV有详细的解释，日志信息如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-23e5a8c87559b293.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-10.png"></p>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>第一步，根据Restful接口设计，需要实现的接口列表如下所示：</p>
+<pre><code>GET /hrm/api/depts 查询部门列表
+GET /hrm/api/depts/id 查询指定部门信息
+POST /hrm/api/depts 增加一个部门
+DELETE /hrm/api/depts/id 删除指定部门
+PUT /hrm/api/depts/id 更新某个部门信息(需要提供整个部门的信息)
+PATCH /hrm/api/depts/id 更新某个部门信息(需要提供部门的部分信息)</code></pre><p>第二步，自定义注解，因为请求接口，有些参数是必须要传的，这个时候就要用到自定义注解了，如下所示：</p>
+<pre><code>@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.RUNTIME)
+public @interface DataValidate {
+    String[] requiredParams() default {};
+}</code></pre><p>第三步：配置拦截器，每一个请求过来，都要先进行下验证，验证sign签名是否正确，验证请求时间是否有效，验证必传参数是否传过来了，这些都需要用到拦截器的，比如验证sign签名是否正确：</p>
+<pre><code>  // 对数据签名进行校验 需要的是sortedMap，看看这样转换是不是可以的
+String sign = jsonObject.getString(&quot;sign&quot;);
+Map&lt;String, Object&gt; map = JSONObject.toJavaObject(jsonObject, Map.class);
+// TreeMap默认是升序排列的，如果要改为降序采用其他方式来实现
+SortedMap&lt;String, Object&gt; sortedMap = new TreeMap&lt;&gt;(map);
+String sysSign = MD5Util.createMD5Sign(sortedMap, BootConstants.SIGN_KEY);
+if (!sysSign.equals(sign)) {
+    logger.info(&quot;数据签名校验失败&quot;);
+    // 在这里返回错误的信息给客户端
+    JSONObject responseJson = new JSONObject();
+    responseJson.put(BootConstants.CODE_KEY, StatusCode.ERROR_SIGN_INVALIDATE);
+    responseJson.put(BootConstants.MESSAGE_KEY, &quot;数据签名校验失败&quot;);
+    String jsonStr = JSON.toJSONString(responseJson, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullStringAsEmpty);
+    String responseStr = AESUtil.encrypt(jsonStr, BootConstants.AES_KEY, BootConstants.AES_IV);
+    response.getWriter().write(responseStr);
+    return false;
+}</code></pre><p>完整的拦截器代码，会在<strong>文章末尾开源出来自己写的Java后台小项目</strong>。</p>
+<p>第三步，定义表的常量、项目当中要用到的一些常量，如下所示：</p>
+<pre><code>public class StatusCode {
+    public static final Integer SUCCESS = 0; // 成功
+    public static final Integer ERROR = -1; //错误信息
+
+    // app端使用100开头的
+    public static final Integer ERROR_TIMEOUT = 100; // 请求时间不合法
+    public static final Integer ERROR_SIGN_INVALIDATE = 101; // 签名校验失败
+    public static final Integer ERROR_REQUIREDPARAMS_LOST = 102; // 必传参数未传
+    public static final Integer ERROR_DATA_EMPTY = 103; // 数据为空
+    public static final Integer ERROR_UNKNOW = 104; // 系统错误
+
+    // 后台网站使用200开头的 以后其他类型以此类推 通用的错误信息用状态码给表示出来，特殊的错误信息用code = -1来标识即可
+}
+
+public class HrmConstants {
+    // 数据库常量表
+    public static final String USERTABLE = &quot;user_inf&quot;;
+    public static final String DEPTTABLE = &quot;dept_inf&quot;;
+    public static final String JOBTABLE = &quot;job_inf&quot;;
+    public static final String EMPLOYEETABLE = &quot;employee_inf&quot;;
+    public static final String NOTICETABLE = &quot;notice_inf&quot;;
+    public static final String DOCUMENTTABLE = &quot;document_inf&quot;;
+
+    // 登录
+    public static final String LOGIN = &quot;loginForm&quot;;
+    // 用户的Session对象
+    public static final String USER_SESSION = &quot;user_session&quot;;
+    // 默认每页4条数据
+    public static int PAGE_DEFAULT_SIZE = 4;
+}</code></pre><p>现在我们来写个单元测试，来验证下配置的拦截器是否起作用，测试时间是否有效为例，剩下的可以在开源项目中找到：</p>
+<pre><code>@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+public class DataSecurityInterceptorTests {
+    @Autowired
+    private MockMvc mockMvc;
+
+    @Test
+    public void testTimeValidate() {
+        SortedMap&lt;String, String&gt; sortedMap = new TreeMap&lt;&gt;();
+        //sortedMap.put(&quot;timeStamp&quot;, System.currentTimeMillis()+&quot;&quot;);
+        sortedMap.put(&quot;timeStamp&quot;, &quot;1509416666000&quot;);
+        sortedMap.put(&quot;deptId&quot;, &quot;1&quot;);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry&lt;String, String&gt; entry : sortedMap.entrySet()) {
+            stringBuilder.append(entry.getKey() + &quot;=&quot; + entry.getValue());
+        }
+        String sign = MD5Util.createMD5Sign(sortedMap, BootConstants.SIGN_KEY);
+        System.out.println(&quot;sign : &quot; + sign);
+        sortedMap.put(&quot;sign&quot;, sign);
+
+        String mapStr = JSON.toJSONString(sortedMap, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullStringAsEmpty);
+        String encryptStr = AESUtil.encrypt(mapStr, BootConstants.AES_KEY, BootConstants.AES_IV);
+
+        try {
+            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(&quot;/hrm/api/depts/id&quot;)
+                .param(&quot;Encrypt&quot;, encryptStr)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn();
+            String content = mvcResult.getResponse().getContentAsString();
+            System.out.println(&quot;content = &quot; + content);
+            String decryptStr = AESUtil.decrypt(content, BootConstants.AES_KEY, BootConstants.AES_IV);
+            System.out.println(&quot;解密后的字符串: &quot; + decryptStr);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre><p>第四步，编写DeptController的代码，以获取部门列表，其余完整的，可以在文章末尾开源的项目中找到：</p>
+<pre><code>@RestController
+public class DeptController {
+    private static final Logger logger = LoggerFactory.getLogger(DeptController.class);
+    @Autowired
+    @Qualifier(&quot;deptService&quot;)
+    private DeptService deptService;
+
+    /**
+     * 在查询列表的时候，有这样一个情况：如果当前页面是否超过了总页数:如果超过了默认给最后一页作为当前页。
+     */
+    @RequestMapping(value = &quot;/hrm/api/depts&quot;, method = RequestMethod.GET)
+    @DataValidate(requiredParams = {&quot;pageIndex&quot;})
+    public void selectDeptList(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject requestJson = (JSONObject) request.getAttribute(BootConstants.REQUESTDATA);
+        if (!requestJson.isEmpty()) {
+            JSONObject resultJson = new JSONObject();
+
+            String pageIndex = requestJson.getString(&quot;pageIndex&quot;);
+            String pageSize = requestJson.getString(&quot;pageSize&quot;);
+            if (StringUtils.isEmpty(pageSize)) {
+                pageSize = &quot;10&quot;;
+            }
+            List&lt;Dept&gt; deptList = deptService.findDeptList(Integer.parseInt(pageIndex), Integer.parseInt(pageSize));
+            resultJson.put(BootConstants.CODE_KEY, StatusCode.SUCCESS);
+            resultJson.put(BootConstants.MESSAGE_KEY, &quot;请求成功&quot;);
+            if (deptList != null &amp;&amp; deptList.size() &gt; 0) {
+                String deptStr = JSON.toJSONString(deptList, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullStringAsEmpty);
+                JSONArray deptJsonArray = JSONArray.parseArray(deptStr);
+                resultJson.put(BootConstants.DATA_KEY, deptJsonArray);
+            } else {
+                JSONArray emptyJsonArray = new JSONArray();
+                resultJson.put(BootConstants.DATA_KEY, emptyJsonArray);
+            }
+
+            request.setAttribute(BootConstants.REQUESTAFTERDATA, resultJson);
+        }
+    }
+}</code></pre><p>在编写Controller代码的时候，特别要注意fastjson的问题，<strong>fastjson默认对列表会存在循环引用，</strong>也就是会出现ref的情况，这个时候就要把循环引用给关闭掉。另外，<strong>fastjson默认也会把属性值为null或者空的给过滤掉，不显示出来，</strong>要设置其序列化的属性才可以让其给显示出来。这点觉得fastjson设计的不太友好，可能阿里巴巴内部因为业务需求是这样要求的，对阿里巴巴内部使用可能比较方便，但是开源出来，面向大众的组件，就不应该这样设计了，吐槽一下。</p>
+<p>第五步，我们通过两种测试来验证下请求部门列表是否正常，第一种使用mockMvc来进行测试，第二种使用httpclient来发送真实的网络请求来测试，首先看下第一种测试，如下所示：</p>
+<pre><code>@RunWith(SpringRunner.class)
+@SpringBootTest
+@AutoConfigureMockMvc
+public class DeptControllerTests {
+    @Autowired
+    private MockMvc mockMvc;
+
+    @MockBean
+    private DeptService deptService;
+
+    @Before
+    public void setUp() throws Exception {
+        Dept dept = new Dept();
+        dept.setId(1);
+        dept.setDepartName(&quot;研发部&quot;);
+        dept.setRemark(&quot;研发部&quot;);
+        // given的主要作用就是对controller下面的接口进行下快速验证而已，并不会发所有的数据全部返回给你的。
+        BDDMockito.given(deptService.findDeptList(1, 10)).willReturn(Arrays.asList(dept));
+    }
+
+    @Test
+    public void testDeptList() throws Exception {
+        SortedMap&lt;String, String&gt; sortedMap = new TreeMap&lt;&gt;();
+        sortedMap.put(&quot;timeStamp&quot;, System.currentTimeMillis()+&quot;&quot;);
+        sortedMap.put(&quot;pageIndex&quot;, &quot;1&quot;);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (Map.Entry&lt;String, String&gt; entry : sortedMap.entrySet()) {
+            stringBuilder.append(entry.getKey() + &quot;=&quot; + entry.getValue());
+        }
+        String sign = MD5Util.createMD5Sign(sortedMap, BootConstants.SIGN_KEY);
+        System.out.println(&quot;sign : &quot; + sign);
+        sortedMap.put(&quot;sign&quot;, sign);
+
+        String mapStr = JSON.toJSONString(sortedMap, SerializerFeature.DisableCircularReferenceDetect, SerializerFeature.WriteMapNullValue, SerializerFeature.WriteNullStringAsEmpty);
+        String encryptStr = AESUtil.encrypt(mapStr, BootConstants.AES_KEY, BootConstants.AES_IV);
+
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get(&quot;/hrm/api/depts&quot;)
+            .param(&quot;Encrypt&quot;, encryptStr)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(MockMvcResultMatchers.status().isOk())
+            .andDo(MockMvcResultHandlers.print())
+            .andReturn();
+        String content = mvcResult.getResponse().getContentAsString();
+        System.out.println(&quot;content = &quot; + content);
+        String decryptStr = AESUtil.decrypt(content, BootConstants.AES_KEY, BootConstants.AES_IV);
+        JSONObject resultJson = JSONObject.parseObject(decryptStr);
+        System.out.println(&quot;部门列表测试信息 : &quot; + resultJson);
+    }
+}</code></pre><p>日志信息如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-bfc8f8ec7c5a8ffc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-11.png"></p>
+<p>使用httpClient来进行下测试，如下所示：</p>
+<pre><code>@RunWith(SpringRunner.class)
+@SpringBootTest
+public class DeptHttpClientTests {
+    /**
+     * 测试GET方法：部门列表、单独一个部门
+     */
+    @Test
+    public void testDeptList() {
+        SortedMap&lt;String, String&gt; sortedMap = new TreeMap&lt;&gt;();
+        sortedMap.put(&quot;pageIndex&quot;, &quot;1&quot;);
+        String encryptStr = EncryptUtils.getEncryptStr(sortedMap);
+        try {
+            URIBuilder builder = new URIBuilder(BootConstants.LOCAL_HOST+&quot;/hrm/api/depts&quot;)
+                .addParameter(&quot;Encrypt&quot;, encryptStr);
+            String content = HttpUtils.sendGetRequest(builder.build());
+            System.out.println(&quot;content = &quot; + content);
+            String decryptStr = EncryptUtils.getDecryptStr(content);
+            JSONObject resultJson = JSONObject.parseObject(decryptStr);
+            System.out.println(&quot;部门列表测试信息 : &quot; + resultJson);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+    }
+}</code></pre><p>日志信息如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-fb417156c2b3c99b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring-boot 1-12.png"></p>
+<p>从日志信息可以看出两者的区别了，使用mockMvc的方式只是把假定的列表值给打印出来了，这种方式也验证了其查询部门列表方法是成功的。使用httpclient发送真实的网络请求把所有的部门列表值都给打印出来了。两种方式都有具体的使用场景，读者可以根据自己的需要去使用。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>本篇文章大概介绍了下写一个完整接口的所有步骤和流程，具体的代码实现可以参考我开源出来的项目代码。</p>
+<p><a href="https://github.com/guoshimeihua/SpringBootServer.git" target="_blank" rel="noopener">Java后台小项目开源地址</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" data-id="ck5cjpo70001o5yt58n87333n" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          如何使用Spring Boot从0到1搭建一个Java后台（三）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">如何使用Spring Boot从0到1搭建一个Java后台（一）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

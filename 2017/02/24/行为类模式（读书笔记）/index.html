@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>行为类模式(读书笔记) | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在读秦小波写的设计模式之禅这本书，行为类模式读完了，现在做一个读书笔记总结。行为类模式包括责任链模式、命令模式、解释器模式、迭代器模式、中介者模式、备忘录模式、观察者模式、状态模式、策略模式、模板方法模式、访问者模式。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="行为类模式(读书笔记)">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/02/24/%E8%A1%8C%E4%B8%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="最近在读秦小波写的设计模式之禅这本书，行为类模式读完了，现在做一个读书笔记总结。行为类模式包括责任链模式、命令模式、解释器模式、迭代器模式、中介者模式、备忘录模式、观察者模式、状态模式、策略模式、模板方法模式、访问者模式。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-78d0f969ec1e1911.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-1f63c0ae289df981.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-21fa1f3d99a4c952.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-7303b53ec8725f3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-c5dd3fb81c650ccd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-961840a116f1fd2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-4e176c450c958f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-d3abcac0d581dc9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-d5464f41621dd93d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-c6fa56d0936b3470.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-b7dbafa1f04ab1cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-d859750ec37c66ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-804dd91a4b8cf892.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-d9d0b5ce07426b75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-a13badaf9e305511.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-d7e078be71190c02.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-02-23T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-03-08T01:29:05.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-78d0f969ec1e1911.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-行为类模式（读书笔记）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/24/%E8%A1%8C%E4%B8%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" class="article-date">
+  <time datetime="2017-02-23T16:00:00.000Z" itemprop="datePublished">2017-02-24</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      行为类模式(读书笔记)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近在读<strong>秦小波</strong>写的<strong>设计模式之禅</strong>这本书，行为类模式读完了，现在做一个读书笔记总结。行为类模式包括责任链模式、命令模式、解释器模式、迭代器模式、中介者模式、备忘录模式、观察者模式、状态模式、策略模式、模板方法模式、访问者模式。</p>
+</blockquote>
+ <a id="more"></a>
+
+<h3 id="责任链模式-Chain-Pattern"><a href="#责任链模式-Chain-Pattern" class="headerlink" title="责任链模式 (Chain Pattern)"></a>责任链模式 (Chain Pattern)</h3><p><strong>定义：使多个对象都有机会处理请求，从而避免了请求的发送者和接受者之间的耦合关系。将这些对象连成一条链，并沿着这条链传递该请求，直到有对象处理它为止。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-78d0f969ec1e1911.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1 chain.png"></p>
+<p><strong>如何理解责任链模式呢？</strong></p>
+<p>通过一个例子来理解下：有A、B、C三个对象，A对象可以处理类型为1的请求，B对象可以处理类型为2的请求，C对象可以处理类型为3的请求，现在发送一个请求request，该怎么处理呢？通常我们会对请求做一下判断，看该请求属于哪一种类型，比如属于类型1就交给A对象处理，处理的逻辑代码大概是这样的：</p>
+<pre><code>if (request.getType == 1) {
+  // 交给对象A处理
+}else if (request.getType == 2) {
+  // 交给对象B处理     
+}else if (request.getType == 3) {
+  // 交给对象C处理    
+}else {
+  // 不做任何处理
+}</code></pre><p>从代码上我们可以看到，写了不少if else语句来判断，显得不是那么优雅，那看下怎么通过责任链模式来解决这个问题。发送一个请求request，会交给A处理，A如果处理不了，就转交给B处理，B如果也处理不了，就转交给C处理，这就是责任链模式，如图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-1f63c0ae289df981.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-2 chain.png"></p>
+<p>那现在使用责任链模式带来了哪些好处呢？最大的好处就是将请求和处理分开，请求者可以不用知道是谁处理的，处理者可以不用知道请求的全貌，两者解耦，提高系统的灵活性。另外，也避免了写大量if else语句。</p>
+<p><strong>注意点：发送一个request请求，在整条链中该请求不会发生变化，这个是使用责任链模式的前提；链中的数量需要控制，避免出现超长链的情况，一般做法是在Handler中设置一个最大节点数量，在setNext方法中判断是否已经是超过其阈值，超过则不允许该链建立，避免无意识地破坏系统的性能。</strong></p>
+<p><strong>责任链模式通用源码</strong></p>
+<pre><code>public abstract class Handler {
+    private Handler nextHandler;
+    // 设置下一个处理者是谁
+    public void setNextHandler(Handler handler) {
+        this.nextHandler = handler;
+    }
+
+    // 每个处理者都有一个处理级别
+    protected abstract Level getHandlerLevel();
+    // 每个处理者都必须实现处理任务
+    protected abstract Response echo(Request request);
+
+    // 每个处理者都必须对请求做出处理
+    public final Response handleMessage(Request request) {
+        Response response = null;
+        if (this.getHandlerLevel().equals(request.getRequestLevel())) {
+            response = this.echo(request);
+        }else {
+            if (this.nextHandler != null) {
+                response = this.nextHandler.handleMessage(request);
+            }else {
+                // 没有适当的处理,业务自行处理
+            }
+        }
+        return response;
+    }
+}
+
+public class ConcreteHandler1 extends Handler {
+    @Override
+    protected Level getHandlerLevel() {
+        // 设置自己的处理级别
+        return null;
+    }
+
+    @Override
+    protected Response echo(Request request) {
+        // 完成逻辑处理
+        return null;
+    }
+}
+
+public class ConcreteHandler2 extends Handler {
+    @Override
+    protected Level getHandlerLevel() {
+        return null;
+    }
+
+    @Override
+    protected Response echo(Request request) {
+        return null;
+    }
+}
+
+public class ConcreteHandler3 extends Handler {
+    @Override
+    protected Level getHandlerLevel() {
+        return null;
+    }
+
+    @Override
+    protected Response echo(Request request) {
+        return null;
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Handler handler1 = new ConcreteHandler1();
+        Handler handler2 = new ConcreteHandler2();
+        Handler handler3 = new ConcreteHandler3();
+        handler1.setNextHandler(handler2);
+        handler2.setNextHandler(handler3);
+
+        Response response = handler1.handleMessage(new Request());
+    }
+}</code></pre><h3 id="命令模式-Command-Pattern"><a href="#命令模式-Command-Pattern" class="headerlink" title="命令模式 (Command Pattern)"></a>命令模式 (Command Pattern)</h3><p><strong>定义：将一个请求封装成一个对象，从而让你使用不同的请求把客户端参数化，对请求排队或者记录请求日志，可以提供命令的撤销和恢复功能。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-21fa1f3d99a4c952.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-3 command.png"></p>
+<p><strong>如何理解命令模式呢？</strong></p>
+<p><strong>命令模式的主旨就是封装命令，使请求者与实现者解耦。</strong>比如，到饭店点菜，客人(请求者)通过服务员(调用者)向厨师(实现者)发送了订单(命令)，该例子就是通过封装命令来使请求者和接收者解耦。</p>
+<p>在责任链模式中举的例子也可以用命令模式来实现，比如发送A命令调用A对象，发送B命令调用B对象，发送C命令调用C对象。如图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-7303b53ec8725f3d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-4 command.png"></p>
+<p>图中的Client就是请求者，A、B、C就是具体的实现者（也称为接收者），从图中可以很明显地看出请求者与实现者解耦了，这就是命令模式，掌握命令模式理解一点就好了，就是把请求封装成命令来执行。</p>
+<p>使用场景：只要你认为是命令的地方就可以采用命令模式，比如，在GUI开发中，一个按钮的点击是一个命令，可以采用命令模式；模拟DOS命令的时候，当然也要采用命令模式；触发反馈机制的处理等。</p>
+<p><strong>注意点：命令模式结合其他模式会更优秀，比如结合责任链模式，实现命令族解析任务；结合模板方法模式，则可以减少Command子类的膨胀问题。</strong></p>
+<p><strong>命令模式通用源码</strong></p>
+<pre><code>public class Invoker {
+    private Command command;
+    // 接收传递过来的命令
+    public void setCommand(Command command) {
+        this.command = command;
+    }
+
+    // 执行命令
+    public void action() {
+        this.command.execute();
+    }
+}
+
+public abstract class Receiver {
+    // 抽象接收者,定义每个接收者都必须完成的任务
+    public abstract void doSomething();
+}
+
+public class ConcreteReceiver1 extends Receiver {
+    @Override
+    public void doSomething() {
+        System.out.println(&quot;处理属于接收者1的业务&quot;);
+    }
+}
+
+public class ConcreteReceiver2 extends Receiver {
+    @Override
+    public void doSomething() {
+        System.out.println(&quot;处理属于接收者2的任务&quot;);
+    }
+}
+
+public abstract class Command {
+    // 指定哪一个接收者
+    protected Receiver receiver;
+    public Command(Receiver receiver) {
+        this.receiver = receiver;
+    }
+
+    // 每个命令类都必须有一个执行命令的方法
+    public abstract void execute();
+}
+
+public class ConcreteCommand1 extends Command {
+    public ConcreteCommand1(Receiver receiver) {
+        super(receiver);
+    }
+
+    @Override
+    public void execute() {
+        super.receiver.doSomething();
+    }
+}
+
+public class ConcreteCommand2 extends Command {
+    public ConcreteCommand2(Receiver receiver) {
+        super(receiver);
+    }
+
+    @Override
+    public void execute() {
+        super.receiver.doSomething();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Invoker invoker = new Invoker();
+
+        // 定义一个发送给接收者的命令
+        Receiver receiver = new ConcreteReceiver1();
+        Command command = new ConcreteCommand1(receiver);
+
+        // 把命令交给调用者去执行
+        invoker.setCommand(command);
+        invoker.action();
+    }
+}</code></pre><h3 id="解释器模式（Interpreter-Pattern）"><a href="#解释器模式（Interpreter-Pattern）" class="headerlink" title="解释器模式（Interpreter Pattern）"></a>解释器模式（Interpreter Pattern）</h3><p><strong>定义：给定一门语言，定义它的文法的一种表示，并定义一个解释器，该解释器使用该表示来解释语言中的句子。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-c5dd3fb81c650ccd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-5 interpreter.png"></p>
+<p><strong>如何理解解释器模式呢？</strong></p>
+<p>举个例子，在抗日战争时期，情报人员交换情报信息都是通过各种密码本的，一名情报人员拿到情报之后，会找到对应的密码本然后去破解得到的情报，这其中的密码本就是文法的一种表示，这就是解释器模式。比如数学中经常用到的公式都可以用解释器模式来实现。</p>
+<p>使用场景：一种特定类型的问题发生的频率足够高；一个简单语法需要解释的场景。</p>
+<p>注意点：尽量不要在重要的模块中使用解释器模式，否则维护会是一个大问题。</p>
+<p><strong>解释器模式通用源码</strong></p>
+<pre><code>public abstract class Expression {
+    // 每个表达式必须有一个解析任务
+    public abstract Object interpreter(Context context);
+}
+
+public class TerminalExpression extends Expression {
+    // 通常终结符表达式只有一个,但是有多个对象
+    @Override
+    public Object interpreter(Context context) {
+        return null;
+    }
+}
+
+public class NonterminalExpression extends Expression {
+    // 每个非终结符表达式都会对其他表达式产生依赖
+    public NonterminalExpression(Expression expression) {
+
+    }
+
+    @Override
+    public Object interpreter(Context context) {
+        // 进行文法处理
+        return null;
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Context ctx = new Context();
+        Stack&lt;Expression&gt; stack = null;
+        //for () 进行语法判断,并产生递归调用.
+        Expression exp = stack.pop();
+        // 具体元素进入场景
+        exp.interpreter(ctx);
+    }
+}</code></pre><h3 id="迭代器模式（Iterator-Pattern）"><a href="#迭代器模式（Iterator-Pattern）" class="headerlink" title="迭代器模式（Iterator Pattern）"></a>迭代器模式（Iterator Pattern）</h3><p><strong>定义：它提供一种方法访问一个容器对象中各个元素，而又不需要暴露该对象的内部细节。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-961840a116f1fd2a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-6 iterator.png"></p>
+<p><strong>如何理解迭代器模式呢？</strong></p>
+<p>迭代器是为容器服务的，那什么是容器呢？能容纳对象的所有类型都可以称之为容器，如Collection集合类型、Set类型等，<strong>迭代器模式就是为解决遍历这些容器中的元素而诞生的。</strong>现在好多语言都已经把迭代器模式集成到自己的API中了，比如JDK 1.2后开始增加了java.util.Iterator这个接口，并把Iterator应用到各个聚合类中了，比如Collection。在Objective-C，我们经常用到的for..in遍历一个数组就内置了迭代器模式。该模式比较简单，不做过多阐述。</p>
+<p><strong>迭代器模式通用源码</strong></p>
+<pre><code>public interface Iterator {
+    // 遍历到下一个元素
+    public Object next();
+    // 是否已经遍历到尾部
+    public boolean hasNext();
+    // 删除当前指向的元素
+    public boolean remove();
+}
+
+public class ConcreteIterator implements Iterator {
+    private Vector vector = new Vector();
+    // 定义当前游标
+    public int cursor = 0;
+    public ConcreteIterator(Vector vector) {
+        this.vector = vector;
+    }
+
+    @Override
+    public boolean hasNext() {
+        if (this.cursor == this.vector.size()) {
+            return false;
+        }else {
+            return true;
+        }
+    }
+
+    @Override
+    public Object next() {
+        Object result = null;
+        if (this.hasNext()) {
+            result = this.vector.get(this.cursor++);
+        }else {
+            result = null;
+        }
+        return result;
+    }
+
+    @Override
+    public boolean remove() {
+        this.vector.remove(this.cursor);
+        return true;
+    }
+}
+
+public interface Aggregate {
+    public void add(Object object);
+    public void remove(Object object);
+    // 由迭代器来遍历所有的元素
+    public Iterator iterator();
+}
+
+public class ConcreteAggregate implements Aggregate {
+    private Vector vector = new Vector();
+
+    @Override
+    public void add(Object object) {
+        this.vector.add(object);
+    }
+
+    @Override
+    public void remove(Object object) {
+        this.vector.remove(object);
+    }
+
+    @Override
+    public Iterator iterator() {
+        return new ConcreteIterator(this.vector);
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        // 声明出容器
+        Aggregate aggregate = new ConcreteAggregate();
+        // 产生对象数据放进去
+        aggregate.add(&quot;abc&quot;);
+        aggregate.add(&quot;123&quot;);
+        aggregate.add(&quot;123456&quot;);
+        // 遍历一下
+        Iterator iterator = aggregate.iterator();
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+
+        // 容器对象确实没有暴露出任何的细节.
+    }
+}</code></pre><h3 id="中介者模式（Mediator-Pattern）"><a href="#中介者模式（Mediator-Pattern）" class="headerlink" title="中介者模式（Mediator Pattern）"></a>中介者模式（Mediator Pattern）</h3><p><strong>定义：用一个中介对象封装一系列的对象交互，中介者使各对象不需要显示地相互作用，从而使其耦合松散，而且可以独立地改变它们之间的交互。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-4e176c450c958f33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-7 mediator.png"></p>
+<p><strong>如何理解中介者模式呢？</strong></p>
+<p>还是举个例子来说明，比如有A、B、C、D四个对象，它们之间的依赖关系如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-d3abcac0d581dc9e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-8 mediator.png"></p>
+<p>从图中可以看出依赖关系密密麻麻，像蜘蛛网一样，要是以这样的方式写出程序来，扩展性与易维护性都非常差，如果使用中介者模式依赖关系会怎样呢？如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-d5464f41621dd93d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-9 mediator.png"></p>
+<p>从图中可以看出现在依赖关系比较清晰明了，各个对象之间没有相互依赖的关系，使对象之间解耦，各个对象之间的联系与交互通过中介者Mediator来完成。中介者模式的优点就是减少了类间的依赖，把原有的一对多的依赖变成了一对一的依赖，同事类只依赖中介者，减少了依赖，同时也降低了类间的耦合。</p>
+<p>使用场景：适用于多个对象之间紧密耦合的情况，紧密耦合的标准是：在类图中出现了蜘蛛网结构，在这种情况下一定要考虑使用中介者模式，这有利于把蜘蛛网梳理为星型结构，使原本复杂混乱的关系变得清晰简单。</p>
+<p><strong>注意：具体的同事类中，有两种类型的方法：一种行为叫做自发行为，与其他的同事类或中介者没有任何的依赖；第二种是必须依赖中介者才能完成的行为，叫做依赖方法。</strong></p>
+<p><strong>中介者模式通用源码</strong></p>
+<pre><code>public class Colleague {
+    protected Mediator mediator;
+
+    // 每个同事都必须有中介
+    public Colleague(Mediator mediator) {
+        this.mediator = mediator;
+    }
+}
+
+public class ConcreteColleague1 extends Colleague {
+    public ConcreteColleague1(Mediator mediator) {
+        super(mediator);
+    }
+
+    // 自有方法 self-method
+    public void selfMethod1() {
+        // 处理自己的业务逻辑
+    }
+
+    // 依赖方法
+    public void depMethod1() {
+        // 交给中介者去处理
+        super.mediator.doSomething1();
+    }
+}
+
+public class ConcreteColleague2 extends Colleague {
+    public ConcreteColleague2(Mediator mediator) {
+        super(mediator);
+    }
+
+    // 自有方法 self-method
+    public void selfMethod2() {
+        // 处理自己的业务逻辑
+    }
+
+    // 依赖方法 dep-method
+    public void depMethod2() {
+        // 交给中介者去处理
+        super.mediator.doSomething2();
+    }
+}
+
+public abstract class Mediator {
+    // 定义同事类
+    protected ConcreteColleague1 concreteColleague1;
+    protected ConcreteColleague2 concreteColleague2;
+
+    // 通过getter/setter方法把同事注入进来
+
+    public ConcreteColleague1 getConcreteColleague1() {
+        return concreteColleague1;
+    }
+
+    public void setConcreteColleague1(ConcreteColleague1 concreteColleague1) {
+        this.concreteColleague1 = concreteColleague1;
+    }
+
+    public ConcreteColleague2 getConcreteColleague2() {
+        return concreteColleague2;
+    }
+
+    public void setConcreteColleague2(ConcreteColleague2 concreteColleague2) {
+        this.concreteColleague2 = concreteColleague2;
+    }
+
+    // 中介者模式的业务逻辑
+    public abstract void doSomething1();
+    public abstract void doSomething2();
+}
+
+public class ConcreteMediator extends Mediator {
+    @Override
+    public void doSomething1() {
+        super.concreteColleague1.selfMethod1();
+        super.concreteColleague2.selfMethod2();
+    }
+
+    @Override
+    public void doSomething2() {
+        super.concreteColleague1.selfMethod1();
+        super.concreteColleague2.selfMethod2();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Mediator mediator = new ConcreteMediator();
+        ConcreteColleague1 concreteColleague1 = new ConcreteColleague1(mediator);
+        concreteColleague1.depMethod1();
+
+        ConcreteColleague2 concreteColleague2 = new ConcreteColleague2(mediator);
+        concreteColleague2.depMethod2();
+    }
+}</code></pre><h3 id="备忘录模式（Memento-Pattern）"><a href="#备忘录模式（Memento-Pattern）" class="headerlink" title="备忘录模式（Memento Pattern）"></a>备忘录模式（Memento Pattern）</h3><p><strong>定义：在不破坏封装性的前提下，捕获一个对象的内部状态，并在该对象之外保存这个状态。这样以后就可将该对象恢复到原先保存的状态。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-c6fa56d0936b3470.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-10 memento.png"></p>
+<p><strong>如何理解备忘录模式呢？</strong></p>
+<p>我们先看下类图中三个角色的作用：Originator发起人角色，记录当前时刻的内部状态，负责定义哪些属于备份范围的状态，负责创建和恢复备忘录数据；Memento备忘录角色，负责存储Originator发起人对象的内部状态，在需要的时候提供发起人需要的内部状态；Caretaker备忘录管理员角色，对备忘录进行管理、保存和提供备忘录。</p>
+<p>备忘录是比较好理解的，就是把当前对象的状态给存储起来，以便需要的时候恢复到记录的状态。比如备忘录模式与命令模式结合起来，则可以实现命令的撤销与恢复。</p>
+<p><strong>注意：备忘录的生命周期，创建出来以后就要在最近的代码中使用，要主动管理它的生命周期，建立就要使用，不使用就要立刻删除其引用，等待垃圾回收器对它的回收处理。</strong></p>
+<p><strong>备忘录模式通用源码</strong></p>
+<pre><code>public class Originator {
+    // 内部状态
+    private String state = &quot;&quot;;
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    // 创建一个备忘录
+    public Memento createMemento() {
+        return new Memento(this.state);
+    }
+
+    // 恢复一个备忘录
+    public void restoreMemento(Memento memento) {
+        this.setState(memento.getState());
+    }
+}
+
+public class Memento {
+    // 发起人内部状态
+    private String state = &quot;&quot;;
+    public Memento(String state) {
+        this.state = state;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+}
+
+public class Caretaker {
+    private Memento memento;
+
+    public Memento getMemento() {
+        return memento;
+    }
+
+    public void setMemento(Memento memento) {
+        this.memento = memento;
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Originator originator = new Originator();
+        Caretaker caretaker = new Caretaker();
+        caretaker.setMemento(originator.createMemento());
+        originator.restoreMemento(caretaker.getMemento());
+    }
+}</code></pre><h3 id="观察者模式（Observer-Pattern）"><a href="#观察者模式（Observer-Pattern）" class="headerlink" title="观察者模式（Observer Pattern）"></a>观察者模式（Observer Pattern）</h3><p><strong>定义：定义对象间一种一对多的依赖关系，使得每当一个对象改变状态，则所有依赖它的对象都会得到通知并被自动更新。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-b7dbafa1f04ab1cd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-11 observer.png"></p>
+<p><strong>如何理解观察者模式呢？</strong></p>
+<p>观察者模式就像Objective-C中的通知，当发送一个通知，所有的注册者都可以收到通知的消息。在Java中系统API给我们提供了观察者的功能，如java.util.Observable。我们来看下类图中的各个角色的作用：Subject被观察者，定义被观察者必须实现的职责，它必须能够动态地增加、取消观察者；Observer观察者，观察者收到消息后，即进行update操作，对接收到的信息进行处理。</p>
+<p>使用场景：关联行为场景；事件多级触发场景；跨系统的消息交换场景，如消息队列的处理机制。</p>
+<p><strong>观察者模式通用源码</strong></p>
+<pre><code>public abstract class Subject {
+    // 定义一个观察者数组
+    private Vector&lt;Observer&gt; vector = new Vector&lt;Observer&gt;();
+    // 增加一个观察者
+    public void addObserver(Observer observer) {
+        vector.add(observer);
+    }
+
+    // 删除一个观察者
+    public void deleteObserver(Observer observer) {
+        vector.remove(observer);
+    }
+
+    // 通知所有观察者
+    public void notifyObservers() {
+        for (Observer observer: this.vector) {
+            observer.update();
+        }
+    }
+}
+
+public class ConcreteSubject extends Subject {
+    // 具体的业务
+    public void doSomething() {
+        super.notifyObservers();
+    }
+}
+
+public interface Observer {
+    public void update();
+}
+
+public class ConcreteObserver1 implements Observer {
+    // 实现更新方法
+    @Override
+    public void update() {
+        System.out.println(&quot;观察者1接收到信息,进行处理.&quot;);
+    }
+}
+
+public class ConcreteObserver2 implements Observer {
+    @Override
+    public void update() {
+        System.out.println(&quot;观察者2接收到信息,进行处理.&quot;);
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        // 创建一个被观察者
+        ConcreteSubject subject = new ConcreteSubject();
+        // 观察者1
+        Observer observer1 = new ConcreteObserver1();
+        // 观察者2
+        Observer observer2 = new ConcreteObserver2();
+        subject.addObserver(observer1);
+        subject.addObserver(observer2);
+
+        subject.doSomething();
+    }
+}</code></pre><h3 id="模板方法模式（Template-Method-Pattern）"><a href="#模板方法模式（Template-Method-Pattern）" class="headerlink" title="模板方法模式（Template Method Pattern）"></a>模板方法模式（Template Method Pattern）</h3><p><strong>定义：定义一个操作中的算法的框架，而将一些步骤延迟到子类中。使得子类可以不改变一个算法的结构即可重定义该算法的某些特定步骤。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-d859750ec37c66ac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-12 template.png"></p>
+<p><strong>如何理解模板方法模式呢？</strong></p>
+<p>在类图中，AbstractClass中是有两种类型的方法，一种是基本方法，一种是模板方法，基本方法是交给具体的子类去实现的，模板方法在父类中实现，也可以理解为在这个模板方法中定义了一个操作中的算法的框架，简单来说就是把公共的部分封装在模板方法中。模板方法主要实现对基本方法的调度，完成固定的逻辑。</p>
+<p>使用场景：多个子类有公有的方法，并且逻辑基本相同时；重要复杂的算法，可以把核心算法设计为模板方法，周边的相关细节功能则由各个子类实现；重构时，把相同的代码抽取到父类中，然后通过钩子函数约束其行为。</p>
+<p><strong>钩子方法，其实就是在父类中设置一个方法，比如设置一个改变布尔变量的方法，这个方法的具体值由子类来设置，子类设置之后会改变父类方法的执行顺序，这就是钩子方法。简单来说就是子类可以通过设置父类中的一个方法，从而改变父类中的行为。</strong></p>
+<p><strong>注意：为了防止恶意的操作，一般模板方法都加上final关键字，不允许被覆写。</strong></p>
+<p><strong>模板方法模式通用源码</strong></p>
+<pre><code>public abstract class AbstractClass {
+    // 基本方法 推迟到子类实现
+    protected abstract void doSomething();
+    // 基本方法
+    protected abstract void doAnything();
+    // 模板方法
+    final public void templateMethod() {
+        // 调用基本方法完成基本的逻辑,相当于是算法的框架.
+        this.doSomething();
+        this.doAnything();
+    }
+}
+
+public class ConcreteClass1 extends AbstractClass {
+    @Override
+    protected void doSomething() {
+        System.out.println(&quot;类A做一些A要做的事情&quot;);
+    }
+
+    @Override
+    protected void doAnything() {
+        System.out.println(&quot;类A做一些A要做的所有事情&quot;);
+    }
+}
+
+public class ConcreteClass2 extends AbstractClass {
+    @Override
+    protected void doSomething() {
+        System.out.println(&quot;类B做一些B要做的事情&quot;);
+    }
+
+    @Override
+    protected void doAnything() {
+        System.out.println(&quot;类B做一些B要做的所有事情&quot;);
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        AbstractClass class1 = new ConcreteClass1();
+        class1.templateMethod();
+
+        AbstractClass class2 = new ConcreteClass2();
+        class2.templateMethod();
+    }
+}</code></pre><h3 id="策略模式（Strategy-Pattern）"><a href="#策略模式（Strategy-Pattern）" class="headerlink" title="策略模式（Strategy Pattern）"></a>策略模式（Strategy Pattern）</h3><p><strong>定义：定义一组算法，将每个算法都封装起来，并且使它们之间可以互换。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-804dd91a4b8cf892.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-13 strategy.png"></p>
+<p><strong>如何理解策略模式呢？</strong></p>
+<p>策略模式使用的就是面向对象的继承和多态机制，Context封装角色，屏蔽高层模块对策略、算法的直接访问，封装可能存在的变化。Strategy抽象策略角色，策略、算法家族的抽象，通常为接口，定义每个策略或算法必须具有的方法和属性。ConcreteStrategy具体策略角色，实现抽象策略角色。</p>
+<p>最大的优点就是避免使用多重条件判断，算法可以自由切换，扩展性良好。</p>
+<p>使用场景：多个类只有在算法或行为上稍有不同的场景；算法需要自由切换的场景；需要屏蔽算法规则的场景。</p>
+<p><strong>注意事项：当一个策略家族的具体策略数量超过4个，则需要考虑使用混合模式，解决策略类膨胀和对外暴漏的问题，否则日后维护就是一个荡手山芋。</strong></p>
+<p><strong>策略模式通用源码</strong></p>
+<pre><code>public interface Strategy {
+    // 策略模式的运算法则
+    public void doSomething();
+}
+
+public class ConcreteStrategy1 implements Strategy {
+    @Override
+    public void doSomething() {
+        System.out.println(&quot;具体策略1的运算法则&quot;);
+    }
+}
+
+public class ConcreteStrategy2 implements Strategy {
+    @Override
+    public void doSomething() {
+        System.out.println(&quot;具体策略2的运算法则&quot;);
+    }
+}
+
+public class Context {
+    private Strategy strategy = null;
+    public Context(Strategy strategy) {
+        this.strategy = strategy;
+    }
+
+    // 封装后的策略方法
+    public void doAnything() {
+        this.strategy.doSomething();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Strategy strategy1 = new ConcreteStrategy1();
+        Context context = new Context(strategy1);
+        context.doAnything();
+    }
+}</code></pre><h3 id="访问者模式（Visitor-Pattern）"><a href="#访问者模式（Visitor-Pattern）" class="headerlink" title="访问者模式（Visitor Pattern）"></a>访问者模式（Visitor Pattern）</h3><p><strong>定义：封装一些作用于某种数据结构中的各元素的操作，它可以在不改变数据结构的前提下定义作用于这些元素的新操作。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-d9d0b5ce07426b75.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-14 visitor.png"></p>
+<p><strong>如何理解访问者模式呢？</strong></p>
+<p>先看下类图中几个角色的具体作用：Visitor抽象访问者，声明访问者可以访问哪些元素，具体来说就是定义哪些对象是可以被访问的。ConcreteVisitor具体访问者，它影响访问者访问到一个类后该怎么干，要做什么事情。Element抽象元素，声明接受哪一类访问者访问，程序上是通过accept方法中的参数来定义的。ConcreteElement具体元素，实现accept方法，通常是visitor.visit(this)，基本上都形成了一种模式了。ObjectStruture结构对象，容纳多个不同类、不同接口的容器。</p>
+<p>举个例子来理解下访问者模式，在一个容器中有A、B、C三种不同的对象，A对象允许访问者1进行访问，访问之后执行A操作，B对象允许访问者2进行访问，访问之后执行B操作，C对象允许访问者3进行访问，访问之后执行C操作。看到这里，会觉得和迭代器模式比较相似，<strong>迭代器模式是遍历容器中的每一个元素，但是迭代器模式只能访问同类或同接口的数据（当然了，如果你使用instanceof，那么能访问所有的数据，这没有争论），而访问者模式是对迭代器模式的扩充，可以遍历不同的对象，然后执行不同的操作，也就是针对访问的对象不同，执行不同的操作。</strong>如下图可以简单地说明访问者模式：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-a13badaf9e305511.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-15 visitor.png"></p>
+<p>使用场景：一个对象结构包含很多类对象，它们有不同的接口；需要对一个对象结构中的对象进行很多不同并且不相关的操作，而你想避免让这些操作污染这些对象的类。</p>
+<p><strong>访问者模式通用源码</strong></p>
+<pre><code>public abstract class Element {
+    // 定义业务逻辑
+    public abstract void doSomething();
+    // 允许谁来访问
+    public abstract void accept(IVisitor iVisitor);
+}
+
+public class ConcreteElement1 extends Element {
+    @Override
+    public void doSomething() {
+        // 业务处理
+    }
+
+    @Override
+    public void accept(IVisitor iVisitor) {
+        iVisitor.visitor(this);
+    }
+}
+
+public class ConcreteElement2 extends Element {
+    @Override
+    public void doSomething() {
+        // 业务逻辑处理
+    }
+
+    @Override
+    public void accept(IVisitor iVisitor) {
+        iVisitor.visitor(this);
+    }
+}
+
+public interface IVisitor {
+    // 可以访问哪些对象
+    public void visitor(ConcreteElement1 element1);
+    public void visitor(ConcreteElement2 element2);
+}
+
+public class Visitor implements IVisitor {
+    // 访问元素1
+    @Override
+    public void visitor(ConcreteElement1 element1) {
+        element1.doSomething();
+    }
+
+    // 访问元素2
+    @Override
+    public void visitor(ConcreteElement2 element2) {
+        element2.doSomething();
+    }
+}
+
+public class ObjectStruture {
+    public static Element createElement() {
+        Random random = new Random();
+        if (random.nextInt(100) &gt; 50) {
+            return new ConcreteElement1();
+        }else {
+            return new ConcreteElement2();
+        }
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        for (int i = 0; i&lt;10; i++) {
+            // 获得元素对象
+            Element element = ObjectStruture.createElement();
+
+            element.accept(new Visitor());
+        }
+    }
+}</code></pre><h3 id="状态模式（State-Pattern）"><a href="#状态模式（State-Pattern）" class="headerlink" title="状态模式（State Pattern）"></a>状态模式（State Pattern）</h3><p><strong>定义：当一个对象内在状态改变时允许其改变行为，这个对象看起来像改变了其类。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-d7e078be71190c02.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-16 state.png"></p>
+<p><strong>如何理解状态模式呢？</strong></p>
+<p>先看下通用类图中各个角色的作用：State抽象状态角色，负责对象状态定义，并且封装环境角色以实现状态切换。ConcreteState具体状态角色，需要完成两个职责，就是本状态下要做的事情，以及本状态如何过渡到其他状态。Context环境角色，定义客户端需要的接口，并且负责具体状态的切换。</p>
+<p><strong>状态模式相对来说比较复杂，它提供了一种对物质运动的另一个观察视角，通过状态变更促使行为的变化。状态模式适用于当某个对象在它的状态发生改变时，它的行为也随着发生比较大的变化，也就是说在行为受状态约束的情况下可以使用状态模式，而且使用时对象的状态最好不要超过5个。</strong></p>
+<p><strong>状态模式通用源码</strong></p>
+<pre><code>public abstract class State {
+    // 定义一个环境角色,提供子类访问
+    protected Context context;
+    // 设置环境角色
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    // 行为1
+    public abstract void handle1();
+    // 行为2
+    public abstract void handle2();
+}
+
+public class ConcreteState1 extends State {
+    @Override
+    public void handle1() {
+        System.out.println(&quot;本状态下必须处理的逻辑&quot;);
+    }
+
+    @Override
+    public void handle2() {
+        super.context.setCurrentState(Context.STATE2);
+        // 过渡到state2状态,由Context实现
+        super.context.handle2();
+    }
+}
+
+public class ConcreteState2 extends State {
+    @Override
+    public void handle1() {
+        super.context.setCurrentState(Context.STATE1);
+        // 过渡到状态1
+        super.context.handle1();
+    }
+
+    @Override
+    public void handle2() {
+        System.out.println(&quot;本状态下必须要处理的逻辑&quot;);
+    }
+}
+
+public class Context {
+    // 定义状态
+    public final static State STATE1 = new ConcreteState1();
+    public final static State STATE2 = new ConcreteState2();
+    // 当前状态
+    private State currentState;
+
+    public State getState() {
+        return currentState;
+    }
+
+    public void setCurrentState(State currentState) {
+        this.currentState = currentState;
+        // 切换状态
+        this.currentState.setContext(this);
+    }
+
+    // 行为委托
+    public void handle1() {
+        this.currentState.handle1();
+    }
+
+    public void handle2() {
+        this.currentState.handle2();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Context context = new Context();
+        context.setCurrentState(new ConcreteState1());
+        context.handle1();
+        context.handle2();
+    }
+}</code></pre><h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/02/24/%E8%A1%8C%E4%B8%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" data-id="ck5cjpo6z001m5yt5e5d43v2t" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/03/08/%E5%A6%82%E4%BD%95%E7%BB%99%E4%BD%A0%E7%9A%84%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%8E%92%E7%89%88/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          如何给你的微信公众号排版
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/17/%E7%BB%93%E6%9E%84%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">结构类模式(读书笔记)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

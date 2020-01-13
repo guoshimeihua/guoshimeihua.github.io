@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Spring入门介绍 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上一篇文章写了关于maven的入门介绍，本篇读书笔记主要对spring的入门进行介绍一下，主要介绍spring库之间的依赖关系、spring日志在使用时要注意哪些事项、spring在项目中如何进行配置。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring入门介绍">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/06/13/Spring%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="上一篇文章写了关于maven的入门介绍，本篇读书笔记主要对spring的入门进行介绍一下，主要介绍spring库之间的依赖关系、spring日志在使用时要注意哪些事项、spring在项目中如何进行配置。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-384b849ebb46ffc2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-6c70787eb95299bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-260306399ade9d8b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-86f5c84ae72e9af5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-3f8c6f6f63c67473.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-7a7bec2c0a441d5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-58198df23b9025f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-06-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-07-02T04:20:19.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-384b849ebb46ffc2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Spring入门介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/13/Spring%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2017-06-12T16:00:00.000Z" itemprop="datePublished">2017-06-13</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Spring入门介绍
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>上一篇文章写了关于maven的入门介绍，本篇读书笔记主要对spring的入门进行介绍一下，主要介绍spring库之间的依赖关系、spring日志在使用时要注意哪些事项、spring在项目中如何进行配置。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="Spring介绍"><a href="#Spring介绍" class="headerlink" title="Spring介绍"></a>Spring介绍</h3><p>什么是Spring呢？我们看下官方文档给出的答案：</p>
+<blockquote>
+<p>Spring框架是一个轻量级的解决方案，为企业应用开发提供了一站式服务。Spring框架是模块化的，我们在项目开发过程中，只需要使用需要用到的模块，其他的模块则可以不需要，比如我们可以仅使用jdbc模块。Spring框架支持声明式事务管理，可以通过RMI或Web服务远程访问你的业务逻辑，并且提供了许多中持久化解决方案。Spring框架提供了一个全功能的MVC框架，使你能够将AOP透明地集成到你的项目中去。</p>
+</blockquote>
+<blockquote>
+<p>Spring框架被设计为非侵入性的，带来的好处就是我们项目当中的业务逻辑代码是不依赖于Spring框架本身的。虽然在数据访问层中，存在数据访问层对Spring框架的一些依赖，但是我们很容易把这些依赖关系和我们的业务逻辑代码区分开的。</p>
+</blockquote>
+<p>从上面的介绍中可以看到Spring框架是很强大的，使用起来也非常方便，目前Spring4.x版本提供的jar包已经有20个了，覆盖了我们项目开发当中用到的大部分功能。</p>
+<h3 id="Spring每个库的作用以及依赖关系"><a href="#Spring每个库的作用以及依赖关系" class="headerlink" title="Spring每个库的作用以及依赖关系"></a>Spring每个库的作用以及依赖关系</h3><p>Spring框架目前包含20个组件，这些组件被分为Core Container、Data Access/Integration、Web、AOP（Aspect Oriented Programming）、Instrumentation、Messaging、Test几大模块。如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-384b849ebb46ffc2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring 1-1.png"></p>
+<p>接下来看下每个库的作用以及它们之间的依赖关系。</p>
+<p><strong>Core Container</strong></p>
+<p>Core Container包含spring-core、spring-beans、spring-context、spring-context-support、spring-expression组件。</p>
+<ul>
+<li>spring-core和spring-beans组件是框架的基础组成部分，包括Ioc和依赖注入。</li>
+<li>在spring-beans组件中，BeanFactory实现了一个复杂的工厂模式。</li>
+<li>spring-context组件建立在由core和beans模块提供的实体基础上，spring-context是spring的context上下文即IoC容器。</li>
+<li>spring-context-support支持将常见的第三方库集成到spring应用程序上下文缓存。</li>
+<li>spring-expression提供了强大的表达式语言，用于在运行时查询和操作对象。</li>
+</ul>
+<p>它们的依赖关系如图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-6c70787eb95299bc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring 1-2.png"></p>
+<p><strong>AOP and Instrumentation</strong></p>
+<p>spring-aop模块提供了符合AOP联盟的面向切面的编程实现。spring-aspects集成AspectJ。spring-instrument提供了一些类级的工具支持和ClassLoader的实现，用于服务器。spring-instrument-tomcat针对tomcat的instrument实现。</p>
+<p>它们之间的依赖关系如图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-260306399ade9d8b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring 1-3.png"></p>
+<p><strong>Messaging</strong></p>
+<p>spring-message包括一个spring消息传递模块。它们的依赖关系如图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-86f5c84ae72e9af5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring 1-4.png"></p>
+<p><strong>Data Access、Integration</strong></p>
+<ul>
+<li>spring-jdbc: jdbc的支持</li>
+<li>spring-tx: 事务控制</li>
+<li>spring-orm: 对象关系映射，集成orm框架</li>
+<li>spring-oxm: 对象xml映射</li>
+<li>Spring-jms: Java消息服务，从spring4.1以后，它提供了与spring-messaging模块的集成。</li>
+</ul>
+<p>它们的依赖关系如图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-3f8c6f6f63c67473.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring 1-5.png"></p>
+<p><strong>Web</strong></p>
+<ul>
+<li>spring-web: 基础web功能，如文件上传功能，远程支持的Web相关部分。</li>
+<li>spring-mvc: 提供web的mvc功能和Web应用程序的REST Web Service实现。</li>
+<li>spring-webmvc-portlet: 提供了在portlet环境中使用的mvc实现，并反映了基于servlet的spring-webmvc模块的功能。</li>
+<li>spring-websocket: 为web应用提供的高效通信工具。</li>
+<li>spring-struts: 与struts的集成，不推荐，spring4不再提供。</li>
+</ul>
+<p>它们的依赖关系如图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-7a7bec2c0a441d5f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring 1-6.png"></p>
+<p><strong>Test</strong></p>
+<p>spring-test: spring测试，提供JUnit或者TestNG，也提供了Mock测试功能。</p>
+<p>它们的依赖关系如图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-58198df23b9025f4.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="spring 1-7.png"></p>
+<p>Spring 4.3版本库有20个，只有搞清楚各个库之间的依赖关系，才能有选择的知道需要引入哪些库，如果使用maven的话，不用去考虑这个问题，maven自动会帮你把依赖的库给搞定的。但搞清楚每个库之间的依赖关系，有助于我们更好理解Spring框架。</p>
+<h3 id="Spring日志的使用"><a href="#Spring日志的使用" class="headerlink" title="Spring日志的使用"></a>Spring日志的使用</h3><p>日志记录是Spring框架非常重要的依赖，它是唯一的强制性外部依赖关系。从上文中我们知道spring-core组件就依赖于commons-logging日志组件，而其他组件大部分都依赖于spring-core组件，这样整个spring框架都依赖于commons-logging组件了，可以看出spring框架默认依赖的是commons-logging日志组件。</p>
+<p>spring框架默认依赖commons-logging组件，但是在实际项目使用中，我们应该避免使用commons-logging组件，因为标准的commons-logging API的运行时算法对于最终的用户是有问题的，想避免commons-logging的标准查找，有两种方法可以解决它。</p>
+<p>1、排除spring-core模块的依赖关系，因为它是明确依赖于commons-logging的唯一模块。排除依赖关系的配置如下所示：</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+           &lt;artifactId&gt;spring-core&lt;/artifactId&gt; 
+           &lt;version&gt;4.3.8.RELEASE&lt;/version&gt; 
+           &lt;exclusions&gt;
+            &lt;exclusion&gt; 
+                &lt;groupId&gt;commons-logging&lt;/groupId&gt; 
+                &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;
+          &lt;/exclusion&gt;
+        &lt;/exclusions&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre><p>但是排除之后，必须要用另外一个日志组件来替代它，比如使用SLF4J提供的JCL替代实现。</p>
+<p>2、依赖于一个特殊的commons-logging依赖关系，比如SLF4J。<strong>SLF4J是Java简单的日志门面，使用日志门面带来的好处就是我们不需要了解具体日志的实现方式，可以绑定到许多常见的日志框架，比如log4j、logback等。</strong>用SLF4J代替commons-logging组件有两种方法，第一种方法是依赖于log4j库，第二种方法是依赖于logback库。下面分别介绍这两种方法的配置：</p>
+<p>第一种方法是先排除现有对commons-logging的依赖关系，然后配置spring对SLF4J的依赖，SLF4J绑定到log4j，最后提供log4j的jar包。在maven中的配置如下：</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt; 
+        &lt;artifactId&gt;spring-core&lt;/artifactId&gt;
+        &lt;version&gt;4.3.8.RELEASE&lt;/version&gt; 
+        &lt;exclusions&gt;
+            &lt;exclusion&gt; 
+                &lt;groupId&gt;commons-logging&lt;/groupId&gt; 
+                &lt;artifactId&gt;commons-logging&lt;/artifactId&gt;
+            &lt;/exclusion&gt;
+        &lt;/exclusions&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt; 
+        &lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt; 
+        &lt;version&gt;1.7.21&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt; 
+        &lt;artifactId&gt;slf4j-log4j12&lt;/artifactId&gt; 
+        &lt;version&gt;1.7.21&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;log4j&lt;/groupId&gt; 
+        &lt;artifactId&gt;log4j&lt;/artifactId&gt; 
+        &lt;version&gt;1.2.17&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre><p>第二种方法是对于SLF4J的用户，通常会绑定到Logback来减少生成的依赖关系。因为Logback直接实现了SLF4J，所有只需要依赖两个库，jcl-over-slf4j和logback。maven中的配置如下：</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt; 
+        &lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt; 
+        &lt;version&gt;1.7.21&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt; 
+        &lt;artifactId&gt;logback-classic&lt;/artifactId&gt; 
+        &lt;version&gt;1.1.7&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre><h3 id="Spring在项目中的配置"><a href="#Spring在项目中的配置" class="headerlink" title="Spring在项目中的配置"></a>Spring在项目中的配置</h3><p>Spring在项目中的配置主要分为两步，第一步依赖要使用的spring组件，第二步配置spring.xml文件。第一步比较简单，在maven环境下的配置如下所示：</p>
+<pre><code>&lt;!-- 属性配置 --&gt;
+&lt;properties&gt;
+    &lt;spring.version&gt;4.2.5.RELEASE&lt;/spring.version&gt;
+    &lt;!-- 文件拷贝时的编码 --&gt;
+    &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;project.reporting.outputEncoding&gt;UTF-8&lt;/project.reporting.outputEncoding&gt;
+    &lt;!-- 编译时的编码 --&gt;
+    &lt;maven.compiler.encoding&gt;UTF-8&lt;/maven.compiler.encoding&gt;
+&lt;/properties&gt;
+
+&lt;dependencies&gt;
+    &lt;!-- spring日志依赖 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt;
+        &lt;version&gt;1.7.21&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;
+        &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;
+        &lt;version&gt;1.1.7&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;!-- spring依赖库 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+        &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-web&lt;/artifactId&gt;
+        &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-context-support&lt;/artifactId&gt;
+        &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-aspects&lt;/artifactId&gt;
+        &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-test&lt;/artifactId&gt;
+        &lt;version&gt;${spring.version}&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre><p> 其中在属性配置的时候，指定了文件拷贝时的编码为UTF-8，编译时的编码也为UTF-8，主要是解决编译时maven2和maven3版本不同的问题。同时在前面也提到使用spring日志框架时应该注意哪些事项，都在配置中有所体现。第二步，首先在web.xml中对dispatcherServlet进行配置，配置如下所示：</p>
+<pre><code>&lt;!--springMVC 框架加载服务 --&gt;
+&lt;servlet&gt;
+    &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
+    &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+    &lt;init-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath*:spring/applicationContext-springmvc.xml&lt;/param-value&gt;
+    &lt;/init-param&gt;
+    &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+    &lt;servlet-name&gt;dispatcherServlet&lt;/servlet-name&gt;
+    &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;</code></pre><p>其中load-on-startup配置为1，说明服务器启动就立即加载。url-pattern配置为/，说明对所有请求都进行拦截。在init-param初始化参数中，classpath*的作用就是自动定位到maven约定的目录下面，maven约定了哪些目录在我的上篇文章<a href="http://www.jianshu.com/p/39875424be3c" target="_blank" rel="noopener">Maven入门介绍</a>中有说到。另外在applicationContext-springmvc.xml文件中对dispatcherServlet的初始化参数有更加详细的配置，applicationContext-springmvc.xml的配置如下所示：</p>
+<pre><code>&lt;context:component-scan base-package=&quot;com.dodonew.controller&quot;/&gt;
+&lt;mvc:annotation-driven/&gt;
+&lt;!-- 视图解析器 --&gt;
+&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;
+    &lt;property name=&quot;prefix&quot;&gt;
+        &lt;value&gt;/WEB-INF&lt;/value&gt;
+    &lt;/property&gt;
+    &lt;property name=&quot;suffix&quot;&gt;
+        &lt;value&gt;.jsp&lt;/value&gt;
+    &lt;/property&gt;
+&lt;/bean&gt;
+
+&lt;!-- 开启静态资源访问 --&gt;
+&lt;mvc:default-servlet-handler/&gt; </code></pre><p>下面解释一下每条配置的作用是什么？</p>
+<p>context:component-scan告诉spring来扫描指定包下的类，并注册被@Component、@Controller、@Service、@Repository等注解标记的组件。</p>
+<p>mvc:annotation-driven是告知Spring，我们启用注解驱动，然后Spring会自动为我们注册HandleMapping、HandlerAdapter、ExceptionResolver的相关实例。</p>
+<p>task:annotation-driven扫描@Scheduled注解定时器。</p>
+<p>mvc:default-servlet-handler也是对静态资源的访问和mvc:resources的作用一样。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/" target="_blank" rel="noopener">http://docs.spring.io/spring/docs/current/spring-framework-reference/htmlsingle/</a></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/06/13/Spring%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" data-id="ck5cjpo5p000o5yt59phq5p1q" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/16/Maven+Web+Spring%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Maven+Web+Spring项目搭建
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/11/Maven%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Maven入门介绍</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

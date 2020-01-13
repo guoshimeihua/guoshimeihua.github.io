@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>嘟嘟牛在线App踩过的坑 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="嘟嘟牛app使用sharesdk遇到的问题？总结记录一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嘟嘟牛在线App踩过的坑">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2016/05/31/%E5%98%9F%E5%98%9F%E7%89%9BApp%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="嘟嘟牛app使用sharesdk遇到的问题？总结记录一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2016-05-30T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-03-08T01:27:53.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-嘟嘟牛App踩过的坑" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/31/%E5%98%9F%E5%98%9F%E7%89%9BApp%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/" class="article-date">
+  <time datetime="2016-05-30T16:00:00.000Z" itemprop="datePublished">2016-05-31</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      嘟嘟牛在线App踩过的坑
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>嘟嘟牛app使用sharesdk遇到的问题？总结记录一下。</p>
+</blockquote>
+<a id="more"></a>
+
+
+<h3 id="ShareSDK分享"><a href="#ShareSDK分享" class="headerlink" title="ShareSDK分享"></a>ShareSDK分享</h3><p>问题1：最近使用ShareSDK经常出现微信不能分享？</p>
+<p>答：thumbImage: 这个要设置微信缩略图参数的</p>
+<pre><code>[shareParams SSDKSetupWeChatParamsByText:nil title:title url:[NSURL URLWithString:originUrl] thumbImage:nil image:[self returnFirstImageString] musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatSession]; //微信朋友圈
+[shareParams SSDKSetupWeChatParamsByText:nil title:title url:[NSURL URLWithString:originUrl] thumbImage:nil image:[self returnFirstImageString] musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatTimeline]; //微信好友
+[shareParams SSDKSetupWeChatParamsByText:nil title:title url:[NSURL URLWithString:originUrl] thumbImage:nil image:[self returnFirstImageString] musicFileURL:nil extInfo:nil fileData:nil emoticonData:nil type:SSDKContentTypeAuto forPlatformSubType:SSDKPlatformSubTypeWechatFav]; //微信收藏</code></pre><p>问题2：新浪微博分享网页图片失败？</p>
+<p>答：分享网络图片到新浪微博，需要有 高级微博写入接口的权限；<br>分享本地图片到新浪微博，不能分享PNG格式的。关于高级微博写入接口权限申请，见如下链接：<a href="http://bbs.mob.com/thread-45-1-1.html" target="_blank" rel="noopener">传送门</a></p>
+<p>问题3：怎么能每次新浪微博分享都跳转到客户端？<br>答：sina分享只授权一次，后面就直接分享。想要每次都授权 那就调用取消授权的接口。</p>
+<pre><code>+ (void)cancelAuthorize:(SSDKPlatformType)platformType;</code></pre><p>问题4：新浪微博分享的时候，已经设置[NSURL URLWithString:originUrl]，但是分享出来的仍然是文本形式的？<br>答：sina要分享链接 需要把链接写到内容里 和文字一起分享才行。例如：</p>
+<pre><code>NSString *text = [NSString stringWithFormat:@&quot;%@ %@&quot;, title, originUrl];
+   [shareParams SSDKSetupSinaWeiboShareParamsByText:text title:title image:[self returnFirstImageString] url:nil latitude:0.0 longitude:0.0 objectID:nil type:SSDKContentTypeAuto];</code></pre><h3 id="适配IPV6"><a href="#适配IPV6" class="headerlink" title="适配IPV6"></a>适配IPV6</h3><p>根据苹果的要求规定，在6月1号，所有上线的应用都必须兼容支持IPV6，对于我们有什么影响呢？<br>1、使用AFNetworking 2.0以上版本的，已经做过IPV6的适配了，开发者无需再进行适配。</p>
+<p>2、工程当中使用的第三方SDK，都要检查一下，看下当前使用的SDK版本是否支持IPV6<br>前面2条已经满足大部分App对IPV6的兼容了。</p>
+<h3 id="bitcode"><a href="#bitcode" class="headerlink" title="bitcode"></a>bitcode</h3><p>目前在项目中UMFeedBack不支持bitcode的。关于bitcode的深入理解，请参考下面的这篇文章：</p>
+<p><a href="http://mp.weixin.qq.com/s?__biz=MzIwMTYzMzcwOQ==&mid=403331570&idx=1&sn=ebb65f74da341425bc4488693c3a64f7&scene=23&srcid=05317y5O6jmRsZbkjOATXKNQ#rd" target="_blank" rel="noopener">传送门</a></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2016/05/31/%E5%98%9F%E5%98%9F%E7%89%9BApp%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91/" data-id="ck5cjpo4x00055yt517322ccs" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/06/26/Cocoapods%E5%85%AC%E6%9C%89%E5%BA%93%E4%B8%8E%E7%A7%81%E6%9C%89%E5%BA%93/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Cocoapods公有库与私有库
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/21/%E9%97%B2%E8%AF%9D%E9%80%89%E6%8B%A9%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">闲话选择排序算法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

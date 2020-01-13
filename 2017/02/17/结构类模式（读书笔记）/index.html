@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>结构类模式(读书笔记) | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在读秦小波写的设计模式之禅这本书，结构类模式读完了，写下一篇文章做下总结。结构类模式包括适配器模式、桥梁模式、组合模式、装饰模式、门面模式、享元模式和代理模式。为什么叫结构类模式呢？因为它们都是通过组合类或对象产生更大结构以适应更高层次的逻辑需求。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="结构类模式(读书笔记)">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/02/17/%E7%BB%93%E6%9E%84%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="最近在读秦小波写的设计模式之禅这本书，结构类模式读完了，写下一篇文章做下总结。结构类模式包括适配器模式、桥梁模式、组合模式、装饰模式、门面模式、享元模式和代理模式。为什么叫结构类模式呢？因为它们都是通过组合类或对象产生更大结构以适应更高层次的逻辑需求。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-054c128912454b42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-59bc48dd3b4706bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-2511f28e8564df3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-47fd94c040932322.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-37f0e7f4d0f56fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-d87d2390575baac0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-cac7fddea735695c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-0524744aeabcb724.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-f70d3e312a371716.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-02-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-03-08T01:28:08.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-054c128912454b42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-结构类模式（读书笔记）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/17/%E7%BB%93%E6%9E%84%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" class="article-date">
+  <time datetime="2017-02-16T16:00:00.000Z" itemprop="datePublished">2017-02-17</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      结构类模式(读书笔记)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近在读<strong>秦小波</strong>写的<strong>设计模式之禅</strong>这本书，结构类模式读完了，写下一篇文章做下总结。结构类模式包括适配器模式、桥梁模式、组合模式、装饰模式、门面模式、享元模式和代理模式。为什么叫结构类模式呢？因为它们都是通过组合类或对象产生更大结构以适应更高层次的逻辑需求。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="适配器模式（Adapter-Pattern）"><a href="#适配器模式（Adapter-Pattern）" class="headerlink" title="适配器模式（Adapter Pattern）"></a>适配器模式（Adapter Pattern）</h3><p><strong>定义：将一个类的接口变换成客户端所期待的另一种接口，从而使原本因接口不匹配而无法在一起工作的两个类能够在一起工作。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-054c128912454b42.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1 adpater.png"></p>
+<p><strong>如何理解呢？</strong></p>
+<p>从通用类图中可以看到有三个角色，Adaptee源角色、Target目标角色、Adapter适配器角色，Target就是客户端所期待的接口，Adaptee就是要被转换的角色，通常它是已经存在的、运行良好的类或对象，Adapter的作用就是把Adaptee转换成为Target。简单来说就是有A和B两个不同的类，如果想让A类像B类一样使用，这个时候就可以通过一个适配器C类，适配器C类负责把A类转换成B类，这样使用A类就可以像使用B类那样。</p>
+<p>适配器模式的使用场景有哪些？只要记住一点就可以了：<strong>你有动机修改一个已经投产的接口时，就可以考虑适配器模式了。</strong>比如系统扩展了，需要使用一个已有或新建立的类，但这个类又不符合系统的接口，可以使用适配器模式解决这个问题。</p>
+<p><strong>适配器模式通用源码</strong></p>
+<pre><code>public interface Target {
+    // 目标角色有自己的方法
+    public void request();
+}
+
+public class ConcreteTarget implements Target {
+    @Override
+    public void request() {
+        System.out.println(&quot;If you need any help, please call me.&quot;);
+    }
+}
+
+public class Adaptee {
+    // 原有的业务逻辑
+    public void doSomething() {
+        System.out.println(&quot;我非常忙&quot;);
+    }
+}
+
+public class Adapter extends Adaptee implements Target {
+    @Override
+    public void request() {
+        super.doSomething();
+    }
+}
+
+// 在Client场景类中使用它
+public class Client {
+    public static void main(String[] args) {
+        // 原有业务逻辑
+        Target target = new ConcreteTarget();
+        target.request();
+
+        // 增加了适配器后的角色
+        Target target1 = new Adapter();
+        target1.request();
+    }
+}</code></pre><p><strong>适配模式的扩展</strong></p>
+<p>前面所说的可以被称为类适配器，下面介绍一种对象适配器，是适配器模式的一种扩展，通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-59bc48dd3b4706bd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-2 adaptee2.png"></p>
+<p>比较两个通用类图，发现一种是Adapter继承于Adaptee，一种是Adapter关联Adaptee1和Adaptee2，所以通过继承关系的叫做类适配器，通过关联关系的叫做对象适配器。<strong>类适配器与对象适配器的区别：类适配器是类间继承，对象适配器是对象的合成关系，也可以说是类的关联关系。</strong></p>
+<p><strong>注意点：Adapter适配器不要加入自己的实现，它所有的实现都是委托给Adaptee源角色来实现的。</strong></p>
+<h3 id="代理模式（Proxy-Pattern）"><a href="#代理模式（Proxy-Pattern）" class="headerlink" title="代理模式（Proxy Pattern）"></a>代理模式（Proxy Pattern）</h3><p><strong>定义：为其他对象提供一种代理以控制这个对象的访问。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-2511f28e8564df3f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-3 proxy.png"></p>
+<p><strong>如何理解代理模式呢？</strong></p>
+<p>通过一个例子来理解，比如一家公司请明星为自己的产品代言，这家公司如果直接联系该明星，明星就会说这件事请和我的经纪人联系，换句话说就是想要请明星代言，先要找到其经纪人，通过经纪人在去和明星进行商讨。在这里经纪人就可以理解为一个代理，通过经纪人来对明星进行访问，这就是代理模式。</p>
+<p>代理模式的使用场景？比如Spring AOP，非常典型的动态代理。</p>
+<p><strong>代理模式通用源码</strong></p>
+<pre><code>public interface Subject {
+    public void request();
+}
+
+public class RealSubject implements Subject {
+    @Override
+    public void request() {
+        // 业务逻辑处理
+    }
+}
+
+public class Proxy implements Subject {
+    // 要代理哪个实现类
+    private Subject subject = null;
+
+    public Proxy(Subject subject) {
+        this.subject = subject;
+    }
+
+    @Override
+    public void request() {
+        this.before();
+        this.subject.request();
+        this.after();
+    }
+
+    // 预处理
+    private void before() {
+        // do something
+    }
+
+    // 善后处理
+    private void after() {
+        // do something
+    }
+}
+
+// Client场景类
+public class Client {
+    public static void main(String[] args) {
+        Subject subject = new RealSubject();
+        Proxy proxy = new Proxy(subject);
+        proxy.request();
+    }
+}</code></pre><p><strong>代理模式的扩展</strong></p>
+<p>扩展一：普通代理</p>
+<p>它要求客户端只能访问代理角色，而不能访问真实角色。</p>
+<p>扩展二：强制代理</p>
+<p>要求客户端必须通过真实角色找到代理角色，否则不能访问真实角色。</p>
+<p>扩展三：代理是有个性的</p>
+<p>一个类可以实现多个接口，完成不同任务的整合。也就是说代理类不仅仅可以实现主题接口，也可以实现其他接口完成不同的任务，而且代理的目的是在目标对象的基础上作增强，这种增强的本质通常就是对目标对象的方法进行拦截和过滤。</p>
+<p>扩展四：动态代理</p>
+<p>动态代理通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-47fd94c040932322.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-4 dynamic-proxy.png"></p>
+<p>动态代理是在实现阶段不用关心代理谁，而在运行阶段才指定代理哪一个对象。</p>
+<h3 id="装饰模式（Decorator-Pattern）"><a href="#装饰模式（Decorator-Pattern）" class="headerlink" title="装饰模式（Decorator Pattern）"></a>装饰模式（Decorator Pattern）</h3><p><strong>定义：动态地给一个对象添加一些额外的职责。就增加功能来说，装饰模式比生成子类更为灵活。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-37f0e7f4d0f56fb9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-5 decorator.png"></p>
+<p><strong>如何理解装饰呢？</strong></p>
+<p>装饰类比较简单，看下其使用场景：<strong>需要扩展一个类的功能，或给一个类增加附加功能；需要动态地给一个对象增加功能，这些功能可以再动态地撤销；需要为一批兄弟类进行改装或加装功能。</strong></p>
+<p><strong>装饰模式通用源码</strong></p>
+<pre><code>public abstract class Component {
+    public abstract void operate();
+}
+
+public class ConcreteComponent extends Component {
+    @Override
+    public void operate() {
+        System.out.println(&quot;do something&quot;);
+    }
+}
+
+public class Decorator extends Component {
+    private Component component = null;
+
+    public Decorator(Component component) {
+        this.component = component;
+    }
+
+    @Override
+    public void operate() {
+        this.component.operate();
+    }
+}
+
+public class ConcreteDecorator1 extends Decorator {
+    public ConcreteDecorator1(Component component) {
+        super(component);
+    }
+
+    public void method1() {
+        System.out.println(&quot;method1 修饰&quot;);
+    }
+
+    @Override
+    public void operate() {
+        this.method1();
+        super.operate();
+    }
+}
+
+public class ConcreteDecorator2 extends Decorator {
+    public ConcreteDecorator2(Component component) {
+        super(component);
+    }
+
+    public void method2() {
+        System.out.println(&quot;method2 修饰&quot;);
+    }
+
+    @Override
+    public void operate() {
+        this.method2();
+        super.operate();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        Component component = new ConcreteComponent();
+        // 修饰1
+        component = new ConcreteDecorator1(component);
+        // 修饰2
+        component = new ConcreteDecorator2(component);
+        component.operate();
+    }
+}</code></pre><h3 id="门面模式（Facade-Pattern）"><a href="#门面模式（Facade-Pattern）" class="headerlink" title="门面模式（Facade Pattern）"></a>门面模式（Facade Pattern）</h3><p><strong>定义：要求一个子系统的外部与其内部的通讯必须通过一个统一的对象进行。门面模式提供一个高层次的接口，使得子系统更易于使用。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-d87d2390575baac0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-6 facade.png"></p>
+<p><strong>如何理解门面模式呢？</strong></p>
+<p>简单来说，门面对象是外界访问子系统内部的唯一通道。比如有A、B、C三个子系统，要想访问这三个子系统，必须通过一个统一的门面对象来访问。</p>
+<p>门面模式的使用场景：为一个复杂的模块或子系统提供一个供外界访问的接口；子系统相对独立(外界对系统的访问只要黑箱操作即可)。</p>
+<p><strong>注意点：门面不参与子系统内的业务逻辑。</strong></p>
+<p><strong>门面模式通用源码</strong></p>
+<pre><code>public class ClassA {
+    // 子系统A
+    public void doSomethingA() {
+        System.out.println(&quot;do something A&quot;);
+    }
+}
+
+public class ClassB {
+    // 子系统B
+    public void doSomethingB() {
+        System.out.println(&quot;do something B&quot;);
+    }
+}
+
+public class ClassC {
+    // 子系统C
+    public void doSomethingC() {
+        System.out.println(&quot;do something C&quot;);
+    }
+}
+
+public class Facade {
+    // 被委托的对象
+    ClassA classA = new ClassA();
+    ClassB classB = new ClassB();
+    ClassC classC = new ClassC();
+    // 提供给外部的访问方法
+    public void methodA() {
+        this.classA.doSomethingA();
+    }
+
+    public void methodB() {
+        this.classB.doSomethingB();
+    }
+
+    public void methodC() {
+        this.classC.doSomethingC();
+    }
+}</code></pre><h3 id="组合模式（Composite-Pattern）"><a href="#组合模式（Composite-Pattern）" class="headerlink" title="组合模式（Composite Pattern）"></a>组合模式（Composite Pattern）</h3><p><strong>定义：将对象组合成树形结构以表示部分-整体的层次结构，使得用户对单个对象和组合对象的使用具有一致性。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-cac7fddea735695c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-7 composite.png"></p>
+<p><strong>如何理解组合模式呢？</strong></p>
+<p>Component抽象构件角色：定义参加组合对象的共有方法和属性，可以定义一些默认的行为或属性；Leaf叶子构件：叶子对象，其下再也没有其他的分支，也就是遍历的最小单位；Composite树枝构件：树枝对象，它的作用是组合树枝节点和叶子节点形成一个树形结构。</p>
+<p><strong>组合模式的使用场景：维护和展示部分-整体关系的场景，如树形菜单、文件和文件夹管理；从一个整体中能够独立出部分模块或功能的场景。</strong></p>
+<p><strong>组合模式通用源码</strong></p>
+<pre><code>public abstract class Component {
+    // 个体和整体都具有的共享 抽象构件
+    public void doSomething() {
+        // 编写业务逻辑
+        System.out.println(&quot;个体和整体都具有的共享&quot;);
+    }
+}
+
+public class Composite extends Component {
+    // 构件容器
+    private ArrayList&lt;Component&gt; componentArrayList = new ArrayList&lt;Component&gt;();
+    // 增加一个叶子构件或树枝构件
+    public void add(Component component) {
+        this.componentArrayList.add(component);
+    }
+    // 删除一个叶子构件或树枝构件
+    public void remove(Component component) {
+        this.componentArrayList.remove(component);
+    }
+    // 获得分支下的所有叶子构件和树枝构件
+    public ArrayList&lt;Component&gt; getChildren() {
+        return this.componentArrayList;
+    }
+}
+
+public class Leaf extends Component {
+    // 树叶构件
+}
+
+// 场景类
+public class Client {
+    public static void main(String[] args) {
+        // 创建一个根节点
+        Composite root = new Composite();
+        root.doSomething();
+        // 创建一个树枝构件
+        Composite branch = new Composite();
+        // 创建一个叶子节点
+        Leaf leaf = new Leaf();
+        // 建立整体
+        root.add(branch);
+        branch.add(leaf);
+
+        display(root);
+    }
+
+    // 通过递归遍历树
+    public static void display(Composite root) {
+        for (Component c : root.getChildren()) {
+            if (c instanceof Leaf) {
+                // 叶子结点
+                c.doSomething();
+            }else {
+                // 树枝结点
+                display((Composite) c);
+            }
+        }
+    }
+}</code></pre><h3 id="桥梁模式（Bridge-Pattern）"><a href="#桥梁模式（Bridge-Pattern）" class="headerlink" title="桥梁模式（Bridge Pattern）"></a>桥梁模式（Bridge Pattern）</h3><p><strong>定义：将抽象和实现解耦，使得两者可以独立地变化。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-0524744aeabcb724.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-8 bridge.png"></p>
+<p><strong>如何理解桥梁模式呢？</strong></p>
+<p>简单来理解就是把经常变化的部分封装到Implementor中，不经常变化的留在抽象中。如果抽闲的实现类想要调用Implementor中的方法怎么办？搭个桥过去，也就是在实现类中保留一个Implementor的引用，这也是为什么叫桥梁模式的原因。最终的目的就是把抽象和实现分离开来。</p>
+<p>使用场景有哪些呢？不希望或不适用使用继承的场景，例如继承层次过渡、无法更细化设计颗粒等场景，需要考虑使用桥梁模式；接口或抽象类不稳定的场景；重用性要求较高的场景，设计的颗粒度越细，则被重用的可能性就越大；</p>
+<p><strong>桥梁模式通用源码</strong></p>
+<pre><code>public interface Implementor {
+    // 基本方法
+    public void doSomething();
+    public void doAnything();
+}
+
+public class ConcreteImplementor1 implements Implementor {
+    @Override
+    public void doSomething() {
+        // 业务逻辑处理
+    }
+
+    @Override
+    public void doAnything() {
+        // 业务逻辑处理
+    }
+}
+
+public class ConcreteImplementor2 implements Implementor {
+    @Override
+    public void doSomething() {
+        // 业务逻辑处理
+    }
+
+    @Override
+    public void doAnything() {
+        // 业务逻辑处理
+    }
+}
+
+public abstract class Abstraction {
+    private Implementor implementor;
+    public Abstraction(Implementor implementor) {
+        this.implementor = implementor;
+    }
+
+    // 自身的行为和属性
+    public void request() {
+        this.implementor.doSomething();
+    }
+
+    // 获得实现化角色
+    public Implementor getImplementor() {
+        return implementor;
+    }
+}
+
+public class RefinedAbstraction extends Abstraction {
+    public RefinedAbstraction(Implementor implementor) {
+        super(implementor);
+    }
+
+    @Override
+    public void request() {
+        super.request();
+        super.getImplementor().doAnything();
+    }
+}
+
+public class Client {
+    public static void main(String[] args) {
+        // 定义一个实现化角色
+        Implementor implementor = new ConcreteImplementor1();
+        // 定义一个抽象化角色
+        Abstraction abstraction = new RefinedAbstraction(implementor);
+        // 执行行文
+        abstraction.request();
+    }
+}</code></pre><h3 id="享元模式（Flyweight-Pattern）"><a href="#享元模式（Flyweight-Pattern）" class="headerlink" title="享元模式（Flyweight Pattern）"></a>享元模式（Flyweight Pattern）</h3><p><strong>定义：使用共享对象可有效地支持大量的细粒度的对象。</strong>通用类图如下：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-f70d3e312a371716.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-9 flyweight.png"></p>
+<p><strong>如何理解享元模式呢？</strong></p>
+<p>享元模式比较简单，可以大大减少应用程序创建的对象，降低程序内存占用，增强程序的性能，但它同时也提高了系统的复杂性，需要分离出外部状态和内部状态，而且外部状态具有固化特性，不应该随内部状态改变而改变，否则导致系统的逻辑混乱。</p>
+<p>使用场景：系统中存在大量相似的对象；需要缓冲池的场景。</p>
+<p><strong>注意点：使用享元模式可以实现对象池，但是这两者还是有比较大的差异，对象池着重在对象的复用上，池中的每个对象是可替换的，从同一个池中获得A对象和B对象对客户端来说是完全相同的，它主要解决复用，而享元模式着重解决对象的共享问题，如何建立多个可共享的细粒度对象则是其关注的重点。</strong></p>
+<p><strong>享元模式通用代码</strong></p>
+<pre><code>public abstract class Flyweight {
+    // 内部状态
+    private String intrinsic;
+    // 外部状态
+    private final String extrinsic;
+    // 要求享元角色必须接受外部状态,外部状态可以理解为key,这样一个东西.
+    public Flyweight(String extrinsic) {
+        this.extrinsic = extrinsic;
+    }
+
+    public String getIntrinsic() {
+        return intrinsic;
+    }
+
+    public void setIntrinsic(String intrinsic) {
+        this.intrinsic = intrinsic;
+    }
+
+    // 定义业务操作
+    public abstract void operate();
+}
+
+public class ConcreteFlyweight1 extends Flyweight {
+    public ConcreteFlyweight1(String extrinsic) {
+        super(extrinsic);
+    }
+
+    // 根据外部状态进行逻辑处理
+    @Override
+    public void operate() {
+        // 业务逻辑处理
+    }
+}
+
+public class ConcreteFlyweight2 extends Flyweight {
+    public ConcreteFlyweight2(String extrinsic) {
+        super(extrinsic);
+    }
+
+    // 根据外部状态进行逻辑处理
+    @Override
+    public void operate() {
+        // 业务逻辑处理
+    }
+}
+
+public class FlyweightFactory {
+    // 定义一个池容器
+    private static HashMap&lt;String, Flyweight&gt; pool = new HashMap&lt;String, Flyweight&gt;();
+    // 享元工厂
+    public static Flyweight getFlyweight(String extrinsic) {
+        Flyweight flyweight = null;
+        if (pool.containsKey(extrinsic)) {
+            flyweight = pool.get(extrinsic);
+        }else {
+            // 根据外部状态创建享元对象
+            flyweight = new ConcreteFlyweight1(extrinsic);
+            // 放置到池中
+            pool.put(extrinsic, flyweight);
+        }
+        return flyweight;
+    }
+}</code></pre><h3 id="代理模式VS装饰模式"><a href="#代理模式VS装饰模式" class="headerlink" title="代理模式VS装饰模式"></a>代理模式VS装饰模式</h3><p>首先要说的是装饰模式就是代理模式的一个特殊应用，两者的共同点是都具有相同的接口，不同点则是代理模式着重<strong>对代理过程的控制，</strong>而装饰模式则是<strong>对类的功能进行加强或减弱，</strong>它着重类的功能变化。</p>
+<h3 id="装饰模式VS适配器模式"><a href="#装饰模式VS适配器模式" class="headerlink" title="装饰模式VS适配器模式"></a>装饰模式VS适配器模式</h3><p>相似点：都是包装作用，都是通过委托方式实现其功能。<strong>不同点是：装饰模式包装的是自己的兄弟类，隶属于同一个家族（相同接口或父类），适配器模式则修饰非血缘关系类，把一个非本家族的对象伪装成本家族的对象，注意是伪装，本质上还是非相同接口的对象。</strong></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/02/17/%E7%BB%93%E6%9E%84%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" data-id="ck5cjpo6s001h5yt56qtj2dg3" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/24/%E8%A1%8C%E4%B8%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          行为类模式(读书笔记)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/02/09/%E5%88%9B%E5%BB%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">创建类模式(读书笔记)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

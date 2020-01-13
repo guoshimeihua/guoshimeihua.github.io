@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>解决CocoaPods慢的小技巧 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我们对CocoaPods的感情真是又爱又恨的，爱的是用它来管理第三方库非常方便，恨的是每次需要更新一些第三方库的时候，速度像蜗牛一样慢。本篇文章分享几个小技巧加快CocoaPods更新第三方库的速度。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决CocoaPods慢的小技巧">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/01/19/%E8%A7%A3%E5%86%B3CocoaPods%E5%90%84%E7%A7%8D%E6%85%A2%E7%9A%84%E5%BF%85%E6%9D%80%E6%8A%80/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="我们对CocoaPods的感情真是又爱又恨的，爱的是用它来管理第三方库非常方便，恨的是每次需要更新一些第三方库的时候，速度像蜗牛一样慢。本篇文章分享几个小技巧加快CocoaPods更新第三方库的速度。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-01-18T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-03-08T01:28:26.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-解决CocoaPods各种慢的必杀技" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/19/%E8%A7%A3%E5%86%B3CocoaPods%E5%90%84%E7%A7%8D%E6%85%A2%E7%9A%84%E5%BF%85%E6%9D%80%E6%8A%80/" class="article-date">
+  <time datetime="2017-01-18T16:00:00.000Z" itemprop="datePublished">2017-01-19</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/iOS/">iOS</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      解决CocoaPods慢的小技巧
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>我们对CocoaPods的感情真是又爱又恨的，爱的是用它来管理第三方库非常方便，恨的是每次需要更新一些第三方库的时候，速度像蜗牛一样慢。本篇文章分享几个小技巧加快CocoaPods更新第三方库的速度。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="RubyGems换源"><a href="#RubyGems换源" class="headerlink" title="RubyGems换源"></a>RubyGems换源</h3><p>RubyGems是什么呢？下面是官网给出的一段介绍：</p>
+<blockquote>
+<p>The RubyGems software allows you to easily download, install, and use ruby software packages on your system. The software package is called a “gem” and contains a package Ruby application or library.</p>
+</blockquote>
+<blockquote>
+<p>Gems can be used to extend or modify functionality in Ruby applications. Commonly they’re used to distribute reusable functionality that is shared with other Rubyists for use in their applications and libraries. Some gems provide command line utilities to help automate tasks and speed up your work.</p>
+</blockquote>
+<p>通俗地来讲RubyGems就像是一个仓库，里面包含了各种软件的包(如Cocoapods、MySql)，可以通过命令行的方式来安装这些软件包，<strong>最为方便的是自动帮你配置好软件依赖的环境，整个安装过程仅仅只需要几行命令行。</strong></p>
+<p>我们在安装CocoaPods的时候，就是通过rubygems来安装的，由于在国内访问rubygems非常慢，所以替换rubygems镜像源就显得十分必要了。在替换rubygems镜像源的时候，<strong>先检查一下rubygems的版本，建议在2.6.x以上，</strong>如果没有的话，建议先升级一下，升级命令行如下：</p>
+<pre><code>$ gem update --system # 这里请翻墙一下
+$ gem -v
+2.6.7</code></pre><p>升级完成之后，可以用gem -v查看下现在的版本号，比如我现在的版本是2.6.7。之前很多人用的都是淘宝的镜像源，现在淘宝的rubygems镜像源交给Ruby China来维护了，替换rubygems镜像源的命令行如下：</p>
+<pre><code>$ gem sources --add https://gems.ruby-china.org/ --remove https://rubygems.org/
+$ gem sources -l
+https://gems.ruby-china.org
+# 确保只有 gems.ruby-china.org</code></pre><p>这里做一下说明，remove后面的镜像源地址填写你当前的镜像源地址。比如你当前的镜像源地址是淘宝的，命令行如下：</p>
+<pre><code>$ gem sources --add https://gems.ruby-china.org/ --remove http://ruby.taobao.org/</code></pre><p><strong>总结：替换rubygems的镜像源，带给我们的好处有两点：</strong></p>
+<ul>
+<li>安装、更新CocoaPods的时候，速度更快，解决半天无反应的情况。</li>
+<li>安装其他软件也可以更加迅速，比如mysql等。</li>
+</ul>
+<h3 id="repo换源"><a href="#repo换源" class="headerlink" title="repo换源"></a>repo换源</h3><p>使用CocoaPods的时候，经常要和这几个命令行打交道：</p>
+<pre><code>pod install
+pod update
+pod repo update</code></pre><p>每次运行这几个命令的时候，真是一件痛苦的事情，等个半小时、一小时或者更长时间才能运行完，为什么会出现这种现象呢？我们先来补充一些基础知识：</p>
+<p>当CocoaPods安装成功以后，它默认的镜像源地址是github(<a href="https://github.com/CocoaPods/Specs.git)，打开命令行进入到下面的文件：" target="_blank" rel="noopener">https://github.com/CocoaPods/Specs.git)，打开命令行进入到下面的文件：</a></p>
+<pre><code>$ cd ~/.cocoapods/repos
+$ ls
+DDNPrivatePods                taobao-baichuansdk-alibcspecs
+master                        taobao-baichuansdk-alibcspecsmirror</code></pre><p>会看到有一个master的文件，这就是CocoaPods在本地建立了一个master的repo，<strong>master里面包含了所有第三方库的地址列表，每一个库的详细信息记录在podspec文件里面。</strong>以为YTKNetwork例，我们看下podspec里面包含的信息：</p>
+<pre><code>{
+      &quot;name&quot;: &quot;YTKNetwork&quot;,
+      &quot;version&quot;: &quot;2.0.3&quot;,
+      &quot;summary&quot;: &quot;YTKNetwork is a high level request util based on AFNetworking.&quot;,
+      &quot;homepage&quot;: &quot;https://github.com/yuantiku/YTKNetwork&quot;,
+      &quot;license&quot;: &quot;MIT&quot;,
+      &quot;authors&quot;: {
+        &quot;tangqiao&quot;: &quot;tangqiao@fenbi.com&quot;,
+        &quot;lancy&quot;: &quot;lancy@fenbi.com&quot;,
+        &quot;maojj&quot;: &quot;maojj@fenbi.com&quot;,
+        &quot;liujl&quot;: &quot;liujl@fenbi.com&quot;
+      },
+      &quot;source&quot;: {
+        &quot;git&quot;: &quot;https://github.com/yuantiku/YTKNetwork.git&quot;,
+        &quot;tag&quot;: &quot;2.0.3&quot;
+      },
+      &quot;source_files&quot;: &quot;YTKNetwork/*.{h,m}&quot;,
+      &quot;requires_arc&quot;: true,
+      &quot;private_header_files&quot;: &quot;YTKNetwork/YTKNetworkPrivate.h&quot;,
+      &quot;platforms&quot;: {
+        &quot;ios&quot;: &quot;7.0&quot;,
+        &quot;osx&quot;: &quot;10.9&quot;,
+        &quot;watchos&quot;: &quot;2.0&quot;,
+        &quot;tvos&quot;: &quot;9.0&quot;
+      },
+      &quot;frameworks&quot;: &quot;CFNetwork&quot;,
+      &quot;dependencies&quot;: {
+        &quot;AFNetworking&quot;: [
+              &quot;~&gt; 3.0&quot;
+        ]
+      }
+}</code></pre><p>上面我们可以看出其指定了tag标签、源码的下载地址，另外在YTKNetwork下有好多tag标签，如下：</p>
+<pre><code>0.1.0 0.2.0 0.3.0 0.4.0 0.5.0 0.6.0 1.0.0 
+1.1.0 1.2.0 1.3.0 2.0.0 2.0.1 2.0.2 2.0.3                                </code></pre><p>至此我们了解master下面的一个库大概包含哪些信息，<strong>第一：指定了tag标签、源码下载地址；第二：库文件目录下包含了许多tag标签，一个版本对应一个tag标签。</strong></p>
+<p>了解完这些基础知识以后，我们来分下一下pod update、pod install、pod repo update背后发生了什么，导致其速度巨慢。<strong>分析问题的先决条件是你本地已经有一个master的repo。</strong>当你运行上面的命令行时，它们会把本地的repo所有地址列表更新一次，在这个过程中实际使用的是git fetch来执行的。为什么是使用git fetch来执行的？下面一段话给出了解释：</p>
+<blockquote>
+<p>Git fetch is used because git clone will only download the history of the default branch (some info about the default branch of a bare repo is available here). As we can’t know whether a given tag will be on the default branch or not, we need to fetch the whole repo (the cache) in our clone (the Pod checkout used for the installation).</p>
+</blockquote>
+<p><strong>简单来说就是我们不知道给定的tag标签是不是在默认的分支上面，所以不得不把全部repo给拉取下来做一下比较，才能确定给定的tag标签是在哪个分支上面。</strong>我们通过一个例子来说明一下，master repo下有一个A库，A库在更新前本地有10个tag标签，也就是有10个版本，CocoaPods要想检测一下A库有没有最新的版本，<strong>它就去github上的repo地址列表拷贝一份A库最新所有的tag标签，和本地的tag标签做一个比较，从而判断A库有没有最新版本，需要不需要更新。</strong></p>
+<p>而git clone仅仅下载默认分支且默认分支repo的大小要比全部分支repo的大小小许多，<strong>还有最重要的一点是git clone明确了tag标签是在默认分支上，这样就不要下载全部的repo进行大量的比较了。</strong></p>
+<p>总结：</p>
+<ul>
+<li>git fetch下载的repo要比git clone下载的repo大许多。</li>
+<li>给定一个tag标签，git clone明确了一个库的tag标签在默认分支上，而git fetch则不能。</li>
+<li>git fetch为了确定库的标签在哪个分支上需要做大量的计算，而git clone则不需要。</li>
+</ul>
+<p>我们可以看出git clone要比git fetch快许多，所以要在使用cocoapods时要尽量避免执行git fetch，看下下面几种解决方案：</p>
+<p><strong>方案一：</strong> 使用下面两个命令行</p>
+<pre><code>pod installl --no-repo-update --verbose
+pod update --no-repo-update --verbose</code></pre><p>其中–verbose的作用就是打印出执行过程中详细的信息，<strong>–no-repo-update的作用就是禁止更新repo，这样就避免执行了git fetch，从而加快速度。</strong>但是如果repo本身就很老(第三方库版本比较低)的时候，仍然是需要更新repo的，这种情况下如何处理呢？请看方案二和方案三。</p>
+<p>*<em>方案二: *</em>进入到repos目录下，通过git clone直接添加master库，命令行如下：</p>
+<pre><code>$ cd ~/.cocoapods/repos 
+$ pod repo remove master
+$ git clone https://github.com/CocoaPods/Specs.git master</code></pre><p>首先要把本地老的master分支给移除掉，<strong>然后使用git clone从github镜像源上clone一份且设置本地master库。</strong>这样本地的repo就是最新的了，此时在进入到当前工程目录下，执行方案一提供的命令行。这样就解决了工程依赖的第三方库版本过低需要更新的问题。但是我们在clone github镜像源的时候，发现速度还是比较慢的，这是因为国内访问github的速度不给力，没办法的事情，这个时候可以考虑挂一个VPN或者使用国内一些网站提供的镜像源。</p>
+<p><strong>方案三：</strong>repo换源</p>
+<p>方案三就是为了解决方案二出现clone github镜像源比较慢的问题，可以换成coding提供的一个镜像源，命令行如下：</p>
+<pre><code>$ cd ~/.cocoapods/repos 
+$ pod repo remove master
+$ git clone https://git.coding.net/hging/Specs.git master</code></pre><p>这样在clone的时候会发现速度很快哈。另外，<strong>在自己工程中的Podfile文件加入下面一行描述：</strong></p>
+<pre><code>source &apos;https://git.coding.net/hging/Specs.git&apos;</code></pre><p><strong>如果不加这一句话，它默认还是从github镜像源地址去下载的，这个不要给忘记了。</strong></p>
+<p>注意点：</p>
+<ul>
+<li>master repo里面存放的是所有第三方库的地址列表，下载第三方库对应的源码还是要到指定的源码存放地址(podspecs中有指定)去下载。更换repo源只是加快了repo的下载速度，并不会加快第三方库源码的下载速度，两者是没有任何关系的。</li>
+<li>在工程中尽量避免直接使用pod update、pod install，在后面添加–no-repo-update后使用。</li>
+<li>工程中依赖第三方库版本过低，可以先到repos目录下，使用git clone更新master repo，然后在工程中使用pod update –no-repo-update命令。</li>
+</ul>
+<p>上面提到的三种方案从一定程度上加快了CocoaPods的执行速度，但是仍然避免不了要更新全部repo的情况，<strong>而实际情况是我们项目当中用到的第三方库大部分只需要十几个，大量的时间被浪费在我们不需要的库上面了。因为CocoaPods是使用中心化的方式来进行管理的，所以当第三方库多起来的时候，就会出现刚才的情况，这个时候可以选择使用Carthage来管理第三方库，它比CocoaPods最大的优势就在于去中心化的方式来管理，不过Carthage的缺点是里面的库还不是很丰富，不过随着时间的推移就不是问题了。</strong></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在第一次安装CocoaPods的时候，替换成rubychina提供的rubygems镜像仓库。在实际工程中尽量避免让CocoaPods执行git fetch命令，比如执行pod update、pod install、pod repo udpate等命令都会引起CocoaPods执行git fetch命令。</p>
+<p>参考文章：</p>
+<p><a href="https://github.com/CocoaPods/CocoaPods/issues/1077" target="_blank" rel="noopener">https://github.com/CocoaPods/CocoaPods/issues/1077</a><br><a href="http://hyichao.github.io/ios/2015/12/06/cocoapods-slow.html" target="_blank" rel="noopener">http://hyichao.github.io/ios/2015/12/06/cocoapods-slow.html</a><br><a href="https://mirrors.tuna.tsinghua.edu.cn/help/CocoaPods/" target="_blank" rel="noopener">https://mirrors.tuna.tsinghua.edu.cn/help/CocoaPods/</a><br><a href="http://gems.ruby-china.org/" target="_blank" rel="noopener">http://gems.ruby-china.org/</a></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/01/19/%E8%A7%A3%E5%86%B3CocoaPods%E5%90%84%E7%A7%8D%E6%85%A2%E7%9A%84%E5%BF%85%E6%9D%80%E6%8A%80/" data-id="ck5cjpo6300145yt502k15guw" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/09/%E5%88%9B%E5%BB%BA%E7%B1%BB%E6%A8%A1%E5%BC%8F(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          创建类模式(读书笔记)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/01/15/iOS%E7%BB%98%E5%9B%BE%E7%B3%BB%E7%BB%9F(%E4%BA%8C)%20Core%20Animation%20(%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0)/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS绘图系统(二) Core Animation (读书笔记)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

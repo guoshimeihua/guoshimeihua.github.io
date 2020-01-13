@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>App架构 (读书笔记) | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近细看了下Casa Taloyum写的View层架构设计，对其中提到的MVC、MVP、MVVM架构模式做了下总结，记录下自己的读书笔记。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="App架构 (读书笔记)">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/03/16/App%E6%9E%B6%E6%9E%84%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="最近细看了下Casa Taloyum写的View层架构设计，对其中提到的MVC、MVP、MVVM架构模式做了下总结，记录下自己的读书笔记。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-6f4a3c011394d47b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-03-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-07-02T04:17:27.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-6f4a3c011394d47b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-App架构（读书笔记）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/16/App%E6%9E%B6%E6%9E%84%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" class="article-date">
+  <time datetime="2017-03-15T16:00:00.000Z" itemprop="datePublished">2017-03-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      App架构 (读书笔记)
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近细看了下<strong>Casa Taloyum</strong>写的View层架构设计，对其中提到的MVC、MVP、MVVM架构模式做了下总结，记录下自己的读书笔记。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="MVC"><a href="#MVC" class="headerlink" title="MVC"></a>MVC</h3><p>谈到架构，就绕不开MVC架构，也可以说其他架构都是MVC架构的变形与优化，比如MVP、MVVM。MVC架构分为三部分：Model(数据管理)、View(视图管理)、Controller(控制器)，三者之间的关系如下图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-6f4a3c011394d47b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="1-1 mvc.png"></p>
+<p>从图中可以看出，Controller处在Model与View之间，负责协调Model与View的关系。<strong>那么MVC在移动端是怎么划分的呢？在服务器端View就是浏览器，显示视图给用户，但是在移动端没有浏览器，那么View放在哪里合适呢？iOS和Android都选择放在C里面了，iOS和Android都以View来充当View的容器(View Container)，这也就解释了在iOS中命名Controller为UIViewController了，在Android中的C就是Activity。</strong>接下来看下三部分承担的职责如下：</p>
+<p><strong>M应该做的事：</strong></p>
+<ol>
+<li>给ViewController提供数据。</li>
+<li>给ViewController存储数据提供接口。</li>
+<li>提供经过抽象的业务基本组件，供Controller调度。</li>
+</ol>
+<p><strong>C应该做的事：</strong></p>
+<ol>
+<li>管理View Container的生命周期。</li>
+<li>负责生成所有的View实例，并放入View Container。</li>
+<li>监听来自View与业务有关的事件，通过与Model的合作，来完成对应事件的业务。</li>
+</ol>
+<p><strong>V应该做的事：</strong></p>
+<ol>
+<li>响应与业务无关的事件，并因此引发动画效果，点击反馈（如果合适的话，尽量还是放在View去做）等。</li>
+<li>界面元素表达。</li>
+</ol>
+<p>M的职责主要是取数据与存储数据，比如对网络数据进行存储。由于取数据与存数据的业务逻辑全部放在M中去处理，随着工程的庞大，M也会随之变大，也就是常说的胖Model。<strong>胖Model减轻了C要处理的事情，但是Model的复用率降低。有胖Model对应的就有瘦Model，瘦Model要达到的目的是，尽一切可能去编写细粒度Model，然后配套各种helper类或方法对弱业务做抽象，强业务依旧交给Controller。</strong></p>
+<p>在MVC架构中，随着软件规模的增大，C很容就变得很庞大很难测试很难维护，MVVM和MVP就是解为了解决这个问题。</p>
+<h3 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h3><p>不管MVP、MVVM，它们的共识都是Controller会随着软件的成长，变得很大很难维护很难测试。MVVM是基于胖Model的架构思路建立的，然后在胖Model中拆出两部分：Model和ViewModel，从而使得Controller只需要专注于数据调配的工作，ViewModel则去负责数据加工并通过通知机制让View响应ViewModel的改变。</p>
+<p><strong>由于ViewModel本质上算是Model层，所以View并不适合直接持有ViewModel。</strong>另外一点是，ViewModel有可能并不是只服务于特定的一个View，使用更加松散的绑定关系能够降低ViewModel和View之间的耦合度。这也是大多数使用MVVM架构的都采用了ReactiveCocoa库的原因，因为ReactiveCocoa采用信号量机制使ViewModel和View之间松耦合。至此，大家可能有一个疑问，ViewModel和View之间已经能相互通信了，那Controller起到什么作用呢？如下所示：</p>
+<pre><code>View &lt;-&gt; Controller &lt;-&gt; ViewModel &lt;-&gt; Model</code></pre><p>所以使用MVVM之后，就不需要Controller的说法是不正确的，严格来说MVVM其实是MVCVM。从图中可以得知，Controller夹在View和ViewModel之间做的其中一个主要事情就是将View和ViewModel进行绑定。<strong>在逻辑上，Controller知道应当展示哪个View，Controller也知道应该使用哪个ViewModel，然而View和ViewModel它们之间是互相不知道的，所以Controller就负责控制他们的绑定关系。Controller另一方面也负责常规的UI逻辑处理。</strong></p>
+<h3 id="MVP"><a href="#MVP" class="headerlink" title="MVP"></a>MVP</h3><p>MVP跟MVVM差不多，分为Model、View、Present三部分，如下所示：</p>
+<pre><code>View &lt;-&gt; Controller &lt;-&gt; Present &lt;-&gt; Model</code></pre><p>从上可以看出几乎和MVVM相似，但是两者还是有区别的，在MVVM中ViewModel与View之间通过ReactiveCocoa的信号量机制来进行交互的，而MVP中View与Present之间是通过依赖注入的方式来进行绑定的。在MVP中，通过抽出Present来处理部分的数据，从而达到了对Controller瘦身的目的。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>所有的架构都源自于MVC，MVP、MVVM、MVCS等都是为了给Controller瘦身，把握住这一点，在理解其他架构模式方面就会游刃有余了。</strong></p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="https://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html" target="_blank" rel="noopener">https://casatwy.com/iosying-yong-jia-gou-tan-viewceng-de-zu-zhi-he-diao-yong-fang-an.html</a></p>
+<p><a href="http://www.infoq.com/cn/articles/android-official-mvp-architecture-sample-project-analysis" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/android-official-mvp-architecture-sample-project-analysis</a></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/03/16/App%E6%9E%B6%E6%9E%84%EF%BC%88%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%89/" data-id="ck5cjpo4s00035yt5btrj7yrj" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/04/06/%E5%89%91%E6%8C%87offer%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          剑指offer(读书笔记)
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/03/08/%E5%A6%82%E4%BD%95%E7%BB%99%E4%BD%A0%E7%9A%84%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E6%8E%92%E7%89%88/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">如何给你的微信公众号排版</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

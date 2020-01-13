@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Maven入门介绍 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="最近在学习Java了，以后分享的文章主要就以Java为主了，偶尔也会分享一下Objective-C方面的文章，这篇读书笔记主要介绍了Maven的一些核心概念和常用的一些插件。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven入门介绍">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/06/11/Maven%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="最近在学习Java了，以后分享的文章主要就以Java为主了，偶尔也会分享一下Objective-C方面的文章，这篇读书笔记主要介绍了Maven的一些核心概念和常用的一些插件。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-adc2bbe01081620c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-06-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-07-02T04:19:35.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-adc2bbe01081620c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Maven入门介绍" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/11/Maven%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" class="article-date">
+  <time datetime="2017-06-10T16:00:00.000Z" itemprop="datePublished">2017-06-11</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Maven入门介绍
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>最近在学习Java了，以后分享的文章主要就以Java为主了，偶尔也会分享一下Objective-C方面的文章，这篇读书笔记主要介绍了Maven的一些核心概念和常用的一些插件。</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="Maven"><a href="#Maven" class="headerlink" title="Maven"></a>Maven</h2><h3 id="什么是Maven"><a href="#什么是Maven" class="headerlink" title="什么是Maven?"></a>什么是Maven?</h3><p>什么是Maven呢？我们看下官网给出的一段介绍：</p>
+<blockquote>
+<p>Apache Maven is a software project management and comprehension tool. Based on the concept of a project object model (POM), Maven can manage a project’s build, reporting and documentation from a central piece of information.</p>
+</blockquote>
+<p>从介绍中我们可以看到Apache Maven是一个项目管理和理解工具，它基于项目对象模型(POM)的概念，它可以管理项目的构建、报告和文档。我们也会经常听到有人对Maven是这样理解的：</p>
+<ul>
+<li>Maven是一个站点和文档工具。</li>
+<li>Maven扩展Ant，让你下载依赖关系。</li>
+<li>Maven是一组可重用的Ant脚本。</li>
+</ul>
+<p>这几个方面都是Maven的一些功能，Maven所提供的功能远比这强大的许多，不过对于我们在日常项目当中用到最多的就是管理第三方库的依赖、项目的构建。如果开发工具使用的是IntelliJ IDEA，自动就帮你安装好了Maven，不是的话，也可以参考下官方给出的Maven安装教程，也是比较简单的。接下来看下怎样用Maven来满足我们项目的日常需要。</p>
+<h3 id="约定优于配置"><a href="#约定优于配置" class="headerlink" title="约定优于配置"></a>约定优于配置</h3><p>Maven使用约定优于配置的原则，如下所示：</p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>目的</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>${basedir}</td>
+<td>存放pom.xml和所有的子目录</td>
+</tr>
+<tr>
+<td>${basedir}/src/main/java</td>
+<td>项目的java源代码</td>
+</tr>
+<tr>
+<td>${basedir}/src/main/resources</td>
+<td>项目的资源，比如说property文件，springmvc.xml</td>
+</tr>
+<tr>
+<td>${basedir}/src/test/java</td>
+<td>项目的测试类，比如说Junit代码</td>
+</tr>
+<tr>
+<td>${basedir}/src/test/resources</td>
+<td>测试用用的资源</td>
+</tr>
+<tr>
+<td>${basedir}/src/main/webapp/WEB-INF</td>
+<td>web应用文件目录，web项目的信息，比如存放web.xml、本地图片、jsp视图页面</td>
+</tr>
+<tr>
+<td>${basedir}/target</td>
+<td>打包输出目录</td>
+</tr>
+<tr>
+<td>${basedir}/target/classes</td>
+<td>编译输出目录</td>
+</tr>
+<tr>
+<td>${basedir}/target/test-classes</td>
+<td>测试编译输出目录</td>
+</tr>
+<tr>
+<td>Test.java</td>
+<td>Maven只会自动运行符合该命名规则的测试类</td>
+</tr>
+<tr>
+<td>~/.m2/repository</td>
+<td>Maven默认的本地仓库目录位置</td>
+</tr>
+</tbody></table>
+<p>一个maven项目在默认情况下会产生jar文件，另外，编译后的classes会放在${basedir}/target/classes下面，jar文件会放在${basedir}/target下面。使用约定优于配置带来最大的好处就是项目的统一，任何人在使用Maven项目的时候，文件的存放位置都是一样的，通用性比较好。这也是为什么我们在用intellij创建一个maven项目的时候，需要配置源文件、资源文件路径的原因。如下图就是常用的几个配置：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-adc2bbe01081620c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven 1-1.png"></p>
+<h3 id="Maven的几个核心概念"><a href="#Maven的几个核心概念" class="headerlink" title="Maven的几个核心概念"></a>Maven的几个核心概念</h3><p>####POM(Project Object Model)</p>
+<p>一个项目所有的配置都放在POM文件中：定义项目的类型、名字、管理依赖关系，定制插件的行为等等。看下我自己写的小demo中pom中配置如下：</p>
+<pre><code>&lt;groupId&gt;com.dodonew&lt;/groupId&gt;
+&lt;artifactId&gt;springmvc&lt;/artifactId&gt;
+&lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+&lt;packaging&gt;war&lt;/packaging&gt;
+&lt;name&gt;springmvc&lt;/name&gt;
+&lt;url&gt;http://maven.apache.org&lt;/url&gt;
+
+&lt;dependencies&gt;
+    &lt;!-- spring日志依赖 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt;
+        &lt;version&gt;1.7.21&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;
+        &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;
+        &lt;version&gt;1.1.7&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre><p><strong>在POM中，groupId、artifactId、packaging、version叫做maven坐标，它能唯一的确定一个项目。有了maven坐标，我们就可以用它来指定我们的项目所依赖的其他项目、插件、或者父项目。</strong>我写的demo很简单，但是比较大的项目一般会分成几个子项目，在这种情况下，每个子项目就会有自己的POM文件，它们会有一个共同的父项目。这样只要构建父项目就能够构建所有的子项目了。同时子项目的POM会继承父项目的POM。关于多个子项目具体怎么操作，在文章后面会有回答的。</p>
+<p>####Maven插件</p>
+<p>Maven常用的插件比如compiler插件、surefire插件、jar插件。比如说jar插件包含建立jar文件的目标，compiler插件包含编译源代码和单元测试代码的目标，surefire插件则是运行单元测试的目标。为什么需要这些插件呢？因为maven本身不会做太多的事情，它不知道怎么样编译或者怎么样打包。它把构建的任务交给插件去做。<strong>插件定义了常用的构建逻辑，能够被重复利用。这样做的好处是，一旦插件有了更新，那么所有maven用户都能得到更新。</strong></p>
+<p>####Maven生命周期</p>
+<p>生命周期指项目的构建过程，它包含了一系列的有序的阶段，而一个阶段就是构建过程中的一个步骤，比如package阶段、compiler阶段等。那么生命周期阶段和上面说的插件目标之间是什么关系呢？<strong>插件目标可以绑定到生命周期阶段上，一个生命周期可以绑定多个插件目标。当maven在构建过程中逐步的通过每个阶段时，会执行该阶段所有的插件目标。</strong>目前生命周期阶段有clean、vavidate、compiler、test、package、verify、install、site、deploy阶段。</p>
+<p>####Maven依赖管理</p>
+<p>我们能够通过maven坐标确定一个项目，换句话说，我们可以用它来解决依赖关系。在POM中，依赖关系是在dependencies部分中定义的。比如对slf4j库和logback库的依赖关系如下：</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;!-- spring日志依赖 --&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.slf4j&lt;/groupId&gt;
+        &lt;artifactId&gt;jcl-over-slf4j&lt;/artifactId&gt;
+        &lt;version&gt;1.7.21&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;ch.qos.logback&lt;/groupId&gt;
+        &lt;artifactId&gt;logback-classic&lt;/artifactId&gt;
+        &lt;version&gt;1.1.7&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre><p>这个依赖关系是比较简单的，但是实际开发中我们会有复杂多的依赖关系，因为被依赖的jar文件会有自己的依赖关系，那么我们是不是也得把间接依赖的jar文件也都定义在POM中呢？答案是不需要，因为maven提供了传递依赖的特性，会把依赖的jar文件它所依赖的库也自动添加进来。比如spring-webmvc库，这个库自己又依赖spring-core、spring-beans、spring-web、spring-expression、spring-context，因为依赖传递性，我们在使用spring-webmvc的时候，只需要声明对spring-webmvc的依赖关系即可，其他的库会自动帮你引入的。<strong>之所以能实现依赖传递性关键就在于下载spring-webmvc库，同时也下载了pom文件，在pom文件定义了这个库需要的依赖关系。</strong></p>
+<p>scope决定了依赖关系的适用范围，比如junit的scope是test，那么它只会在执行compiler:testCompile和surefire:test目标的时候才会被加载到classpath中，在执行compiler:compile目标时是拿不到junit的。换句话说就是在maven哪个生命周期中起作用了。scope的默认值是compile，即任何时候都会被包含在classpath中，在打包的时候也会被包括进去。</p>
+<p><strong>Maven库</strong></p>
+<p>我们所依赖的库是从maven默认的远程库(<a href="http://repo.maven.org/maven2)下载的，这个是公有的库。有时公司自己封装了一些私有库，这个时候我们就可以搭建自己的私有库了。本地库是指maven下载了插件或者jar文件后存放在本地机器上的拷贝。在Mac上，它的位置在~/.m2/repository。当maven查找需要的jar文件时，它会先在本地库中查找，只有在找不到的情况下，才会去远程库中找的。由于maven默认的远程库服务器在国外，国内访问的时候比较慢，建议替换成阿里云的镜像，仓库地址如下：" target="_blank" rel="noopener">http://repo.maven.org/maven2)下载的，这个是公有的库。有时公司自己封装了一些私有库，这个时候我们就可以搭建自己的私有库了。本地库是指maven下载了插件或者jar文件后存放在本地机器上的拷贝。在Mac上，它的位置在~/.m2/repository。当maven查找需要的jar文件时，它会先在本地库中查找，只有在找不到的情况下，才会去远程库中找的。由于maven默认的远程库服务器在国外，国内访问的时候比较慢，建议替换成阿里云的镜像，仓库地址如下：</a></p>
+<pre><code>http://maven.aliyun.com/nexus/content/groups/public/</code></pre><h3 id="Maven多模块项目POM注意的事项"><a href="#Maven多模块项目POM注意的事项" class="headerlink" title="Maven多模块项目POM注意的事项"></a>Maven多模块项目POM注意的事项</h3><h4 id="denpendencyManagement"><a href="#denpendencyManagement" class="headerlink" title="denpendencyManagement"></a>denpendencyManagement</h4><p>在项目开发过程中，有时一个项目下面包含了几个子模块，在多模块的情况，POM的配置应该要注意写什么呢？我们通过一个例子来说明下。<br>有这样一个工程，里面有A模块、B模块和C模块，A模块需要引入junit和log4j库，配置如下：</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactid&gt;junit&lt;/artifactId&gt;
+    &lt;version&gt;3.8.2&lt;/version&gt;
+  &lt;/dependency&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;log4j&lt;/groupId&gt;
+    &lt;artifactid&gt;log4j&lt;/artifactId&gt;
+    &lt;version&gt;1.2.9&lt;/version&gt;
+  &lt;/dependency&gt;</code></pre><p>此时B模块也需要引入这两个库，配置如下：</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;junit&lt;/groupId&gt;
+    &lt;artifactid&gt;junit&lt;/artifactId&gt;
+    &lt;version&gt;4.8.2&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+  &lt;/dependency&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;log4j&lt;/groupId&gt;
+    &lt;artifactid&gt;log4j&lt;/artifactId&gt;
+    &lt;version&gt;1.2.16&lt;/version&gt;
+  &lt;/dependency&gt;</code></pre><p>会发现A模块和B模块对junit和log4j库依赖的版本是不同的，出现这种情况是十分危险的，因为依赖不同版本的库可能会造成很多未知的风险。怎么解决不同模块之间对同一个库的依赖版本一样呢？Maven提供了优雅的解决办法，使用继承机制以及dependencyManagement元素来解决这个问题。如果你在父模块中配置dependencies，那么所有的子模块都自动继承，不仅达到了依赖一致的目的，还省了大段的代码，但这样来做会存在问题的。比如B模块需要spring-aop模块，但是C模块不需要spring-aop模块，如果用dependencies在父类中统一配置，C模块中也会包含有spring-aop模块，不符合我们的要求。但是用dependencyManagement就没有这样的问题。<strong>dependencyManagement只会影响现有依赖的配置，但不会引入依赖。</strong>这样我们在父模块中的配置可以更改如下所示：</p>
+<pre><code>&lt;!-- dependencyManagement只会影响现有依赖的配置，但不会引入依赖。 --&gt;
+&lt;dependencyManagement&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.12&lt;/version&gt;
+            &lt;scope&gt;test&lt;/scope&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;log4j&lt;/groupId&gt;
+            &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+            &lt;version&gt;1.2.17&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+&lt;/dependencyManagement&gt;</code></pre><p>这段配置不会给任何子模块引入依赖，如果某个子模块需要junit和log4j，只需要这样配置即可：</p>
+<pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;log4j&lt;/groupId&gt;
+        &lt;artifactId&gt;log4j&lt;/artifactId&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre><p><strong>在多模块Maven项目中，使用dependencyManagement能够有效地帮我们维护依赖一致性。</strong></p>
+<h4 id="pluginManagement"><a href="#pluginManagement" class="headerlink" title="pluginManagement"></a>pluginManagement</h4><p>上面介绍了在多模块中对依赖库的管理，接下来介绍下对插件的管理。与dependencyManagement类似，我们可以使用pluginManagement元素管理插件。一个常见的用法就是我们希望项目所有模块的使用compiler插件的时候，都是用java1.7，以及指定Java源文件编码为UTF-8，这时可以在父模块的POM中如下配置pluginManagement：</p>
+<pre><code>&lt;build&gt;
+      &lt;pluginManagement&gt;
+        &lt;plugins&gt;
+              &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;2.3.2&lt;/version&gt;
+                &lt;configuration&gt;
+                  &lt;source&gt;1.5&lt;/source&gt;
+                  &lt;target&gt;1.5&lt;/target&gt;
+                  &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                &lt;/configuration&gt;
+              &lt;/plugin&gt;
+        &lt;/plugins&gt;
+      &lt;/pluginManagement&gt;
+&lt;/build&gt;</code></pre><p>这段配置会被应用到所有子模块的compiler插件中，因为Maven内置了与compiler插件与生命周期的绑定，因此子模块不需要任何maven-compiler-plugin的配置了。</p>
+<h3 id="Maven常用的几个插件"><a href="#Maven常用的几个插件" class="headerlink" title="Maven常用的几个插件"></a>Maven常用的几个插件</h3><p>Maven本质上是一个插件框架，它的核心并不执行任何具体的构建任务，所有这些任务都交给插件来完成。下面说几个常用的插件：</p>
+<p><strong>maven-compiler-plugin(编译插件)</strong></p>
+<p>用来编译Java代码，在对Java代码进行编译的时候，可以指定使用哪个JDK的版本来进行编译，配置如下所示：</p>
+<pre><code>&lt;plugin&gt;
+       &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+      &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+      &lt;version&gt;3.6.0&lt;/version&gt;
+      &lt;configuration&gt;
+          &lt;source&gt;1.7&lt;/source&gt; &lt;!-- 源代码使用jdk1.7 --&gt;
+         &lt;target&gt;1.7&lt;/target&gt; &lt;!-- 使用jvm1.7编译目标代码 --&gt;
+      &lt;/configuration&gt;</code></pre>   </plugin>
+
+<p><strong>maven-resources-plugin(资源插件)</strong></p>
+<p>Maven区别对待Java代码和资源文件，maven-resources-plugin则用来处理资源文件。默认的主资源文件目录是src/main/resources，很多时候会需要添加额外的资源文件目录，这个时候就可以通过配置maven-resources-plugin来实现，配置如下所示：</p>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-resources-plugin&lt;/artifactId&gt;
+    &lt;version&gt;2.5&lt;/version&gt;
+    &lt;executions&gt;
+        &lt;execution&gt;
+            &lt;phase&gt;compile&lt;/phase&gt; &lt;!-- 与Maven编译生命周期绑定在一起 --&gt;
+        &lt;/execution&gt;
+    &lt;/executions&gt;
+&lt;/plugin&gt;</code></pre><p><strong>maven-surefire-plugin(测试插件)</strong></p>
+<p>Maven2/3中用于执行测试的插件不是maven-test-plugin，而是maven-surefire-plugin，其实在大部分情况下，只要你的测试类遵循通用的命令约定（以Test结尾，以TestCase结尾、或者Test开头），就几乎不用知晓该插件的存在。但是当你想要跳过测试、排除某些测试类、或者使用一些TestNG特性的时候，就要用到了maven-surefire-plugin的一些配置选项了，配置如下所示：</p>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-surefire-plugin&lt;/artifactId&gt;
+    &lt;version&gt;2.14&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;skipTests&gt;true&lt;/skipTests&gt; &lt;!-- 跳过测试 --&gt;
+    &lt;/configuration&gt;</code></pre>   </plugin>
+
+<p><strong>maven-clean-plugin(清除插件)</strong></p>
+<p>主要作用就是清理构建目录下的全部内容，有些项目，构建时需要清理构建目录以外的文件，比如指定的库文件，这时候就需要配置<filesets>来实现了，配置如下所示：</p>
+<pre><code>&lt;plugin&gt;
+    &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+    &lt;artifactId&gt;maven-clean-plugin&lt;/artifactId&gt;
+    &lt;version&gt;3.0.0&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;!--&lt;skip&gt;true&lt;/skip&gt;--&gt;
+        &lt;!--&lt;failOnError&gt;false&lt;/failOnError&gt;--&gt;
+        &lt;!--当配置true时,只清理filesets里的文件,构建目录中得文件不被清理.默认是flase.--&gt;
+        &lt;excludeDefaultDirectories&gt;false&lt;/excludeDefaultDirectories&gt;
+        &lt;filesets&gt;
+            &lt;fileset&gt;
+                &lt;!--要清理的目录位置--&gt;
+                &lt;directory&gt;${basedir}/logs&lt;/directory&gt;
+                &lt;!--是否跟随符号链接 (symbolic links)--&gt;
+                &lt;followSymlinks&gt;false&lt;/followSymlinks&gt;
+               &lt;/fileset&gt;
+        &lt;/filesets&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre><p><strong>maven-war-plugin(打包插件)</strong></p>
+<p>主要作用就是用来打包的，在打包的时候经常需要排除一些文件，就需要对warSourceExcludes进行配置了，配置如下所示：</p>
+<pre><code>&lt;plugin&gt;
+    &lt;artifactId&gt;maven-war-plugin&lt;/artifactId&gt;
+    &lt;version&gt;2.0.2&lt;/version&gt;
+    &lt;configuration&gt;
+        &lt;warSourceExcludes&gt;WEB-INF/lib/**&lt;/warSourceExcludes&gt;
+    &lt;/configuration&gt;
+&lt;/plugin&gt;</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>Maven是一个项目管理和自动化构建工具，项目遵循约定优于配置，这也是maven项目的一大特色。另外，maven本质上是一个插件框架，它的核心不执行任何具体的构建工作，全部都交给插件去执行，maven插件是与maven生命周期绑定在一起的。理解这些重要的核心点，对于maven的使用会有很大的帮助。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p>Maven入门介绍</p>
+<p><a href="http://www.oracle.com/technetwork/cn/community/java/apache-maven-getting-started-1-406235-zhs.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/cn/community/java/apache-maven-getting-started-1-406235-zhs.html</a></p>
+<p><a href="http://www.oracle.com/technetwork/cn/community/java/apache-maven-getting-started-2-405568-zhs.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/cn/community/java/apache-maven-getting-started-2-405568-zhs.html</a></p>
+<p><a href="https://maven.apache.org/what-is-maven.html" target="_blank" rel="noopener">https://maven.apache.org/what-is-maven.html</a></p>
+<p>Maven常用插件</p>
+<p><a href="http://www.infoq.com/cn/news/2011/04/xxb-maven-7-plugin" target="_blank" rel="noopener">http://www.infoq.com/cn/news/2011/04/xxb-maven-7-plugin</a></p>
+<p><a href="http://www.infoq.com/cn/news/2011/05/xxb-maven-8-plugin" target="_blank" rel="noopener">http://www.infoq.com/cn/news/2011/05/xxb-maven-8-plugin</a></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/06/11/Maven%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" data-id="ck5cjpo6n001c5yt5cdrod1mg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/13/Spring%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spring入门介绍
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/04/15/iOS%E8%BF%9B%E9%98%B6%EF%BC%88%E4%BA%8C%EF%BC%89Objective-C%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS进阶（二）Objective-C底层原理</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

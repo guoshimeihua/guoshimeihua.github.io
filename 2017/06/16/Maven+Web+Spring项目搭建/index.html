@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Maven+Web+Spring项目搭建 | 国士梅花</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="之前写了关于Maven入门介绍与Spring入门介绍两篇文章，本篇文章主要介绍使用IntelliJ IDEA搭建一个maven+web+spring的项目，在搭建的过程中会用到前面两篇文章中相关的知识点，如有不熟悉的，可以先看下前面两篇文章。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Maven+Web+Spring项目搭建">
+<meta property="og:url" content="https://www.guoshimeihua.cn/2017/06/16/Maven+Web+Spring%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/index.html">
+<meta property="og:site_name" content="国士梅花">
+<meta property="og:description" content="之前写了关于Maven入门介绍与Spring入门介绍两篇文章，本篇文章主要介绍使用IntelliJ IDEA搭建一个maven+web+spring的项目，在搭建的过程中会用到前面两篇文章中相关的知识点，如有不熟悉的，可以先看下前面两篇文章。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-e0ff5c4632d8f739.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-88e0411b78797f51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-ccbeeab9e40e5223.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-98dbe0765952c7c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-c10534e9ff745d9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-bbf8fed96e27ddfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-617d6b64e1aee7c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-bc424206a49d0e0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-4ce0f52bd70e937c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-ebafb549c171bf7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-9cfd52c5a8e4324a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-ce8d4d87304f0c13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-5061cb9348abdc79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-bc5f59b145d151ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-76dd76e91f033e53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-b9c23e932b4a0394.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-fcf2a6d0e528e67a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-bf219d147b328ab1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-c977db2b8cbceeab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-0620e4bfd77f8d7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-641dfe5230881fa1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-4600eb42f6e92b55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-9753c164fb8ad3eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-38cd9d747b7f0631.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-a8869e286242a778.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-f2f5823175863b83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-f0aa339fd1dcf32b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-5b43725a94ac9afb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-f2e259eb9c131860.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-55e1ef5fabdbaedd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-b7ff45fc7a16fd56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-f5da4c74fb3aeb81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-b090f8db32a7f822.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-96b5296e8cd971f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-a3fc7dd5600dc0d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-26dbde4f5352b349.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-8658f302558cf556.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-a65ac60f9896c22c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-8cd13dc917be30d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-ce2ddf01f0cd5c61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-000c88ab4b448a5b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="article:published_time" content="2017-06-15T16:00:00.000Z">
+<meta property="article:modified_time" content="2017-07-02T04:19:06.000Z">
+<meta property="article:author" content="guoshimeihua">
+<meta property="article:tag" content="国士梅花、大前端">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/416556-e0ff5c4632d8f739.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+  
+    <link rel="alternate" href="/atom.xml" title="国士梅花" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">国士梅花</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">一个国士，一枝梅花</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.guoshimeihua.cn"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Maven+Web+Spring项目搭建" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/16/Maven+Web+Spring%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" class="article-date">
+  <time datetime="2017-06-15T16:00:00.000Z" itemprop="datePublished">2017-06-16</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/java/">java</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Maven+Web+Spring项目搭建
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>之前写了关于Maven入门介绍与Spring入门介绍两篇文章，本篇文章主要介绍使用IntelliJ IDEA搭建一个maven+web+spring的项目，在搭建的过程中会用到前面两篇文章中相关的知识点，如有不熟悉的，可以先看下前面两篇文章。</p>
+</blockquote>
+<a id="more"></a>
+
+<h3 id="Maven-Web-Spring项目搭建"><a href="#Maven-Web-Spring项目搭建" class="headerlink" title="Maven+Web+Spring项目搭建"></a>Maven+Web+Spring项目搭建</h3><p><strong>步骤1：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-e0ff5c4632d8f739.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-1.png"></p>
+<p>注意不要选中红线标注的地方，<strong>因为archetype是模板、原型的意思，所以Create from archetype就是根据选中的模板快速创建出一个对应的项目，</strong>比如你选中下面webapp模板，就能快速创建出一个webapp项目。但是它最大的缺点就是创建速度太慢了。</p>
+<p><strong>步骤2：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-88e0411b78797f51.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-2.png"></p>
+<p>填写工程的GroupId、ArtifactId，GroupId、ArtifactId有什么作用？我在<a href="http://www.jianshu.com/p/39875424be3c" target="_blank" rel="noopener">Maven入门介绍</a>中已经介绍了。</p>
+<p><strong>步骤3：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-ccbeeab9e40e5223.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-3.png"></p>
+<p>选择项目存放的位置。</p>
+<p><strong>步骤4：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-98dbe0765952c7c3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-4.png"></p>
+<p>特别注意下用红色圆圈标注的地方，可以看出文件夹的颜色发生了变化，在resources文件夹多了一个小标志。<strong>为什么这些文件夹的颜色会发生变化呢？这是因为Maven遵循约定优于配置，约定了这些文件夹分别存放不同的东西。</strong>如果没有发生变化，则需要自己手动来配置，点击红色圆圈标注的位置，打开项目的工程设置，如图：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-c10534e9ff745d9f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-5.png"></p>
+<p>打开项目的工程设置后如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-bbf8fed96e27ddfa.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-6.png"></p>
+<p>比如你选中src/main/java目录，然后在点击Sources就配置成功了，其他的也是同样的方法，记得最后要点击OK按钮，这样设置才会生效的。关于Maven具体都约定了哪些目录存放哪些东西，可以看下我之前关于Maven入门介绍的文章。</p>
+<p><strong>步骤5：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-617d6b64e1aee7c0.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-7.png"></p>
+<p>Project(工程): A标注的地方，选择该项目组件使用的SDK，比如使用的是jdk1.8版本。B标注的地方，选择该项目组件支持到jdk哪个版本，比如使用的jdk1.8版本，但是在这里可以选择最低支持到jdk1.7版本。</p>
+<p><strong>步骤6：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-bc424206a49d0e0d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-8.png"></p>
+<p>Modules(组件): 从图中可以看到此项目没有任何服务组件，因为我们是手动创建Maven，没有选择任何Maven模板，这个在前面说过没有选的原因，因此需要我们进行添加，在这里可以添加我们想要的服务组件，比如web组件、spring组件等，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-4ce0f52bd70e937c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-9.png"></p>
+<p><strong>步骤7：</strong></p>
+<p>选择添加web组件，添加之后，选中添加的web组件，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-ebafb549c171bf7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-10.png"></p>
+<p>可以看到我们要对web组件配置三个地方，在介绍具体的配置前，我们有必要先了解一下Java Web应用程序的规范目录结构，如下图表所示：</p>
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>/webapp</td>
+<td>Web应用的根目录，所有的JSP和HTML文件都存放在此目录下</td>
+</tr>
+<tr>
+<td>/webapp/WEB-INF</td>
+<td>存放web应用的发布描述文件web.xml</td>
+</tr>
+<tr>
+<td>/webapp/WEB-INF/classes</td>
+<td>存放各种class文件，Servlet类文件也放于此目录下</td>
+</tr>
+<tr>
+<td>/webapp/WEB-INF/lib</td>
+<td>存放web应用所需要的各种jar文件</td>
+</tr>
+</tbody></table>
+<p><strong>WEB-INF目录是一个专用区域，当前的web应用不能把此目录中的内容提供给用户，这个目录下的文件只供当前的web应用使用，里面包含不应该由客户端直接下载的资源。简单来说就是我们可以看到一个web应用程序中的jsp、html文件，但里面的jar包、classes文件是看不到的。</strong>在项目开发的过程中，尽量按照web应用程序的规范目录结构来存储相应的文件，这样会带给我们许多好处，比如项目存放位置比较统一，通用性会比较好。在Maven项目中，如果想依赖某个jar包，只需要在pom.xml中添加下配置即可，那么这就会有个疑问了？我们依赖的jar包并没有存放在/WEB-INF/lib文件夹下面，这和我们上面所说的不符。对于这个问题，我们做个简单的验证，在pom.xml中配置对slf4j jar包的依赖，同时在WEB-INF/lib下面添加json-simple-1.1.1.jar包，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-9cfd52c5a8e4324a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-10-1.png"></p>
+<p>现在我们点击C标注的地方，开始打出来一个war包出来，存放的位置如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-ce8d4d87304f0c13.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-10-2.png"></p>
+<p>接下来我们把打好的war包，放在本地Tomcat webapps目录下面，并启动tomcat，启动tomcat后，会自动解析maven-springmvc.war包的，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-5061cb9348abdc79.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-10-3.png"></p>
+<p>从图中可以看出，通过maven依赖的jar包在打包的时候被放在了WEB-INF/lib目录下面，跟前面说的规范目录结构相吻合。不过在实际项目开发过程中，经常会在打包的时候把lib下面的包给排除掉，lib下面的包由公司的运维人员去手动添加。现在我们对web应用程序有了一个大概的了解，来继续看下步骤7需要配置的三个地方，先看下B标注的地方(Web Resources Directory)web资源目录，就是web应用的根目录，点击进行编辑，更改其路径为/src/main/webapp即可。A标注的地方(Web Module Deployment Descriptor)是web应用的发布描述文件，也就是要配置web.xml的位置，这个前面也有讲解到，需要更改路径配置到src/main/webapp/WEB-INF/web.xml路径下面。A、B配置好后如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-bc5f59b145d151ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-11.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-76dd76e91f033e53.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-11-1.png"></p>
+<p>在配置web.xml存放位置的时候，需要注意一点，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-b9c23e932b4a0394.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-12.png"></p>
+<p>在选择描述版本的时候，如果你是基于Tomcat8.0的话，选择3.1版本，如果是基于Tomcat7.0的话，选择3.0版本，这个一定要注意，别选错了。</p>
+<p>最后看下C标注的地方，Web Facet resources are not included in an artifact，其中Facets表示当前项目适配的服务组件，Artifacts描述了当前项目发布的信息，C标注翻译过来就是说当前项目发布信息中没有包含web服务组件的发布信息，可以点击标注右边的Create Artifact创建一个web服务组件的发布信息，然后就可以在Artifacts里面看到web服务组件的发布信息了。</p>
+<p><strong>步骤8：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-fcf2a6d0e528e67a.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-13.png"></p>
+<p>在Facets一栏中，我们可以看到当前项目适配的服务组件是web组件，如果在Modules也添加了Spring服务组件，在这里也可以看到适配的服务组件既有web组件，也有spring组件了。</p>
+<p><strong>步骤9：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-bf219d147b328ab1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-14.png"></p>
+<p>如果在步骤7点击了Create Artifact，在这里就可以看到web项目的发布信息，特别要注意红色标注的地方一定要是war包，否则运行的时候会报错的。如果不是war包的话，可以先给移除掉，手动来重新添加，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-c977db2b8cbceeab.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-15.png"></p>
+<p>到这里为止，一个maven+web的项目已经创建好了，点击确定按钮之后当前项目的目录结构如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-0620e4bfd77f8d7e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-17.png"></p>
+<p>如果项目中有需要添加自己的jar包，而不是通过maven依赖于某个jar包，可以在WEB-INF/lib下面添加自己的jar包，这个在前面有讲到过的，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-641dfe5230881fa1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-18.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-4600eb42f6e92b55.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-19.png"></p>
+<p><strong>步骤10：</strong></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-9753c164fb8ad3eb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-21.png"></p>
+<p>点击Edit COnfiguartions开始配置tomcat，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-38cd9d747b7f0631.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-22.png"></p>
+<p>选择Local之后的页面如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-a8869e286242a778.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-23.png"></p>
+<p>在这个页面出现了一个警告，Warning: No artifacts marked for deployment，就是说当前web项目没有部署到Tomcat服务器中，那我们来进行部署一下，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-f2f5823175863b83.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-24.png"></p>
+<p>选择Artifacts之后页面如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-f0aa339fd1dcf32b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-25.png"></p>
+<p>这样就把web项目部署到Tomact服务器上了，在回到Server选项上，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-5b43725a94ac9afb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-26.png"></p>
+<p>注意红色标注的地方建议都选择Update classes and resources，这样在你更改了一个类的话，不需要重新启动Tomcat服务器就可以生效了，因为Java本身是不支持热部署的，如果想支持热部署的话，需要配置一个相应插件的，具体大家可以搜下怎么做，这里不做详细说明。</p>
+<p><strong>步骤11：</strong></p>
+<p>如果此时我们创建一个java类，继承自HttpServlet，会发现报错的，为什么报错呢？是因为我们只是把当前的项目部署到tomcat服务器上，但是当前的项目并没有依赖于tomcat，而tomcat中包含了servlet-api.jar包，所有就会报错了。我们在项目中添加对Tomcat的依赖，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-f2e259eb9c131860.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-27.png"></p>
+<p>点击Library后页面如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-55e1ef5fabdbaedd.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-28.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-b7ff45fc7a16fd56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-29.png"></p>
+<p>注意红色标注的地方为Provided，它代表的含义是表示整个应用生命周期都会一直存在的。到现在整个web服务组件就全部配置好了，接下来看下Spring服务组件的配置了。</p>
+<p><strong>步骤12：</strong></p>
+<p>跟添加web服务组件一样，在Modules添加Spring服务组件，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-f5da4c74fb3aeb81.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-30.png"></p>
+<p>添加spring服务组件之后页面如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-b090f8db32a7f822.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-31.png"></p>
+<p>在红色标注的地方会看到一个警告，就是说spring服务组件缺少依赖的jar包。<strong>添加一个spring服务组件，总共需要三步配置：1、添加依赖jar包；2、配置dispatcherServlet；3、启动注解、配置静态资源访问等。</strong>我们先看添加依赖的jar包，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-96b5296e8cd971f2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-32.png"></p>
+<p>添加依赖的jar包，每个jar包的作用以及添加日志jar包需要注意的事项，都在我之前写的<a href="http://www.jianshu.com/p/424e2f151f9e" target="_blank" rel="noopener">Spring入门介绍</a>有介绍到，这里就不详细说明了。接下来看如何配置dispatcherServlet，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-a3fc7dd5600dc0d6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-33.png"></p>
+<p>每行配置的具体作用，可以看我之前写的Spring入门介绍，这里就不详细说明了。最后看下启动注解、配置静态资源访问，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-26dbde4f5352b349.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-35.png"></p>
+<p>这些都配置完成后，我们打开工程设置页面，如下所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-8658f302558cf556.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-36.png"></p>
+<p>这个时候在看红色标注的地方，就会看到applicationContext-springmvc.xml，说明dispatcherServlet配置成功了。</p>
+<p><strong>步骤13：</strong></p>
+<p>下面我们写个简单的demo，来验证下我们搭建的项目maven+web服务组件+spring服务组件是否正确，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-a65ac60f9896c22c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-37.png"></p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-8cd13dc917be30d9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-38.png"></p>
+<p>然后启动tomcat，如果看到下面的日志信息，说明spring服务组件启动了，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-ce2ddf01f0cd5c61.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-39.png"></p>
+<p>tomcat启动后，首先会报404错误的，然后在localhost:8083后面，输入hello，就可以看到welcome.jsp页面的信息了，如下图所示：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-000c88ab4b448a5b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="maven-springmvc 1-40.png"></p>
+<p>通过这样一个简单的demo就验证了我们搭建的项目是没有问题的。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>在Maven入门介绍、Web应用程序目录规范介绍中，都提到了一个词<strong>约定优于配置</strong>，那什么是约定优于配置呢？约定优于配置带给我们有哪些好处呢？</p>
+<p><strong>约定优于配置，是一种软件设计范式，旨在减少软件开发人员需要做决定的数量，获得简单的好处，而又不失灵活性。</strong>简单来说，开发人员仅需规定应用中不符合约定的部分。比如，如果模型中有一个名为Sale类，那么数据库中对应的表名就为sales。只有在偏离这一约定时，例如将该表名命名为products_sold，才需要写有关这个名字的配置。再比如Maven项目约定了源代码的存放位置，所以只需配置很少的信息就可以自动完成编译、测试和打包等工作。再比如iOS开发中，声明一个属性，系统会自动给你添加getter与setter方法，这其实也是一种约定。可见约定优于配置在很多语言、框架设计的时候都被采用到了。</p>
+<h3 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h3><p><a href="http://www.cnblogs.com/wql025/p/5215570.html" target="_blank" rel="noopener">http://www.cnblogs.com/wql025/p/5215570.html</a></p>
+<p><a href="http://www.splaybow.com/post/tomcatfolder09311611122007.html" target="_blank" rel="noopener">http://www.splaybow.com/post/tomcatfolder09311611122007.html</a></p>
+<p><a href="https://zh.wikipedia.org/wiki/%E7%BA%A6%E5%AE%9A%E4%BC%98%E4%BA%8E%E9%85%8D%E7%BD%AE" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E7%BA%A6%E5%AE%9A%E4%BC%98%E4%BA%8E%E9%85%8D%E7%BD%AE</a></p>
+<h3 id="国士梅花"><a href="#国士梅花" class="headerlink" title="国士梅花"></a>国士梅花</h3><p>欢迎大家关注国士梅花，技术路上与你陪伴。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/416556-34d2366fbc81b9be.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="guoshimeihua.jpg"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.guoshimeihua.cn/2017/06/16/Maven+Web+Spring%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA/" data-id="ck5cjpo6p001e5yt558rnamt1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/06/30/Spring%20MVC%E6%B3%A8%E8%A7%A3%E3%80%81%E6%A0%87%E7%AD%BE%E5%BA%93%E3%80%81%E5%9B%BD%E9%99%85%E5%8C%96/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Spring MVC注解、标签库、国际化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/06/13/Spring%E5%85%A5%E9%97%A8%E4%BB%8B%E7%BB%8D/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Spring入门介绍</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">分类</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/java/">java</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/">个人总结</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%9E%B6%E6%9E%84/">架构</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/">设计模式</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/12/">十二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/11/">十一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">九月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">七月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">六月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">四月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">三月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">二月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">一月 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">十二月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/06/">六月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">五月 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/04/">四月 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/12/29/2017%E5%B9%B4%E6%80%BB%E7%BB%93%EF%BC%8C2018%E5%B9%B4%E8%AE%A1%E5%88%92/">2017年总结，2018年计划</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/08/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%89%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（三）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/07/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（二）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/11/06/%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8Spring%20Boot%E4%BB%8E0%E5%88%B01%E6%90%AD%E5%BB%BA%E4%B8%80%E4%B8%AAJava%E5%90%8E%E5%8F%B0%EF%BC%88%E4%B8%80%EF%BC%89/">如何使用Spring Boot从0到1搭建一个Java后台（一）</a>
+          </li>
+        
+          <li>
+            <a href="/2017/09/04/Mybatis%E4%BD%BF%E7%94%A8%E4%BB%8B%E7%BB%8D/">Mybatis使用介绍</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 guoshimeihua<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
